@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisuda | Dashboard</title>
+  <title>Wisudawan | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -65,8 +65,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <?php $this->load->view('side_bar_menu');  ?>      
+    <section class="sidebar">      
+      <?php $this->load->view('side_bar_menu1');  ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -76,11 +76,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Berita        
+        Dashboard        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Berita</li>
+        <li class="active">Dashboard</li>
       </ol>
     </section>
 
@@ -124,7 +124,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <!-- /.col -->
       </div>
-      <!-- /.row -->      
+      <!-- /.row -->  
+      
+
+      
     </section>
     <!-- /.content -->
   </div>
