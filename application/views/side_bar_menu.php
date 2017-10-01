@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </a>          
         </li>      
         <li class="treeview">
-          <a href="<?php echo base_url();?>index.php/Wisudawan_dashboard">
+          <a href="<?php echo base_url();?>index.php/Wisudawan_dashboard/login">
             <i class="fa fa-graduation-cap"></i> <span>Login Wisudawan</span>            
           </a>          
         </li>      

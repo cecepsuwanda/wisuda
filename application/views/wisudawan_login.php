@@ -34,24 +34,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
+                   <?php if($isbuka==0){ ?>
+                      <div class="callout callout-danger">
+                          <h4>Pemberitahuan</h4>
+                          <p>Pendaftaran wisuda belum dibuka !!!</p>
+                      </div>
+                   <?php } ?>
+
+                   <?php if($msg!=""){
+                          echo $msg;
+                        }
+                  ?>
+
+
+
     <p class="login-box-msg">Masukkan username dan password untuk login</p>
 
-    <form action="<?php echo base_url();?>index.php/Wisudawan_dashboard/login" method="post">
+    <form action="<?php echo base_url();?>index.php/Wisudawan_dashboard/login" method="post" id="login">
       <div class="form-group has-feedback">
-        <input type="text" name="un" value="" class="form-control" placeholder="Username">
+        <input type="text" name="un" value="" class="form-control" placeholder="Username" data-msg="Username Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="psw" value="" class="form-control" placeholder="Password">
+        <input type="password" name="psw" value="" class="form-control" placeholder="Password" data-msg="Password Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
          
          <div class="col-xs-4">
-          <button type="submit" name="login" value="login" class="btn btn-primary btn-block btn-flat">Login</button>
+          <button type="submit" name="login" value="login" class="btn btn-primary btn-block btn-flat" <?php echo $isbuka==0 ? 'disabled' :''; ?> >Login</button>
          </div>
-         <div class="col-xs-4">
-          <button type="button" name="reset" class="btn btn-primary btn-block btn-flat">Reset</button>
+         <div class="col-xs-5">
+         <!-- <button type="button" name="reset" class="btn btn-primary btn-block btn-flat">Reset</button> -->
+           <?php if($isbuka==1){ ?>
+              <a href="<?php echo base_url();?>index.php/Wisudawan_dashboard/lupa">Lupa Password ?</a>
+           <?php } ?>   
         </div>
         <!-- /.col -->
       </div>
@@ -68,13 +85,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/bootstrap/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="<?php echo base_url();?>assets/plugins/iCheck/icheck.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
 <script>
   $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
+   $("#login").validate();
+
+   // $('input').iCheck({
+   //   checkboxClass: 'icheckbox_square-blue',
+  //    radioClass: 'iradio_square-blue',
+   //   increaseArea: '20%' // optional
+    //});
   });
 </script>
 </body>

@@ -34,6 +34,38 @@ insert  into `tb_fak`(`id_fak`,`nm_fak`,`urut_fak`) values
 ('FMIPA','Matematika dan Ilmu Pengetahuan Alam',6),
 ('FTI','Teknologi Informasi',4);
 
+/*Table structure for table `tb_log_wisudawan` */
+
+DROP TABLE IF EXISTS `tb_log_wisudawan`;
+
+CREATE TABLE `tb_log_wisudawan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lg_time` datetime NOT NULL,
+  `out_time` datetime DEFAULT NULL,
+  `id_wisuda` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3889 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_log_wisudawan` */
+
+/*Table structure for table `tb_priode` */
+
+DROP TABLE IF EXISTS `tb_priode`;
+
+CREATE TABLE `tb_priode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `awal` date DEFAULT NULL,
+  `akhir` date DEFAULT NULL,
+  `wisuda` date DEFAULT NULL,
+  `aktif` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_priode` */
+
+insert  into `tb_priode`(`id`,`awal`,`akhir`,`wisuda`,`aktif`) values 
+(1,'2017-10-01','2017-10-31','2017-11-18',1);
+
 /*Table structure for table `tb_prodi` */
 
 DROP TABLE IF EXISTS `tb_prodi`;
@@ -84,28 +116,31 @@ insert  into `tb_user`(`user_name`,`user_pass`,`tgl_input`) values
 DROP TABLE IF EXISTS `tb_wisudawan`;
 
 CREATE TABLE `tb_wisudawan` (
-  `ktp` varchar(20) DEFAULT NULL,
-  `nama` varchar(200) DEFAULT NULL,
+  `id_wisuda` varchar(20) NOT NULL,
+  `nim` varchar(10) NOT NULL,
+  `ktp` varchar(20) NOT NULL,
+  `nama` varchar(200) NOT NULL,
   `tmpt_lahir` varchar(100) DEFAULT NULL,
-  `tgl_lahir` date DEFAULT NULL,
-  `jk` int(1) DEFAULT NULL,
+  `tgl_lahir` date NOT NULL,
+  `jk` int(1) NOT NULL,
   `alamat` varchar(200) DEFAULT NULL,
   `hp` varchar(15) DEFAULT NULL,
-  `nim` varchar(10) NOT NULL,
-  `angkatan` int(4) DEFAULT NULL,
-  `id_prodi` varchar(40) DEFAULT NULL,
+  `angkatan` int(4) NOT NULL,
+  `id_prodi` varchar(40) NOT NULL,
   `jdl_skripsi` varchar(255) DEFAULT NULL,
   `tgl_lls` date DEFAULT NULL,
   `ipk` float DEFAULT NULL,
   `photo` varchar(100) DEFAULT NULL,
   `kwitansi` varchar(100) DEFAULT NULL,
   `tgl_input` datetime DEFAULT NULL,
-  `user_name` varchar(100) DEFAULT NULL,
-  `user_pass` varchar(100) DEFAULT NULL,
-  `ver` int(1) DEFAULT NULL,
+  `tgl_update` datetime DEFAULT NULL,
+  `user_name` varchar(32) DEFAULT NULL,
+  `user_pass` varchar(32) DEFAULT NULL,
+  `ver` int(1) DEFAULT '0',
   `tgl_ver` datetime DEFAULT NULL,
   `admin_name` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`nim`)
+  `ket` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_wisuda`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `tb_wisudawan` */

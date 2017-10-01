@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class="active treeview">
-          <a href="<?php echo base_url();?>index.php/Wisudawan_dashboard/login">
+          <a href="<?php echo base_url();?>index.php/Wisudawan_dashboard/index">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>            
           </a>          
         </li>
@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </a>          
         </li>      
         <li class="treeview">
-          <a href="<?php echo base_url();?>index.php/Main_dashboard">
+          <a href="<?php echo base_url();?>index.php/Wisudawan_dashboard/logout">
             <i class="fa fa-graduation-cap"></i> <span>Logout Wisudawan</span>            
           </a>          
         </li>      

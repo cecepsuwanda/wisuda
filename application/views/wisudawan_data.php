@@ -28,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/singleuploadimages/main.css">
 <style type="text/css">
   
 </style>
@@ -92,119 +93,260 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <section class="content">
      
       <div class="row">
-        <div class="col-md-12">
-          <div class="box">
+        <!-- left column -->
+        <div class="col-md-6">
+           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Data Wisudawan</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+              <h3 class="box-title">Data Pribadi</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-             <div class="row">
-                 <div class="col-md-6">
-                     <div class="form-group">
-                        <label>Fakultas</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+            <!-- form start -->
+            <form id="datapribadi" action="" method="post" enctype="multipart/form-data">
+            <form role="form">
+              <div class="box-body">
+                 <div id="ketdatapribadi">
+
+                 </div>  
+                 <div class="form-group">
+                 <label>Photo Wisudawan</label>
+                        <div id="paper">
+                            <div id="console">
+                                <div id="uploadbox" onClick="singleupload_input.click();" class="singleupload">
+                                  <?php 
+                                    if(!empty($photo))
+                                    {
+                                  ?>
+                                    <img src="<?php echo $photo; ?>" style="width:86.4px;height:86.4px;"> 
+                                  <?php 
+                                    }
+                                  ?> 
+
+                                </div>
+                                <input type="file" id="singleupload_input" style="display:none;" name="img" value=""/>
+                            </div>
+                       </div>
+                      <font size='1'>untuk upload photo klick kotak di atas</font>
+                      <input type='hidden' name='nm_file' id='nm_file' value='<?php echo $photo; ?>'>
+                </div>
+                 <div class="form-group">
+                 <label>No. KTP/NIK</label>
+                 <input type="text" class="form-control" id="ktp" name="ktp" value="<?php echo $ktp; ?>"  placeholder="KTP/NIK ..."  data-msg="KTP/NIP Harus Diisi !!!" data-inputmask='"mask": "9999999999999999"' required data-mask>
+                 </div>
+                      <!-- /.form-group --> 
+                <div class="form-group">
+                <label>Nama Lengkap</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama; ?>" placeholder="Nama Lengkap ..."  data-msg="Nama Lengkap Harus Diisi !!!" required >
+                </div>
+                <div class="form-group">
+                <label>Tempat Lahir</label>
+                <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Lahir ..."  value="<?php echo $tmpt_lahir; ?>" >
+                </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <!-- /.form-group --> 
+                          <div class="form-group">
+                             <label>Jenis Kelamin</label>
+                             <select class="form-control select2" id="jk" name="jk" style="width: 100%;"  data-msg="Jenis Kelamin Harus Dipilih !!!" required >
+                               
+                               <option value='<?php echo $jk; ?>' ><?php echo ($jk==1 ? 'Laki-laki':'Perempuan') ; ?></option> 
+                               <option value=''>-- Pilih Jenis Kelamin --</option>                               
+                               <option value='<?php echo ($jk==1 ? 2 : 1); ?>' ><?php echo ($jk==1 ? 'Perempuan':'Laki-laki') ; ?></option>
+
+                            </select>
+                          </div>
+                          <!-- /.form-group -->
+                        </div>
+                        <div class="col-md-6">  
+                          <div class="form-group">
+                             <label>Tanggal Lahir</label>
+                             <input type="text" class="form-control" id="datepicker" id="tgl" name="tgl" value="<?php echo $tgl_lahir; ?>"  placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Harus Diisi !!!"  required data-mask>
+                          </div>
+                          <!-- /.form-group -->
+                        </div>
+                      </div> 
+                <div class="form-group">
+                  <label>Alamat</label>
+                  <textarea name="alamat" class="form-control" rows="3" placeholder="Alamat ..."> <?php echo $alamat; ?></textarea>
+                </div>  
+
+                <div class="form-group">
+                 <label>No. HP</label>
+                 <input type="text" class="form-control" id="hp" name="hp"  placeholder="Nomor HP ..."  value="<?php echo $hp; ?>"  data-inputmask='"mask": "999999999999"'  data-mask>
+                 </div>
+                      <!-- /.form-group -->      
+               
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+           </form> 
+          </div>
+          <!-- /.box -->
+
+           <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Rubah Username dan Password</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="datauser" action="" method="post" enctype="multipart/form-data">
+            <form role="form">
+              <div class="box-body">
+                <div id="ketdatauser">
+
+                 </div>  
+                <div class="form-group">
+                         <label>Username</label>
+                         <input type="text" class="form-control"  id="user" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!"  required>
+                      </div>
+                      <!-- /.form-group --> 
+                      <div class="form-group">
+                         <label>Password</label>
+                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!"  required>
+                      </div>
+                      <!-- /.form-group -->
+                
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </form>
+          </div>
+          <!-- /.box -->
+
+
+        </div>
+        <!--/.col (left) -->
+        <!-- right column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Data Akademik</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="dataakademik" action="" method="post" >
+            <form role="form">
+              <div class="box-body">
+                <div id="ketdataakademik">
+
+                 </div>  
+                <div class="form-group">
+                         <label>Fakultas</label>
+                        <select class="form-control select2" id="fak" name="fak" style="width: 100%;"  data-msg="Fakultas Harus Dipilih !!!" required>
+                          <?php echo $drop_fak ?>
                         </select>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Prodi</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                        <select class="form-control select2" id="prodi" name="prodi" style="width: 100%;"  data-msg="Prodi Harus Dipilih !!!" required>
+                          <?php echo $drop_prodi ?>                         
                         </select>
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Angkatan</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                        <select class="form-control select2" id="ang" name="ang" style="width: 100%;"  data-msg="Angkatan Harus Dipilih !!!" required>
+                          <?php echo $drop_ang ?>
                         </select>
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
                          <label>NIM</label>
-                         <input type="text" class="form-control" placeholder="NIM ...">
+                         <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." value="<?php echo $nim; ?>" data-msg="NIM Harus Diisi !!!" data-inputmask='"mask": "A9A999999"' required data-mask>
                       </div>
                       <!-- /.form-group -->
-                      <div class="form-group">
-                         <label>No. KTP/NIK</label>
-                         <input type="text" class="form-control" placeholder="KTP/NIK ...">
+                
+                
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </form>
+          </div>
+          <!-- /.box -->
+
+           <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Data Wisuda</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form id="datawisuda" action="" method="post" enctype="multipart/form-data">
+            <form role="form">
+              <div class="box-body">
+                <div id="ketdatawisuda">
+
+                 </div>  
+                <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                          <label>IPK</label>
+                         <input type="text" class="form-control" id="ipk" name="ipk" placeholder="IPK ..." value="<?php echo $ipk; ?>"  data-inputmask='"mask": "9.99"'  data-mask>
                       </div>
-                      <!-- /.form-group --> 
-                 </div>
-                 <!-- /.col -->
-                 <div class="col-md-6">
+                      <!-- /.form-group -->
+                        </div>
+                        <div class="col-md-6">  
+                          <div class="form-group">
+                             <label>Tanggal Lulus</label> 
+                             <input type="text" class="form-control" id="datepicker1" id="tgllls" name="tgllls" value="<?php echo $tgl_lls; ?>" placeholder="Tanggal Lulus ..." data-inputmask='"mask": "99-99-9999"'  data-mask>
+                          </div>
+                          <!-- /.form-group -->
+                        </div>
+                      </div> 
                       
                       <div class="form-group">
-                         <label>Nama Lengkap</label>
-                         <input type="text" class="form-control" placeholder="Nama Lengkap ...">
-                      </div>
-                      <!-- /.form-group --> 
-                      <div class="form-group">
-                         <label>Tempat Lahir</label>
-                         <input type="text" class="form-control" placeholder="Tempat Lahir ...">
-                      </div>
-                      <!-- /.form-group -->
-                      <div class="form-group">
-                         <label>Tanggal Lahir</label>
-                         <input type="text" class="form-control" id="datepicker" >
-                      </div>
-                      <!-- /.form-group -->
-                      <div class="form-group">
-                         <label>Username</label>
-                         <input type="text" class="form-control" placeholder="Username ...">
-                      </div>
-                      <!-- /.form-group --> 
-                      <div class="form-group">
-                         <label>Password</label>
-                         <input type="password" class="form-control" placeholder="Password ...">
-                      </div>
-                      <!-- /.form-group -->
+                        <label>Judul Skripsi</label>
+                        <textarea name="jdlskripsi" class="form-control" rows="3"  placeholder="Judul Skripsi ..."><?php echo $jdl_skripsi; ?></textarea>
+                      </div>  
 
+                      <div class="form-group">
+                 <label>Upload Kwitansi Pembayaran Wisuda</label>
+                        <div id="paper">
+                            <div id="console">
+                                <div id="uploadbox1" onClick="singleupload_input1.click();" class="singleupload">
+                                  <?php 
+                                    if(!empty($kwitansi))
+                                    {
+                                  ?>
+                                    <img src="<?php echo $kwitansi; ?>" style="width:86.4px;height:86.4px;"> 
+                                  <?php 
+                                    }
+                                  ?>
+                                </div>
+                                <input type="file" id="singleupload_input1" style="display:none;" name="img" value=""/>
+                            </div>
+                       </div>
+                      <font size='1'>untuk upload photo klick kotak di atas</font>
+                      <input type='hidden' name='nm_file' id='nm_file1' value='<?php echo $kwitansi; ?>'>
+                </div>
 
-                 </div>
-                 <!-- /.col -->
-             </div>
-             <!-- /.row --> 
-             <div class="box-footer">
-               <button type="submit" class="btn btn-info pull-right">Buat Akun</button>
-             </div>
-             <!-- /.row --> 
- 
-            </div>
-            <!-- ./box-body -->
-            
+                
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+            </form>
+          </form>
           </div>
           <!-- /.box -->
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->     
+      </div>      
     </section>
     <!-- /.content -->
   </div>
@@ -240,6 +382,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/dist/js/app.min.js"></script>
 <!-- Sparkline -->
 <script src="<?php echo base_url();?>assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- InputMask -->
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <!-- jvectormap -->
 <script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
@@ -253,9 +399,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE dashboard demo (This is only for demo purposes) 
 <script src="<?php echo base_url();?>assets/dist/js/pages/dashboard2.js"></script>-->  
 <!-- AdminLTE for demo purposes -->
-<script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> 
+<script src="<?php echo base_url();?>assets/dist/js/demo.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/singleuploadimages/jquery.singleuploadimage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script> 
 <script>
+
+    function myajax(id,data1,url,fbefore=null,fafter=null) {
+        
+        if(fbefore != null){
+            if(typeof fbefore==='function'){
+               fbefore();
+            }
+        }
+        
+        $.ajax({
+            "type" : "post",
+            "url" : url,
+            "cache" : false,
+            "data" : data1,
+            success : function (data) {
+                if(id!=''){                  
+                  $('#'+id).html(data);
+                }
+                
+                if(fafter != null){
+                    if(typeof fafter==='function'){
+                       fafter(data);
+                    }
+                }
+            }
+        });
+     }
+
   $(function () {
+     $("[data-mask]").inputmask();
+    
+    
     $(".select2").select2();
 
     //Date picker
@@ -263,6 +442,87 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       format: 'dd-mm-yyyy',
       autoclose: true
     });
+
+    //Date picker
+    $('#datepicker1').datepicker({
+      format: 'dd-mm-yyyy',
+      autoclose: true
+    });
+
+    $("#fak").change(function () {
+       var idfak = $('#fak option:selected').val();
+       data = "idfak=" + idfak;
+       myajax('prodi',data,'<?php echo base_url();?>index.php/Main_dashboard/get_prodi');       
+      });
+        
+
+    $("#datapribadi").validate();
+    $("#dataakademik").validate();
+    $("#datauser").validate();
+
+                  $('#uploadbox').singleupload({
+                    action: 'do_upload', //action: 'do_upload.json'
+                    inputId: 'singleupload_input',
+                    onError: function(code) {
+                      console.debug('error code '+res.code);
+                    },onSuccess: function(url, data) {
+                      $('#nm_file').val(url);
+                    }
+                  });
+
+                  $('#uploadbox1').singleupload({
+                    action: 'do_upload', //action: 'do_upload.json'
+                    inputId: 'singleupload_input1',
+                    onError: function(code) {
+                      console.debug('error code '+res.code);
+                    },onSuccess: function(url, data) {
+                      $('#nm_file1').val(url);
+                    }
+                  });
+
+    $("#datapribadi").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#datapribadi").valid();
+        if (isvalid) {            
+            data = $("#datapribadi").serialize();
+            myajax('ketdatapribadi',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedatapribadi');    
+        }        
+    });
+
+    $("#dataakademik").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#dataakademik").valid();
+        if (isvalid) {            
+            data = $("#dataakademik").serialize();
+            myajax('ketdataakademik',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedataakademik');    
+        }        
+    });
+
+    $("#datauser").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#datauser").valid();
+        if (isvalid) {            
+            data = $("#datauser").serialize();
+            myajax('ketdatauser',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedatauser');    
+        }        
+    });
+
+    $("#datawisuda").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#datawisuda").valid();
+        if (isvalid) {            
+            data = $("#datawisuda").serialize();
+            myajax('ketdatawisuda',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedatawisuda');    
+        }        
+    });           
 
     
   });

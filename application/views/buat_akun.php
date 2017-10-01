@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">Wisuda</span>
       <!-- logo for regular state and mobile devices -->
@@ -105,55 +105,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+            <div class="row">
+                 <div class="col-md-12">
+                  <?php if($isbuka==0){ ?>
+                      <div class="callout callout-danger">
+                          <h4>Pemberitahuan</h4>
+                          <p>Pendaftaran wisuda belum dibuka !!!</p>
+                      </div>
+                   <?php } ?> 
+                     <div id="ket">
+
+                     <div>  
+                 </div>
+            </div>      
+             
+             <form action="#" id="buat_akun" name="buat_akun" method="post" >
              <div class="row">
                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label>Fakultas</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                 
+                    <div class="form-group">
+                        <!-- <label>Fakultas</label> -->
+                        <select class="form-control select2" id="fak" name="fak" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Fakultas Harus Dipilih !!!" required>
+                          <?php echo $drop_fak ?>
                         </select>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
-                        <label>Prodi</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                        <!-- <label>Prodi</label> -->
+                        <select class="form-control select2" id="prodi" name="prodi" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Prodi Harus Dipilih !!!" required>
+                          <option value = '' selected="selected">--- Pilih Prodi ---</option>                          
                         </select>
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
-                        <label>Angkatan</label>
-                        <select class="form-control select2" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                        <!-- <label>Angkatan</label> -->
+                        <select class="form-control select2" id="ang" name="ang" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Angkatan Harus Dipilih !!!" required>
+                          <?php echo $drop_ang ?>
                         </select>
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
-                         <label>NIM</label>
-                         <input type="text" class="form-control" placeholder="NIM ...">
+                         <!-- <label>NIM</label> -->
+                         <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="NIM Harus Diisi !!!" data-inputmask='"mask": "A9A999999"' required data-mask>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
-                         <label>No. KTP/NIK</label>
-                         <input type="text" class="form-control" placeholder="KTP/NIK ...">
+                         <!-- <label>No. KTP/NIK</label> -->
+                         <input type="text" class="form-control" id="ktp" name="ktp"  placeholder="KTP/NIK ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="KTP/NIP Harus Diisi !!!" data-inputmask='"mask": "9999999999999999"' required data-mask>
                       </div>
                       <!-- /.form-group --> 
                  </div>
@@ -161,28 +159,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <div class="col-md-6">
                       
                       <div class="form-group">
-                         <label>Nama Lengkap</label>
-                         <input type="text" class="form-control" placeholder="Nama Lengkap ...">
+                         <!-- <label>Nama Lengkap</label> -->
+                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Nama Lengkap Harus Diisi !!!" required >
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-md-6">
+                          <!-- /.form-group --> 
+                          <div class="form-group">
+                             <!-- <label>Tempat Lahir</label> -->
+                             <select class="form-control select2" id="jk" name="jk" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Jenis Kelamin Harus Dipilih !!!" required >
+                               <option value='' selected='selected'>-- Pilih Jenis Kelamin --</option>
+                               <option value='1' >Laki-laki</option>
+                               <option value='2' >Perempuan</option>
+                            </select>
+                          </div>
+                          <!-- /.form-group -->
+                        </div>
+                        <div class="col-md-6">  
+                          <div class="form-group">
+                             <!-- <label>Tanggal Lahir</label> -->
+                             <input type="text" class="form-control" id="datepicker" id="tgl" name="tgl" placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required data-mask>
+                          </div>
+                          <!-- /.form-group -->
+                        </div>
+                      </div>  
+                      <div class="form-group">
+                         <!-- <label>Username</label> -->
+                         <input type="text" class="form-control"  id="user" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
                       </div>
                       <!-- /.form-group --> 
                       <div class="form-group">
-                         <label>Tempat Lahir</label>
-                         <input type="text" class="form-control" placeholder="Tempat Lahir ...">
-                      </div>
-                      <!-- /.form-group -->
-                      <div class="form-group">
-                         <label>Tanggal Lahir</label>
-                         <input type="text" class="form-control" id="datepicker" >
-                      </div>
-                      <!-- /.form-group -->
-                      <div class="form-group">
-                         <label>Username</label>
-                         <input type="text" class="form-control" placeholder="Username ...">
-                      </div>
-                      <!-- /.form-group --> 
-                      <div class="form-group">
-                         <label>Password</label>
-                         <input type="password" class="form-control" placeholder="Password ...">
+                         <!-- <label>Password</label> -->
+                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
                       </div>
                       <!-- /.form-group -->
 
@@ -192,10 +201,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              </div>
              <!-- /.row --> 
              <div class="box-footer">
-               <button type="submit" class="btn btn-info pull-right">Buat Akun</button>
+               <button type="submit" class="btn btn-info pull-right"  <?php echo $isbuka==0 ? 'disabled' :''; ?> >Buat Akun</button>
              </div>
              <!-- /.row --> 
- 
+             </form>
             </div>
             <!-- ./box-body -->
             
@@ -214,7 +223,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; September 2017 <a href="#">Cecep Suwanda</a> Powered by AdminLTE.</strong> All rights
+    <strong>Copyright &copy; September 2017 by <a href="#">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
     reserved.
   </footer>
 
@@ -234,28 +243,67 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
 <!-- Select2 -->
 <script src="<?php echo base_url();?>assets/plugins/select2/select2.full.min.js"></script>
-<!-- FastClick -->
-<script src="<?php echo base_url();?>assets/plugins/fastclick/fastclick.js"></script>
+<!-- FastClick 
+<script src="<?php echo base_url();?>assets/plugins/fastclick/fastclick.js"></script>-->
 <!-- AdminLTE App -->
 <script src="<?php echo base_url();?>assets/dist/js/app.min.js"></script>
 <!-- Sparkline -->
 <script src="<?php echo base_url();?>assets/plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
+<!-- InputMask -->
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<!-- jvectormap 
 <script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>-->
 <!-- DataTables 
 <script src="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>-->
 <!-- SlimScroll 1.3.0 -->
 <script src="<?php echo base_url();?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- ChartJS 1.0.1 -->
-<script src="<?php echo base_url();?>assets/plugins/chartjs/Chart.min.js"></script>
+<!-- ChartJS 1.0.1 
+<script src="<?php echo base_url();?>assets/plugins/chartjs/Chart.min.js"></script>-->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) 
 <script src="<?php echo base_url();?>assets/dist/js/pages/dashboard2.js"></script>-->  
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+
 <script>
+  
+  function myajax(id,data1,url,fbefore=null,fafter=null) {
+        
+        if(fbefore != null){
+            if(typeof fbefore==='function'){
+               fbefore();
+            }
+        }
+        
+        $.ajax({
+            "type" : "post",
+            "url" : url,
+            "cache" : false,
+            "data" : data1,
+            success : function (data) {
+                if(id!=''){                  
+                  $('#'+id).html(data);
+                }
+                
+                if(fafter != null){
+                    if(typeof fafter==='function'){
+                       fafter(data);
+                    }
+                }
+            }
+        });
+     }
+
+
   $(function () {
+    
+    $("[data-mask]").inputmask();
+    
+    
     $(".select2").select2();
 
     //Date picker
@@ -263,6 +311,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       format: 'dd-mm-yyyy',
       autoclose: true
     });
+
+    $("#fak").change(function () {
+       var idfak = $('#fak option:selected').val();
+       data = "idfak=" + idfak;
+       myajax('prodi',data,'<?php echo base_url();?>index.php/Main_dashboard/get_prodi');       
+      });
+        
+
+    $("#buat_akun").validate();
+
+    $("#buat_akun").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#buat_akun").valid();
+        if (isvalid) {            
+            data = $("#buat_akun").serialize();
+            myajax('ket',data,'<?php echo base_url();?>index.php/Main_dashboard/save');    
+        }        
+    });
+
 
     
   });
