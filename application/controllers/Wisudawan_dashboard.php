@@ -7,7 +7,12 @@ class Wisudawan_dashboard extends CI_Controller {
 	{
 		$logged_in = $this->session->userdata('logged_in');
 		if($logged_in){
-		 $this->load->view('wisudawan_dashboard');
+		    
+		    $db['berita']=$this->Berita_model;
+            $this->Wisudawan_dashboard_model->setdbvar($db);
+            $data=$this->Wisudawan_dashboard_model->baca_berita();
+		    $this->load->view('wisudawan_dashboard',$data);
+
 		}else{
 			redirect('/Wisudawan_dashboard/login');
 		}
@@ -30,9 +35,34 @@ class Wisudawan_dashboard extends CI_Controller {
           redirect('/Wisudawan_dashboard/index');
 		}else{
 		  $this->load->view('wisudawan_login',$data);
-		} 
+		} 		
+	}
 
-		
+	public function lupa()
+	{
+        $save = $this->input->post('save');
+        $hsl['msg']='';
+
+        if($save=='save'){
+          $data['jk']= $this->input->post('jk');
+          $data['ktp']=$this->input->post('ktp');
+          $data['tgl_lahir']= date('Y-m-d', strtotime($this->input->post('tgl')));        
+          $data['user_name']= $this->input->post('user');
+          $data['user_pass']=$this->input->post('pass');
+        
+          $db['priode']=$this->Priode_model;
+          $db['wisudawan']=$this->Wisudawan_model;
+          
+          $this->Wisudawan_dashboard_model->setdbvar($db);
+          $hsl=$this->Wisudawan_dashboard_model->lupa($data);
+        }
+
+        if(($save=='save') and ($hsl['kd']==1) )
+		{
+          $this->load->view('wisudawan_login',$hsl);
+		}else{ 
+		  $this->load->view('wisudawan_lupa',$hsl);
+		}  
 	}
 
 	public function data()
@@ -80,7 +110,7 @@ class Wisudawan_dashboard extends CI_Controller {
         
                 $config['upload_path']          = './assets/photo';
                 $config['allowed_types']        = 'gif|jpg|png';
-                //$config['max_size']             = 100;
+                $config['max_size']             = 1024;
                 //$config['max_width']            = 1024;
                 //$config['max_height']           = 768;
 
@@ -89,7 +119,7 @@ class Wisudawan_dashboard extends CI_Controller {
                 if ( ! $this->upload->do_upload('img'))
                 {
                         $error = array('error' => $this->upload->display_errors());
-                                                   
+                        echo json_encode(array('code' => 0, 'url' => ''));                           
                 }
                 else
                 {
@@ -162,6 +192,9 @@ class Wisudawan_dashboard extends CI_Controller {
           $data['tgl_lls']= date('Y-m-d', strtotime($this->input->post('tgllls')));
         }
         
+        if(!empty($this->input->post('tglbyr'))){
+          $data['tgl_byr']= date('Y-m-d', strtotime($this->input->post('tglbyr')));
+        }
         
         if(!empty($this->input->post('nm_file')))
         {

@@ -17,8 +17,16 @@ class Main_dashboard_model extends CI_Model {
       {
          foreach ($data as $row) {
          	$table.='<tr>';
-              foreach ($row as $value) {
-              	$table.='<td>'.$value.'</td>';
+              foreach ($row as $key=>$value) {
+                if($key=='kwitansi'){
+                  $table.='<td>'.(is_null($value) ? ''  : 'Ada').'</td>';
+                }else{  
+              	 if($key=='nama'){
+                  $table.='<td>'.strtoupper($value).'</td>';
+                 }else{ 
+                   $table.='<td>'.$value.'</td>';
+                 }
+                }  
               }
          	$table.='</tr>';
          }
@@ -34,6 +42,7 @@ class Main_dashboard_model extends CI_Model {
      $tmp=$this->db['wisudawan']->jml('tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
      $data['jml_calon']= is_null($tmp[0]['jml1']) ? 0 : $tmp[0]['jml1'];
      $data['jml_wisudawan']=is_null($tmp[0]['jml2']) ? 0 :$tmp[0]['jml2'];
+     $data['jml_layak']=is_null($tmp[0]['jml3']) ? 0 :$tmp[0]['jml3'];
      $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=0 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
      $data['data_calon']=$this->build_tag_db($tmp);
      $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=1 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
@@ -101,6 +110,51 @@ class Main_dashboard_model extends CI_Model {
      $tmp=$this->db['prodi']->getdata("fak_prodi='$fak'");
      $data = $this->build_dropdown($tmp,array('id_prodi','nm_prodi'),'Prodi. ','--- Pilih Prodi ---');      
      return $data;
+   }
+   
+   private function build_timeline($data)
+   {
+     $arr_timeline=array(); 
+     if(!empty($data))
+     {
+      foreach ($data as $row) {
+        $tgl = date("d M Y", strtotime($row['tgl_post']));
+        $time = date("H:i:s", strtotime($row['tgl_post']));
+        $arr_timeline[$tgl][] = array('id'=>$row['id_berita'],'waktu'=>$time,'msg'=>$row['isi_berita']);
+      }
+     }
+    
+    
+    $timeline ='';
+
+     if(!empty($arr_timeline))
+     {
+      foreach ($arr_timeline as $key=>$row) {
+         $timeline .= '<li class="time-label"><span class="bg-red">'.$key.'</span></li>';
+         
+         foreach ($row as $value) {
+                 $timeline .= '<li>
+                                <i class="fa fa-user bg-aqua"></i>
+                                <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> '.$value['waktu'].'</span>
+                                <h3 class="timeline-header"><a href="#">Admin</a></h3>
+                                <div class="timeline-body">'
+                                .$value['msg'].
+                                '</div>                                
+                                </div></li>';        
+         }           
+ 
+      }
+     }
+     return $timeline;
+   }
+
+
+   public function baca_berita()
+   {
+      $tmp=$this->db['berita']->getdata('');
+      $data['timeline'] = $this->build_timeline($tmp);
+      return $data;
    }
 
 }

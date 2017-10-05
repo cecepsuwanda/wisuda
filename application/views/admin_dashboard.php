@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisuda | Dashboard</title>
+  <title>Admin | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">      
-      <?php $this->load->view('side_bar_menu');  ?>
+      <?php $this->load->view('side_bar_menu2');  ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -140,7 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Wisudawan</h3>
+              <h3 class="box-title">Rekap Perprodi</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -152,28 +152,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body">
              <div class="row"> 
               <div class="col-xs-12">
-                <div class='callout callout-info'>
-                    <h4>Pemberitahuan</h4>
-                    <p>Wisudawan adalah pendaftar yang sudah diverifikasi oleh Admin</p> 
-                </div>  
-              <table id="wisudawan" class="table table-bordered table-striped">
+                 <table id="rekapprodi" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Kwitansi</th>
-                  <th>Keterangan</th>                  
+                  <th>No</th>
+                  <th>Program Studi</th>
+                  <th>Calon Wisudawan</th>
+                  <th>Layak verifikasi</th>
+                  <th>Wisudawan</th>                 
                 </tr>
                 </thead>
                 <tbody>
-                  <?php echo $data_wisudawan; ?>
+                  <?php echo $rekap_prodi; ?>
                 </tbody>
                 <tfoot>
                 
                 </tfoot>
               </table>
+              
               </div>
             </div>
             </div>
@@ -186,59 +182,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <!-- /.row -->
 
-      <!-- Main row -->
-      <div class="row">
-        <!-- Left col -->
-        <div class="col-md-12">
-          <!-- MAP & BOX PANE -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Calon Wisudawan</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">                
-              <div class="col-xs-12">
-                <div class='callout callout-info'>
-                    <h4>Pemberitahuan</h4>
-                    <p>Calon Wisudawan adalah pendaftar yang belum diverifikasi oleh Admin</p> 
-                </div>  
-              <table id="calon" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Kwitansi</th>
-                  <th>Keterangan</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_calon; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              </div> 
-             </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-          
-          
-        </div>
-        <!-- /.col -->        
-      </div>
-      <!-- /.row -->
+     
     </section>
     <!-- /.content -->
   </div>
@@ -248,7 +192,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; September 2017 by <a href="<?php echo base_url();?>index.php/Admin_dashboard/login">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
+    <strong>Copyright &copy; September 2017 by <a href="#">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
     reserved.
   </footer>
 
@@ -286,8 +230,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
 <script>
   $(function () {
-    $("#wisudawan").DataTable();
-    $("#calon").DataTable();
+    $("#rekapprodi").DataTable();
+    
     
   });
 </script>

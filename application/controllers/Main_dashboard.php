@@ -14,7 +14,11 @@ class Main_dashboard extends CI_Controller {
 
     public function berita()
 	{
-		$this->load->view('berita');
+		
+        $db['berita']=$this->Berita_model;
+        $this->Main_dashboard_model->setdbvar($db);
+        $data=$this->Main_dashboard_model->baca_berita(); 
+		$this->load->view('berita',$data);
 	}
 
     public function save()

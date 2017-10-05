@@ -66,6 +66,7 @@ class Wisudawan_dashboard_model extends CI_Model {
      $data['alamat']=empty($tmp[0]['alamat']) ? '' : $tmp[0]['alamat'];
      $data['hp']=$tmp[0]['hp'];
      $data['photo']=$tmp[0]['photo'];
+     $data['tgl_byr']= is_null($tmp[0]['tgl_byr'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_byr']));
      $data['kwitansi']=$tmp[0]['kwitansi'];
 
      $data['nim']=$tmp[0]['nim'];
@@ -78,6 +79,8 @@ class Wisudawan_dashboard_model extends CI_Model {
      return $data;
 
    }
+
+
 
    public function login($login,$un,$psw)
    {
@@ -110,6 +113,36 @@ class Wisudawan_dashboard_model extends CI_Model {
    	 }
 
    	 return $data;
+   }
+
+   public function lupa($data)
+   {
+     $tmp=$this->db['priode']->getdata('aktif=1');
+     $date = date('Y-m-d');
+     $data['isbuka']= $date >= $tmp[0]['awal'] && $date <= $tmp[0]['akhir'];
+
+     $tmp=$this->db['wisudawan']->getdata("ktp='$data[ktp]' and tgl_lahir='$data[tgl_lahir]' and jk='$data[jk]'");
+     $msg='';
+     if(!empty($tmp)){
+        $tmp1['id_wisuda']=$tmp[0]['id_wisuda'];
+        $tmp=$this->db['wisudawan']->getdata("user_name='$data[user_name]' and ktp<>'$data[ktp]'");
+        if(!empty($tmp)){
+             $data['kd']=0;
+             $msg = "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Username ada dalam database !!!</p> </div>";
+             }
+             else{
+               $tmp1['user_name']=$data['user_name'];
+               $tmp1['user_pass']=md5($data['user_pass']);
+               $this->db['wisudawan']->updatedata($tmp1);
+               $msg="<div class='callout callout-info'><h4>Pemberitahuan</h4><p>User name dan Password berhasil diganti, silahkan login !!!</p> </div>";
+               $data['kd']=1;
+             }
+     } else{
+       $msg="<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Data anda tidak ada dalam database !!!</p> </div>"; 
+       $data['kd']=0;
+     }
+     $data['msg']=$msg;
+     return $data; 
    }
 
    public function logout($id_wisuda,$lg_time)
@@ -176,6 +209,51 @@ class Wisudawan_dashboard_model extends CI_Model {
                $this->db['wisudawan']->updatedata($data);
                return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan id_wisuda = $data[id_wisuda], berhasil di update !!!</p> </div>"; 
      
+   }
+
+    private function build_timeline($data)
+   {
+     $arr_timeline=array(); 
+     if(!empty($data))
+     {
+      foreach ($data as $row) {
+        $tgl = date("d M Y", strtotime($row['tgl_post']));
+        $time = date("H:i:s", strtotime($row['tgl_post']));
+        $arr_timeline[$tgl][] = array('id'=>$row['id_berita'],'waktu'=>$time,'msg'=>$row['isi_berita']);
+      }
+     }
+    
+    
+    $timeline ='';
+
+     if(!empty($arr_timeline))
+     {
+      foreach ($arr_timeline as $key=>$row) {
+         $timeline .= '<li class="time-label"><span class="bg-red">'.$key.'</span></li>';
+         
+         foreach ($row as $value) {
+                 $timeline .= '<li>
+                                <i class="fa fa-user bg-aqua"></i>
+                                <div class="timeline-item">
+                                <span class="time"><i class="fa fa-clock-o"></i> '.$value['waktu'].'</span>
+                                <h3 class="timeline-header"><a href="#">Admin</a></h3>
+                                <div class="timeline-body">'
+                                .$value['msg'].
+                                '</div>                                
+                                </div></li>';        
+         }           
+ 
+      }
+     }
+     return $timeline;
+   }
+
+
+   public function baca_berita()
+   {
+      $tmp=$this->db['berita']->getdata('');
+      $data['timeline'] = $this->build_timeline($tmp);
+      return $data;
    }
 
 

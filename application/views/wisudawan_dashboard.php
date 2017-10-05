@@ -91,31 +91,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col-md-12">
           <!-- The time line -->
           <ul class="timeline">
-            <!-- timeline time label -->
-            <li class="time-label">
-                  <span class="bg-red">
-                    28 Sep. 2017
-                  </span>
-            </li>
-            <!-- /.timeline-label -->
-            <!-- timeline item -->
-            <li>
-              <i class="fa fa-user bg-aqua"></i>
-
-              <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                <h3 class="timeline-header"><a href="#">Admin</a></h3>
-
-                <div class="timeline-body">
-                  Pendaftaran Wisuda online dimulai pada tanggal 2 Oktober 2017 pukul 07:00 BBWI. 
-                </div>
-                
-              </div>
-            </li>
-            <!-- END timeline item -->
-            
-            
+            <?php echo $timeline;?>           
             
             <li>
               <i class="fa fa-clock-o bg-gray"></i>

@@ -160,7 +160,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       
                       <div class="form-group">
                          <!-- <label>Nama Lengkap</label> -->
-                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Nama Lengkap Harus Diisi !!!" required >
+                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Nama Lengkap Harus Diisi !!!" style="text-transform:uppercase;" on keyup="javascript:this.value=this.value.toUpperCase();" required >
                       </div>
                       
                       <div class="row">

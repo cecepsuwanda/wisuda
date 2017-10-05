@@ -6,11 +6,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisuda | Dashboard</title>
+  <title>Admin | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/bootstrap/css/bootstrap.min.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/datepicker/datepicker3.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/select2/select2.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -24,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/singleuploadimages/main.css">
 <style type="text/css">
   
 </style>
@@ -66,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">      
-      <?php $this->load->view('side_bar_menu');  ?>
+      <?php $this->load->view('side_bar_menu2');  ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -80,62 +85,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li class="active">Data Wisudawan</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Info boxes -->
-      <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-edit"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Calon Wisudawan</span>
-              <span class="info-box-number"><?php echo $jml_calon; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Layak Verifikasi</span>
-              <span class="info-box-number"><?php echo $jml_layak; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Wisudawan</span>
-              <span class="info-box-number"><?php echo $jml_wisudawan; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        
-       
-      </div>
-      <!-- /.row -->
-
+     
       <div class="row">
         <div class="col-md-12">
           <div class="box">
@@ -152,23 +108,73 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body">
              <div class="row"> 
               <div class="col-xs-12">
-                <div class='callout callout-info'>
-                    <h4>Pemberitahuan</h4>
-                    <p>Wisudawan adalah pendaftar yang sudah diverifikasi oleh Admin</p> 
-                </div>  
+                
               <table id="wisudawan" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>Photo</th>
                   <th>NIM</th>
                   <th>Nama</th>
+                  <th>Tanggal Bayar</th>
+                  <th>Kwitansi</th>
                   <th>Fakultas</th>
                   <th>Prodi</th>
-                  <th>Kwitansi</th>
                   <th>Keterangan</th>                  
+                  <th>Aksi</th>               
                 </tr>
                 </thead>
                 <tbody>
                   <?php echo $data_wisudawan; ?>
+                </tbody>
+                <tfoot>
+                
+                </tfoot>
+              </table>
+              
+              </div>
+            </div>
+            </div>
+            <!-- ./box-body -->
+            
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Layak Verifikasi</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>                
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+             <div class="row"> 
+              <div class="col-xs-12">
+                
+              <table id="layak" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>NIM</th>
+                  <th>Nama</th>
+                  <th>Tanggal Bayar</th>
+                  <th>Kwitansi</th>
+                  <th>Fakultas</th>
+                  <th>Prodi</th>
+                  <th>Keterangan</th>                  
+                  <th>Aksi</th>              
+                </tr>
+                </thead>
+                <tbody>
+                  <?php echo $data_layak; ?>
                 </tbody>
                 <tfoot>
                 
@@ -185,7 +191,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- /.col -->
       </div>
       <!-- /.row -->
-
       <!-- Main row -->
       <div class="row">
         <!-- Left col -->
@@ -205,19 +210,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body">
               <div class="row">                
               <div class="col-xs-12">
-                <div class='callout callout-info'>
-                    <h4>Pemberitahuan</h4>
-                    <p>Calon Wisudawan adalah pendaftar yang belum diverifikasi oleh Admin</p> 
-                </div>  
+                
               <table id="calon" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>Photo</th>
                   <th>NIM</th>
                   <th>Nama</th>
+                  <th>Tanggal Bayar</th>
+                  <th>Kwitansi</th>
                   <th>Fakultas</th>
                   <th>Prodi</th>
-                  <th>Kwitansi</th>
-                  <th>Keterangan</th>
+                  <th>Keterangan</th>                  
+                  <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -239,8 +244,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- /.col -->        
       </div>
       <!-- /.row -->
+
+
+  <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div id="modal"></div>>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+
+
     </section>
-    <!-- /.content -->
+    <!-- /.content -->    
   </div>
   <!-- /.content-wrapper -->
 
@@ -248,7 +264,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; September 2017 by <a href="<?php echo base_url();?>index.php/Admin_dashboard/login">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
+    <strong>Copyright &copy; September 2017 by <a href="#">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
     reserved.
   </footer>
 
@@ -264,12 +280,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="<?php echo base_url();?>assets/bootstrap/js/bootstrap.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="<?php echo base_url();?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
+<!-- Select2 -->
+<script src="<?php echo base_url();?>assets/plugins/select2/select2.full.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo base_url();?>assets/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url();?>assets/dist/js/app.min.js"></script>
 <!-- Sparkline -->
 <script src="<?php echo base_url();?>assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- InputMask -->
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <!-- jvectormap -->
 <script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
@@ -284,10 +308,158 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/dist/js/pages/dashboard2.js"></script> --> 
 <!-- AdminLTE for demo purposes 
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
+<script src="<?php echo base_url();?>assets/plugins/singleuploadimages/jquery.singleuploadimage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script> 
 <script>
+  
+  function myajax(id,data1,url,fbefore=null,fafter=null) {
+        
+        if(fbefore != null){
+            if(typeof fbefore==='function'){
+               fbefore();
+            }
+        }
+        
+        $.ajax({
+            "type" : "post",
+            "url" : url,
+            "cache" : false,
+            "data" : data1,
+            success : function (data) {
+                if(id!=''){                  
+                  $('#'+id).html(data);
+                }
+                
+                if(fafter != null){
+                    if(typeof fafter==='function'){
+                       fafter(data1);
+                    }
+                }
+            }
+        });
+     }
+
+  function after(data)
+  {
+    $('#myModal').modal();
+    $("#myModal").on("hidden.bs.modal", function () {
+      window.location.href = "<?php echo site_url('Admin_dashboard/data'); ?>";
+     });
+
+    $("[data-mask]").inputmask();
+    
+    
+    $(".select2").select2();
+
+    //Date picker
+    $('#datepicker').datepicker({
+      format: 'dd-mm-yyyy',
+      autoclose: true
+    });
+
+    //Date picker
+    $('#datepicker1').datepicker({
+      format: 'dd-mm-yyyy',
+      autoclose: true
+    });
+
+    //Date picker
+    $('#datepicker2').datepicker({
+      format: 'dd-mm-yyyy',
+      autoclose: true
+    });
+
+    $("#fak").change(function () {
+       var idfak = $('#fak option:selected').val();
+       data = "idfak=" + idfak;
+       myajax('prodi',data,'<?php echo base_url();?>index.php/Main_dashboard/get_prodi');       
+      });
+        
+
+    $("#datapribadi").validate();
+    $("#dataakademik").validate();
+    
+                  $('#uploadbox').singleupload({
+                    action: 'do_upload', //action: 'do_upload.json'
+                    inputId: 'singleupload_input',
+                    onError: function(code) {
+                      //console.debug('error code '+res.code);
+                    },onSuccess: function(url, code) {
+                      $('#nm_file').val(url);
+                    }
+                  });
+
+                  $('#uploadbox1').singleupload({
+                    action: 'do_upload', //action: 'do_upload.json'
+                    inputId: 'singleupload_input1',
+                    onError: function(code) {                      
+                      //console.debug('error code '+res.code);
+                    },onSuccess: function(url, code) {                      
+                      $('#nm_file1').val(url);
+                    }
+                  });
+
+    $("#datapribadi").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#datapribadi").valid();
+        if (isvalid) {            
+            data = $("#datapribadi").serialize()+'&'+data;
+            myajax('ketdatapribadi',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatedatapribadi');    
+        }        
+    });
+
+    $("#dataakademik").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#dataakademik").valid();
+        if (isvalid) {            
+            data = $("#dataakademik").serialize()+'&'+data;
+            myajax('ketdataakademik',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatedataakademik');    
+        }        
+    });
+
+    $("#ketverifikasi").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+                      
+            data = $("#ketverifikasi").serialize()+'&'+data;
+            myajax('ketketverifikasi',data,'<?php echo base_url();?>index.php/Admin_dashboard/updateketverifikasi');    
+                
+    });
+
+    
+
+    $("#datawisuda").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#datawisuda").valid();
+        if (isvalid) {            
+            data = $("#datawisuda").serialize()+'&'+data;
+            myajax('ketdatawisuda',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatedatawisuda');    
+        }        
+    });  
+
+
+  }
+
+
+  function modal_show(id)
+  {
+    myajax('modal','id_wisuda='+id,"<?php echo base_url();?>index.php/Admin_dashboard/baca_data_wisudawan",null,after);
+    
+  }
+
+
+
   $(function () {
     $("#wisudawan").DataTable();
     $("#calon").DataTable();
+    $("#layak").DataTable();
     
   });
 </script>

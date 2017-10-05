@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wisuda | Dashboard</title>
+  <title>Admin | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -65,8 +65,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">      
-      <?php $this->load->view('side_bar_menu');  ?>
+    <section class="sidebar">
+      <?php $this->load->view('side_bar_menu2');  ?>      
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -76,71 +76,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard        
+        Berita        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li class="active">Berita</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-      <!-- Info boxes -->
-      <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-edit"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Calon Wisudawan</span>
-              <span class="info-box-number"><?php echo $jml_calon; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Layak Verifikasi</span>
-              <span class="info-box-number"><?php echo $jml_layak; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Wisudawan</span>
-              <span class="info-box-number"><?php echo $jml_wisudawan; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        
-       
-      </div>
-      <!-- /.row -->
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
+      
+     <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Wisudawan</h3>
+              <h3 class="box-title">Buat Berita Baru</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>                
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <form id="postberita" action="" method="post" >
+            <form role="form">
+            <div class="box-body">
+              <div class="row">
+               <div class="col-md-12">
+                  <div class="form-group">
+                  <label>Berita</label>
+                  <textarea name="berita" class="form-control" rows="3" placeholder="Berita ..."></textarea>
+                </div> 
+
+                </div>
+                <!-- /.col -->
+              </div>
+                <!-- /.row --> 
+            
+            </div>
+            <!-- ./box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Post</button>
+              </div> 
+              </form>
+           </form>            
+          </div>
+          <!-- /.box -->     
+
+
+      <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Timeline Berita</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -150,95 +136,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-             <div class="row"> 
-              <div class="col-xs-12">
-                <div class='callout callout-info'>
-                    <h4>Pemberitahuan</h4>
-                    <p>Wisudawan adalah pendaftar yang sudah diverifikasi oleh Admin</p> 
-                </div>  
-              <table id="wisudawan" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Kwitansi</th>
-                  <th>Keterangan</th>                  
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_wisudawan; ?>
-                </tbody>
-                <tfoot>
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <!-- The time line -->
+          <ul class="timeline">
                 
-                </tfoot>
-              </table>
-              </div>
-            </div>
-            </div>
-            <!-- ./box-body -->
+             <?php echo $timeline; ?>       
             
-          </div>
-          <!-- /.box -->
+            <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+          </ul>
         </div>
         <!-- /.col -->
       </div>
-      <!-- /.row -->
+      <!-- /.row --> 
 
-      <!-- Main row -->
-      <div class="row">
-        <!-- Left col -->
-        <div class="col-md-12">
-          <!-- MAP & BOX PANE -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Calon Wisudawan</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">                
-              <div class="col-xs-12">
-                <div class='callout callout-info'>
-                    <h4>Pemberitahuan</h4>
-                    <p>Calon Wisudawan adalah pendaftar yang belum diverifikasi oleh Admin</p> 
-                </div>  
-              <table id="calon" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Kwitansi</th>
-                  <th>Keterangan</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_calon; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              </div> 
-             </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-          
-          
-        </div>
-        <!-- /.col -->        
       </div>
-      <!-- /.row -->
+            <!-- ./box-body -->
+            
+          </div>
+          <!-- /.box -->     
+
     </section>
     <!-- /.content -->
   </div>
@@ -248,7 +168,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; September 2017 by <a href="<?php echo base_url();?>index.php/Admin_dashboard/login">Cecep Suwanda</a>, Template by AdminLTE.</strong> All rights
+    <strong>Copyright &copy; September 2017 <a href="#">Cecep Suwanda</a> Powered by AdminLTE.</strong> All rights
     reserved.
   </footer>
 
@@ -285,9 +205,71 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes 
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
 <script>
+  
+  function myajax(id,data1,url,fbefore=null,fafter=null) {
+        
+        if(fbefore != null){
+            if(typeof fbefore==='function'){
+               fbefore();
+            }
+        }
+        
+        $.ajax({
+            "type" : "post",
+            "url" : url,
+            "cache" : false,
+            "data" : data1,
+            success : function (data) {
+                if(id!=''){                  
+                  $('#'+id).html(data);
+                }
+                
+                if(fafter != null){
+                    if(typeof fafter==='function'){
+                       fafter(data);
+                    }
+                }
+            }
+        });
+     }
+
+    function after(data)
+    {
+       window.location.href = "<?php echo site_url('Admin_dashboard/berita'); ?>";
+    }
+
+  function delete_berita(id)
+  {
+    myajax('','id_berita='+id,"<?php echo base_url();?>index.php/Admin_dashboard/delete_berita",null,after);
+    
+  }
+
+  function edit_berita(id)
+  {
+    $('#edit_'+id).hide();
+    $('#save_'+id).show();
+    myajax('msgbdy_'+id,'id_berita='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_berita");
+    
+  }
+
+  function save_berita(id)
+  {
+    isi_berita=$('#berita_'+id).val();
+    myajax('','id_berita='+id+'&isi_berita='+isi_berita,"<?php echo base_url();?>index.php/Admin_dashboard/save_berita",null,after);
+    
+  }
+
+
   $(function () {
-    $("#wisudawan").DataTable();
-    $("#calon").DataTable();
+   $("#postberita").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+                   
+            data = $("#postberita").serialize();
+            myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/addberita',null,after);    
+                
+    });        
     
   });
 </script>
