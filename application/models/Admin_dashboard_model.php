@@ -61,6 +61,93 @@ class Admin_dashboard_model extends CI_Model {
       return $table;
    }
 
+   private function build_tag_db2($data)
+   {
+      $table='';
+      if(!empty($data))       
+      {
+          $i=1;
+          foreach ($data as $row) {
+          $table.='<tr>';
+              foreach ($row as $key=>$value) {
+                if($key!='id'){
+                   $table.='<td>'.$value.'</td>';
+                 }else{
+                   $table.='<td>'.$i.'</td>';
+                 }  
+              }
+          $table.='</tr>';
+          $i++;
+         }
+      }
+
+      return $table;
+   }
+
+   private function build_tag_db3($data)
+   {
+      $table='';
+      if(!empty($data))       
+      {
+          $i=1;
+          foreach ($data as $row) {
+          $table.='<tr>';
+              foreach ($row as $key=>$value) {
+                if($key!='id'){
+                  if($key=='id_wisuda'){
+                     $tmp=$this->db['wisudawan']->getdata("id_wisuda='$value'");
+                     $table.='<td>'.(isset($tmp[0]['nim']) ? $tmp[0]['nim'] : '').'</td>';
+                     $table.='<td>'.(isset($tmp[0]['nama']) ? $tmp[0]['nama'] : '').'</td>';
+                  }else{
+                     $table.='<td>'.$value.'</td>';
+                  }                
+                 }else{
+                   $table.='<td>'.$i.'</td>';
+                 }  
+              }
+          $table.='</tr>';
+          $i++;
+         }
+      }
+
+      return $table;
+   }
+
+   private function build_tag_db4($data)
+   {
+      
+
+      $table='';
+      if(!empty($data))       
+      {
+          $i=1;
+          foreach ($data as $row) {
+              $table.='<tr>';
+              $table.='<td>'.$i.'</td>';
+              $table.='<td><img src="'.base_url().'assets/photo/'.$row.'" style="width:50px;height:50px;"><br>'.$row.'</td>';    
+              $table.='<td></td>';              
+              $table.='</tr>';
+          $i++;
+         }
+      }
+
+      return $table;
+   }
+
+   public function baca_log()
+   {
+
+     $tmp=$this->db['log_admin']->getdata('');
+     $data['log_admin']=$this->build_tag_db2($tmp);
+     $tmp=$this->db['log_wisudawan']->getdata('');
+     $data['log_wisudawan']=$this->build_tag_db3($tmp);
+
+     $file = directory_map('./assets/photo/');
+     $data['photo']=$this->build_tag_db4($file);
+
+     return $data;
+   }
+
    public function rekap_data()
    {
      $priode=$this->db['priode']->getdata('aktif=1');
@@ -282,63 +369,42 @@ class Admin_dashboard_model extends CI_Model {
 
    
 
-   public function updatedatapribadi($data)
+   public function updatedatawisudawan($data)
    {
      $tmp=$this->db['wisudawan']->getdata("ktp='$data[ktp]' and id_wisuda<>'$data[id_wisuda]'");
          if(!empty($tmp)){
-             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Wisudawan dengan ktp/nik = $data[ktp], sudah ada !!!</p> </div>"; 
+             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon wisudawan dengan ktp/nik = $data[ktp], sudah ada !!!</p> </div>"; 
          }else{
-              
-               if(isset($data['photo'])){
-                  if(file_exists('./assets/photo/'.basename($data['photo']))){
-                     $ext = explode('.',basename($data['photo']));
-                     rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
-                     $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
-                 }
-               }
 
-               $this->db['wisudawan']->updatedata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan ktp/nik = $data[ktp], berhasil di update !!!</p> </div>"; 
+             $tmp=$this->db['wisudawan']->getdata("nim='$data[nim]' and id_wisuda<>'$data[id_wisuda]'");
+                if(!empty($tmp)){
+                      return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon wisudawan dengan nim = $data[nim], sudah ada !!!</p> </div>"; 
+                }else{
+                
+
+                       if(isset($data['photo'])){
+                              if(file_exists('./assets/photo/'.basename($data['photo']))){
+                                 $ext = explode('.',basename($data['photo']));
+                                 rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
+                                 $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
+                             }
+                           }
+
+                           if(isset($data['kwitansi'])){
+                              if(file_exists('./assets/photo/'.basename($data['kwitansi']))){
+                                 $ext = explode('.',basename($data['kwitansi']));
+                                 rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1]);
+                                 $data['kwitansi']=base_url().'assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1];
+                             }
+                           }
+
+                      
+                         $this->db['wisudawan']->updatedata($data);
+                         return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan id wisuda = $data[id_wisuda], berhasil di update !!!</p> </div>"; 
+                         
+               }    
          }
-   }
-
-   public function updatedataakademik($data)
-   {
-     $tmp=$this->db['wisudawan']->getdata("nim='$data[nim]' and id_wisuda<>'$data[id_wisuda]'");
-         if(!empty($tmp)){
-             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Wisudawan dengan nim = $data[nim], sudah ada !!!</p> </div>"; 
-         }else{
-              
-               $this->db['wisudawan']->updatedata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan nim = $data[nim], berhasil di update !!!</p> </div>"; 
-         }
-   }
-
-   
-
-   public function updateketverifikasi($data)
-   {
-               $this->db['wisudawan']->updatedata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan id_wisuda = $data[id_wisuda], berhasil di update !!!</p> </div>"; 
-     
-   }
-
-
-   public function updatedatawisuda($data)
-   {
-                   
-               if(isset($data['kwitansi'])){
-                  if(file_exists('./assets/photo/'.basename($data['kwitansi']))){
-                     $ext = explode('.',basename($data['kwitansi']));
-                     rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1]);
-                     $data['kwitansi']=base_url().'assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1];
-                 }
-               }
-
-               $this->db['wisudawan']->updatedata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan id_wisuda = $data[id_wisuda], berhasil di update !!!</p> </div>"; 
-     
-   }
+   }   
 
 
 }

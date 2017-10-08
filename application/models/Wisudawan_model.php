@@ -9,7 +9,7 @@ class Wisudawan_model extends CI_Model {
       if(!empty($where)){
         $this->db->where($where);      
       }
-
+      
       $this->query = $this->db->get();
       $hsl=array();
       if($this->query->num_rows()>0)

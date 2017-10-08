@@ -6,23 +6,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Edit Data Wisudawan : <?php echo $nama.'('.$nim.')';  ?></h4>
       </div>
+       <form id="datawisudawan" action="" method="post" enctype="multipart/form-data">  
       <div class="modal-body">
+        <div id="ketdatawisudawan"></div>
          <div class="row">
         <!-- left column -->
         <div class="col-md-6">
-           <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Data Pribadi</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="datapribadi" action="" method="post" enctype="multipart/form-data">
-            <form role="form">
-              <div class="box-body">
-                 <div id="ketdatapribadi">
-
-                 </div>  
-                 <div class="form-group">
+           <div class="form-group">
                  <label>Photo Wisudawan</label>
                         <div id="paper">
                             <div id="console">
@@ -42,6 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        </div>
                       <font size='1'>untuk upload photo klick kotak di atas</font>
                       <input type='hidden' name='nm_file' id='nm_file' value='<?php echo $photo; ?>'>
+                      <div id="ketuploadphoto"></div>  
                 </div>
                  <div class="form-group">
                  <label>No. KTP/NIK</label>
@@ -54,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="form-group">
                 <label>Tempat Lahir</label>
-                <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Lahir ..."  value="<?php echo $tmpt_lahir; ?>" >
+                <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Lahir ..." data-msg="Tempat Lahir Harus Diisi !!!" value="<?php echo $tmpt_lahir; ?>" required >
                 </div>
                       <div class="row">
                         <div class="col-md-6">
@@ -88,31 +79,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <label>No. HP</label>
                  <input type="text" class="form-control" id="hp" name="hp"  placeholder="Nomor HP ..."  value="<?php echo $hp; ?>"  data-inputmask='"mask": "999999999999"'  data-mask>
                  </div>
-                      <!-- /.form-group -->      
-               
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-              </div>
-            </form>
-           </form> 
-          </div>
-          <!-- /.box -->
-
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Keterangan dan Verifikasi</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="ketverifikasi" action="" method="post" >
-            <form role="form">
-              <div class="box-body">
-                 <div id="ketketverifikasi">
-
-                 </div>  
                                        
                 <div class="form-group">
                   <label>Keterangan</label>
@@ -136,37 +102,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   
                  </div>
                       <!-- /.form-group -->      
-               
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-              </div>
-            </form>
-           </form> 
-          </div>
-          <!-- /.box -->
-
-
         </div>
         <!--/.col (left) -->
         <!-- right column -->
         <div class="col-md-6">
             <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Data Akademik</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="dataakademik" action="" method="post" >
-            <form role="form">
-              <div class="box-body">
-                <div id="ketdataakademik">
-
-                 </div>  
-                <div class="form-group">
+          <div class="form-group">
                          <label>Fakultas</label>
                         <select class="form-control select2" id="fak" name="fak" style="width: 100%;"  data-msg="Fakultas Harus Dipilih !!!" required>
                           <?php echo $drop_fak ?>
@@ -192,32 +133,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                          <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." value="<?php echo $nim; ?>" data-msg="NIM Harus Diisi !!!" data-inputmask='"mask": "A9A999999"' required data-mask>
                       </div>
                       <!-- /.form-group -->
+             
+              
                 
-                
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-              </div>
-            </form>
-          </form>
-          </div>
-          <!-- /.box -->
-
-           <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Data Wisuda</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="datawisuda" action="" method="post" enctype="multipart/form-data">
-            <form role="form">
-              <div class="box-body">
-                <div id="ketdatawisuda">
-
-                 </div>  
                 <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -242,7 +160,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                       <div class="form-group">
                              <label>Tanggal Bayar Wisuda</label> 
-                             <input type="text" class="form-control" id="datepicker2" id="tglbyr" name="tglbyr" value="<?php echo $tgl_byr; ?>" placeholder="Tanggal Bayar Wisuda ..." data-inputmask='"mask": "99-99-9999"'  data-mask>
+                             <input type="text" class="form-control" id="datepicker2" id="tglbyr" name="tglbyr" value="<?php echo $tgl_byr; ?>" placeholder="Tanggal Bayar Wisuda ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Bayar Wisuda Harus Diisi !!!" required data-mask>
                           </div>
                           <!-- /.form-group -->  
 
@@ -264,23 +182,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                        </div>
                       <font size='1'>untuk upload photo klick kotak di atas</font>
-                      <input type='hidden' name='nm_file' id='nm_file1' value='<?php echo $kwitansi; ?>'>
+                      <input type='hidden' name='nm_file1' id='nm_file1' value='<?php echo $kwitansi; ?>'>
+                      <div id="ketuploadkwitansi"></div>  
                 </div>
-
-                
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-              </div>
-            </form>
-          </form>
-          </div>
-          <!-- /.box -->
         </div>
       </div>
       </div>
       <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Update</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>        
       </div>
+    </form>

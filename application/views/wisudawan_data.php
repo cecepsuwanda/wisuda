@@ -91,22 +91,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Main content -->
     <section class="content">
-     
+      
+      
+     <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Data Wisudawan</h3>
+        </div>
+       
+     <form id="datawisudawan" action="" method="post" enctype="multipart/form-data">    
+       <div class="box-body">       
+          
+<div id="ketdatawisudawan"></div>  
       <div class="row">
         <!-- left column -->
         <div class="col-md-6">
-           <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Data Pribadi</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="datapribadi" action="" method="post" enctype="multipart/form-data">
-            <form role="form">
-              <div class="box-body">
-                 <div id="ketdatapribadi">
-
-                 </div>  
+           <!-- form start -->            
+                 
                  <div class="form-group">
                  <label>Photo Wisudawan</label>
                         <div id="paper">
@@ -127,6 +127,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                        </div>
                       <font size='1'>untuk upload photo klick kotak di atas</font>
                       <input type='hidden' name='nm_file' id='nm_file' value='<?php echo $photo; ?>'>
+                      <div id="ketuploadphoto"></div>  
                 </div>
                  <div class="form-group">
                  <label>No. KTP/NIK</label>
@@ -139,7 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="form-group">
                 <label>Tempat Lahir</label>
-                <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Lahir ..."  value="<?php echo $tmpt_lahir; ?>" >
+                <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Lahir ..." data-msg="Tempat Lahir Harus Diisi !!!" value="<?php echo $tmpt_lahir; ?>" required >
                 </div>
                       <div class="row">
                         <div class="col-md-6">
@@ -173,73 +174,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <label>No. HP</label>
                  <input type="text" class="form-control" id="hp" name="hp"  placeholder="Nomor HP ..."  value="<?php echo $hp; ?>"  data-inputmask='"mask": "999999999999"'  data-mask>
                  </div>
-                      <!-- /.form-group -->      
-               
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-              </div>
-            </form>
-           </form> 
-          </div>
-          <!-- /.box -->
-
-           <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Rubah Username dan Password</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="datauser" action="" method="post" enctype="multipart/form-data">
-            <form role="form">
-              <div class="box-body">
-                <div id="ketdatauser">
-
-                 </div>  
+                           
                 <div class="form-group">
                          <label>Username</label>
-                         <input type="text" class="form-control"  id="user" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!"  required>
+                         <input type="text" class="form-control"  id="user" name="user" placeholder="Username ...">
                       </div>
                       <!-- /.form-group --> 
                       <div class="form-group">
                          <label>Password</label>
-                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!"  required>
+                         <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ...">
                       </div>
                       <!-- /.form-group -->
-                
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-              </div>
-            </form>
-          </form>
-          </div>
-          <!-- /.box -->
-
-
         </div>
         <!--/.col (left) -->
         <!-- right column -->
         <div class="col-md-6">
             <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Data Akademik</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="dataakademik" action="" method="post" >
-            <form role="form">
-              <div class="box-body">
-                <div id="ketdataakademik">
-
-                 </div>  
-                <div class="form-group">
+          
+            
+                     <div class="form-group">
                          <label>Fakultas</label>
                         <select class="form-control select2" id="fak" name="fak" style="width: 100%;"  data-msg="Fakultas Harus Dipilih !!!" required>
                           <?php echo $drop_fak ?>
@@ -265,32 +218,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                          <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." value="<?php echo $nim; ?>" data-msg="NIM Harus Diisi !!!" data-inputmask='"mask": "A9A999999"' required data-mask>
                       </div>
                       <!-- /.form-group -->
+             
+              
                 
-                
-              </div>
-              <!-- /.box-body -->
-
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-              </div>
-            </form>
-          </form>
-          </div>
-          <!-- /.box -->
-
-           <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">Data Wisuda</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form id="datawisuda" action="" method="post" enctype="multipart/form-data">
-            <form role="form">
-              <div class="box-body">
-                <div id="ketdatawisuda">
-
-                 </div>  
                 <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -315,7 +245,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                       <div class="form-group">
                              <label>Tanggal Bayar Wisuda</label> 
-                             <input type="text" class="form-control" id="datepicker2" id="tglbyr" name="tglbyr" value="<?php echo $tgl_byr; ?>" placeholder="Tanggal Bayar Wisuda ..." data-inputmask='"mask": "99-99-9999"'  data-mask>
+                             <input type="text" class="form-control" id="datepicker2" id="tglbyr" name="tglbyr" value="<?php echo $tgl_byr; ?>" placeholder="Tanggal Bayar Wisuda ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Bayar Wisuda Harus Diisi !!!" required data-mask>
                           </div>
                           <!-- /.form-group -->  
 
@@ -337,22 +267,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                        </div>
                       <font size='1'>untuk upload photo klick kotak di atas</font>
-                      <input type='hidden' name='nm_file' id='nm_file1' value='<?php echo $kwitansi; ?>'>
+                      <input type='hidden' name='nm_file1' id='nm_file1' value='<?php echo $kwitansi; ?>'>
+                      <div id="ketuploadkwitansi"></div>  
                 </div>
-
-                
-              </div>
+          
+        </div>
+      </div> 
+       </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
               </div>
-            </form>
-          </form>
-          </div>
-          <!-- /.box -->
+      </form>    
         </div>
-      </div>      
+          <!-- /.box -->      
+
     </section>
     <!-- /.content -->
   </div>
@@ -468,9 +398,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       });
         
 
-    $("#datapribadi").validate();
-    $("#dataakademik").validate();
-    $("#datauser").validate();
+    $("#datawisudawan").validate();
+    
 
                   $('#uploadbox').singleupload({
                     action: 'do_upload', //action: 'do_upload.json'
@@ -478,7 +407,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     onError: function(code) {
                       //console.debug('error code '+res.code);
                     },onSuccess: function(url, code) {
-                      $('#nm_file').val(url);
+                      if(url==''){
+                         $('#ketuploadphoto').html("<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Gagal upload gambar !!!</p> </div>");
+                         $('#nm_file').val(url);
+                       }else{
+                        $('#nm_file').val(url);
+                        $('#ketuploadphoto').html("<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Berhasil upload gambar !!!</p> </div>");
+                       }
                     }
                   });
 
@@ -487,54 +422,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     inputId: 'singleupload_input1',
                     onError: function(code) {                      
                       //console.debug('error code '+res.code);
-                    },onSuccess: function(url, code) {                      
-                      $('#nm_file1').val(url);
+                    },onSuccess: function(url, code) { 
+                       if(url==''){
+                         $('#ketuploadkwitansi').html("<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Gagal upload gambar !!!</p> </div>");
+                         $('#nm_file1').val(url);
+                       }else{
+                        $('#nm_file1').val(url);
+                        $('#ketuploadkwitansi').html("<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Berhasil upload gambar !!!</p> </div>");
+                       }
                     }
                   });
 
-    $("#datapribadi").submit(function(e) {
+    $("#datawisudawan").submit(function(e) {
 
         //prevent Default functionality
         e.preventDefault();
-        var isvalid = $("#datapribadi").valid();
+        var isvalid = $("#datawisudawan").valid();
         if (isvalid) {            
-            data = $("#datapribadi").serialize();
-            myajax('ketdatapribadi',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedatapribadi');    
+            data = $("#datawisudawan").serialize();
+            myajax('ketdatawisudawan',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedatawisudawan');    
         }        
     });
 
-    $("#dataakademik").submit(function(e) {
-
-        //prevent Default functionality
-        e.preventDefault();
-        var isvalid = $("#dataakademik").valid();
-        if (isvalid) {            
-            data = $("#dataakademik").serialize();
-            myajax('ketdataakademik',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedataakademik');    
-        }        
-    });
-
-    $("#datauser").submit(function(e) {
-
-        //prevent Default functionality
-        e.preventDefault();
-        var isvalid = $("#datauser").valid();
-        if (isvalid) {            
-            data = $("#datauser").serialize();
-            myajax('ketdatauser',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedatauser');    
-        }        
-    });
-
-    $("#datawisuda").submit(function(e) {
-
-        //prevent Default functionality
-        e.preventDefault();
-        var isvalid = $("#datawisuda").valid();
-        if (isvalid) {            
-            data = $("#datawisuda").serialize();
-            myajax('ketdatawisuda',data,'<?php echo base_url();?>index.php/Wisudawan_dashboard/updatedatawisuda');    
-        }        
-    });           
+               
 
     
   });

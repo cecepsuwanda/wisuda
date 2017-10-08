@@ -40,7 +40,6 @@
             xhr.addEventListener("load", function(ev) {
                 $this.html('');
                 var res = eval("(" + ev.target.responseText + ")");
-
                 if(res.code != 0) {
                     settings.onError(res.code);
                     return;

@@ -124,6 +124,21 @@ class Admin_dashboard extends CI_Controller {
 
 	}
 
+	public function log()
+	{
+      $logged_in = $this->session->userdata('logged_in');
+		if($logged_in){  
+	        $db['log_admin']=$this->Log_user_model;
+			$db['log_wisudawan']=$this->Log_wisudawan_model;
+			$db['wisudawan']=$this->Wisudawan_model;
+			$this->Admin_dashboard_model->setdbvar($db);
+	        $data=$this->Admin_dashboard_model->baca_log();
+			$this->load->view('admin_log',$data);
+		}else{
+			redirect('/Admin_dashboard/login');
+		}	
+	}
+
 	public function logout()
 	{
 		$logged_in = $this->session->userdata('logged_in');
@@ -149,9 +164,12 @@ class Admin_dashboard extends CI_Controller {
 	{
 		header('Content-type: application/json');
         
+                $nm_file = 'temp_admin_'.date('YmdHis');
+
                 $config['upload_path']          = './assets/photo';
                 $config['allowed_types']        = 'gif|jpg|png';
                 $config['max_size']             = 1024;
+                $config['file_name']            = $nm_file;
                 //$config['max_width']            = 1024;
                 //$config['max_height']           = 768;
 
@@ -165,7 +183,11 @@ class Admin_dashboard extends CI_Controller {
                 else
                 {
                         $data = array('upload_data' => $this->upload->data());
-                        echo json_encode(array('code' => 0, 'url' => base_url()."assets/photo/".$_FILES['img']['name']));
+                        if(file_exists('./assets/photo/'.$data['upload_data']['file_name'])){
+                          echo json_encode(array('code' => 0, 'url' => base_url()."assets/photo/".$data['upload_data']['file_name']));
+                        }else{
+                          echo json_encode(array('code' => 0, 'url' => ''));         	
+                        } 
                 }
 
 
@@ -174,7 +196,7 @@ class Admin_dashboard extends CI_Controller {
         
 	}
 
-	public function updatedatapribadi()
+	public function updatedatawisudawan()
 	{
         $data['alamat']=$this->input->post('alamat');
         $data['hp']=$this->input->post('hp');
@@ -188,46 +210,15 @@ class Admin_dashboard extends CI_Controller {
          $data['photo']= $this->input->post('nm_file');
         }
 
-
-        $data['id_wisuda']= $this->input->post('id_wisuda');
-		$db['wisudawan']=$this->Wisudawan_model;
-		$this->Admin_dashboard_model->setdbvar($db);
-		$hsl=$this->Admin_dashboard_model->updatedatapribadi($data);
-		echo $hsl;
-	}
-
-	public function updatedataakademik()
-	{
         $data['angkatan']=$this->input->post('ang');
         $data['id_prodi']= $this->input->post('prodi');
         $data['nim']=$this->input->post('nim');
-        
 
-        $data['id_wisuda']= $this->input->post('id_wisuda');
-		$db['wisudawan']=$this->Wisudawan_model;
-		$this->Admin_dashboard_model->setdbvar($db);
-		$hsl=$this->Admin_dashboard_model->updatedataakademik($data);
-		echo $hsl;
-	}
-
-	public function updateketverifikasi()
-	{
         $data['ket']=$this->input->post('keterangan');
         $data['ver']= $this->input->post('verifikasi');
         $data['tgl_ver']=date('Y-m-d H:i:s');
         $data['admin_name']=$this->session->userdata('user_name');
 
-        $data['id_wisuda']= $this->input->post('id_wisuda');
-		$db['wisudawan']=$this->Wisudawan_model;
-		$this->Admin_dashboard_model->setdbvar($db);
-		$hsl=$this->Admin_dashboard_model->updateketverifikasi($data);
-		echo $hsl;
-	}
-
-	
-
-	public function updatedatawisuda()
-	{
         $data['ipk']= $this->input->post('ipk');
         
         $data['jdl_skripsi']= $this->input->post('jdlskripsi');
@@ -240,16 +231,15 @@ class Admin_dashboard extends CI_Controller {
           $data['tgl_byr']= date('Y-m-d', strtotime($this->input->post('tglbyr')));
         }
         
-        if(!empty($this->input->post('nm_file')))
+        if(!empty($this->input->post('nm_file1')))
         {
-         $data['kwitansi']= $this->input->post('nm_file');
+         $data['kwitansi']= $this->input->post('nm_file1');
         }
-                
 
         $data['id_wisuda']= $this->input->post('id_wisuda');
 		$db['wisudawan']=$this->Wisudawan_model;
 		$this->Admin_dashboard_model->setdbvar($db);
-		$hsl=$this->Admin_dashboard_model->updatedatawisuda($data);
+		$hsl=$this->Admin_dashboard_model->updatedatawisudawan($data);
 		echo $hsl;
 	}
 

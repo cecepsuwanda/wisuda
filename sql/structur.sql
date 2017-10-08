@@ -12,6 +12,17 @@ MySQL - 5.7.11-log : Database - wisuda
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*Table structure for table `tb_berita` */
+
+DROP TABLE IF EXISTS `tb_berita`;
+
+CREATE TABLE `tb_berita` (
+  `id_berita` varchar(20) NOT NULL,
+  `isi_berita` varchar(200) DEFAULT NULL,
+  `tgl_post` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_berita`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*Table structure for table `tb_fak` */
 
 DROP TABLE IF EXISTS `tb_fak`;
@@ -23,16 +34,17 @@ CREATE TABLE `tb_fak` (
   PRIMARY KEY (`id_fak`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Data for the table `tb_fak` */
+/*Table structure for table `tb_log_user` */
 
-insert  into `tb_fak`(`id_fak`,`nm_fak`,`urut_fak`) values 
-('FAPERTA','Pertanian',1),
-('FE','Ekonomi',3),
-('FIKES','Ilmu Kesehatan',7),
-('FISIP','Ilmu Sosial dan Ilmu Politik',5),
-('FKIP','Keguruan Dan Ilmu Pendidikan',2),
-('FMIPA','Matematika dan Ilmu Pengetahuan Alam',6),
-('FTI','Teknologi Informasi',4);
+DROP TABLE IF EXISTS `tb_log_user`;
+
+CREATE TABLE `tb_log_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lg_time` datetime NOT NULL,
+  `out_time` datetime DEFAULT NULL,
+  `user_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3910 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tb_log_wisudawan` */
 
@@ -44,9 +56,23 @@ CREATE TABLE `tb_log_wisudawan` (
   `out_time` datetime DEFAULT NULL,
   `id_wisuda` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3889 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3905 DEFAULT CHARSET=utf8;
 
-/*Data for the table `tb_log_wisudawan` */
+/*Table structure for table `tb_msg` */
+
+DROP TABLE IF EXISTS `tb_msg`;
+
+CREATE TABLE `tb_msg` (
+  `id_msg` varchar(100) NOT NULL,
+  `from` varchar(100) NOT NULL,
+  `idx_from` int(1) NOT NULL,
+  `to` varchar(100) NOT NULL,
+  `idx_to` int(1) NOT NULL,
+  `isi_msg` varchar(200) DEFAULT NULL,
+  `tgl_msg` datetime DEFAULT NULL,
+  `is_replay` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id_msg`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `tb_priode` */
 
@@ -61,11 +87,6 @@ CREATE TABLE `tb_priode` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-/*Data for the table `tb_priode` */
-
-insert  into `tb_priode`(`id`,`awal`,`akhir`,`wisuda`,`aktif`) values 
-(1,'2017-10-01','2017-10-31','2017-11-18',1);
-
 /*Table structure for table `tb_prodi` */
 
 DROP TABLE IF EXISTS `tb_prodi`;
@@ -78,23 +99,6 @@ CREATE TABLE `tb_prodi` (
   PRIMARY KEY (`id_prodi`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-/*Data for the table `tb_prodi` */
-
-insert  into `tb_prodi`(`id_prodi`,`nm_prodi`,`fak_prodi`,`urut_prodi`) values 
-('54201','Agribisnis','FAPERTA',1),
-('54211','Agroteknologi','FAPERTA',2),
-('62201','Akuntansi','FE',8),
-('87202','Pendidikan Geografi','FKIP',4),
-('55201','Teknik Informatika','FTI',10),
-('88201','Pendidikan Bahasa Indonesia','FKIP',6),
-('88203','Pendidikan Bahasa Inggris','FKIP',5),
-('65201','Ilmu Pemerintahan','FISIP',9),
-('87220','Pendidikan Ilmu Pengetahuan Sosial','FKIP',7),
-('14201','Keperawatan','FIKES',13),
-('44201','Matematika','FMIPA',12),
-('57201','Sistem Informasi','FTI',11),
-('41221','Teknologi Pangan','FAPERTA',3);
-
 /*Table structure for table `tb_user` */
 
 DROP TABLE IF EXISTS `tb_user`;
@@ -105,11 +109,6 @@ CREATE TABLE `tb_user` (
   `tgl_input` datetime DEFAULT NULL,
   PRIMARY KEY (`user_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `tb_user` */
-
-insert  into `tb_user`(`user_name`,`user_pass`,`tgl_input`) values 
-('admin','827ccb0eea8a706c4c34a16891f84e7b','2017-09-27 07:19:58');
 
 /*Table structure for table `tb_wisudawan` */
 
@@ -131,6 +130,7 @@ CREATE TABLE `tb_wisudawan` (
   `tgl_lls` date DEFAULT NULL,
   `ipk` float DEFAULT NULL,
   `photo` varchar(100) DEFAULT NULL,
+  `tgl_byr` date DEFAULT NULL,
   `kwitansi` varchar(100) DEFAULT NULL,
   `tgl_input` datetime DEFAULT NULL,
   `tgl_update` datetime DEFAULT NULL,
@@ -142,8 +142,6 @@ CREATE TABLE `tb_wisudawan` (
   `ket` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_wisuda`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `tb_wisudawan` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

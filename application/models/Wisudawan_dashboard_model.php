@@ -151,65 +151,51 @@ class Wisudawan_dashboard_model extends CI_Model {
       $tmp=$this->db['log']->updatedata(array('id_wisuda'=>$id_wisuda,'lg_time'=>$lg_time,'out_time'=>$out_time));
    }
 
-   public function updatedatapribadi($data)
+   public function updatedatawisudawan($data)
    {
      $tmp=$this->db['wisudawan']->getdata("ktp='$data[ktp]' and id_wisuda<>'$data[id_wisuda]'");
          if(!empty($tmp)){
-             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Wisudawan dengan ktp/nik = $data[ktp], sudah ada !!!</p> </div>"; 
+             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon wisudawan dengan ktp/nik = $data[ktp], sudah ada !!!</p> </div>"; 
          }else{
-              
-               if(isset($data['photo'])){
-                  if(file_exists('./assets/photo/'.basename($data['photo']))){
-                     $ext = explode('.',basename($data['photo']));
-                     rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
-                     $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
-                 }
-               }
 
-               $this->db['wisudawan']->updatedata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan ktp/nik = $data[ktp], berhasil di update !!!</p> </div>"; 
+             $tmp=$this->db['wisudawan']->getdata("nim='$data[nim]' and id_wisuda<>'$data[id_wisuda]'");
+                if(!empty($tmp)){
+                      return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon wisudawan dengan nim = $data[nim], sudah ada !!!</p> </div>"; 
+                }else{
+
+                    $is_simpan=1;
+                    if(isset($data['user_name'])){ 
+                       $tmp=$this->db['wisudawan']->getdata("user_name='$data[user_name]' and id_wisuda<>'$data[id_wisuda]'");
+                       if(!empty($tmp)){
+                         $is_simpan=0;
+                         return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Wisudawan dengan user_name = $data[user_name], sudah ada !!!</p> </div>"; 
+                       }
+                    }   
+
+                       if(isset($data['photo'])){
+                              if(file_exists('./assets/photo/'.basename($data['photo']))){
+                                 $ext = explode('.',basename($data['photo']));
+                                 rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
+                                 $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
+                             }
+                           }
+
+                           if(isset($data['kwitansi'])){
+                              if(file_exists('./assets/photo/'.basename($data['kwitansi']))){
+                                 $ext = explode('.',basename($data['kwitansi']));
+                                 rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1]);
+                                 $data['kwitansi']=base_url().'assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1];
+                             }
+                           }
+
+                      if($is_simpan==1){ 
+                         $this->db['wisudawan']->updatedata($data);
+                         return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan id wisuda = $data[id_wisuda], berhasil di update !!!</p> </div>"; 
+                      }   
+               }    
          }
    }
-
-   public function updatedataakademik($data)
-   {
-     $tmp=$this->db['wisudawan']->getdata("nim='$data[nim]' and id_wisuda<>'$data[id_wisuda]'");
-         if(!empty($tmp)){
-             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Wisudawan dengan nim = $data[nim], sudah ada !!!</p> </div>"; 
-         }else{
-              
-               $this->db['wisudawan']->updatedata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan nim = $data[nim], berhasil di update !!!</p> </div>"; 
-         }
-   }
-
-   public function updatedatauser($data)
-   {
-     $tmp=$this->db['wisudawan']->getdata("user_name='$data[user_name]' and id_wisuda<>'$data[id_wisuda]'");
-         if(!empty($tmp)){
-             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Wisudawan dengan user_name = $data[user_name], sudah ada !!!</p> </div>"; 
-         }else{
-              
-               $this->db['wisudawan']->updatedata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan user_name = $data[user_name], berhasil di update !!!</p> </div>"; 
-         }
-   }
-
-   public function updatedatawisuda($data)
-   {
-                   
-               if(isset($data['kwitansi'])){
-                  if(file_exists('./assets/photo/'.basename($data['kwitansi']))){
-                     $ext = explode('.',basename($data['kwitansi']));
-                     rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1]);
-                     $data['kwitansi']=base_url().'assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1];
-                 }
-               }
-
-               $this->db['wisudawan']->updatedata($data);
-               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan id_wisuda = $data[id_wisuda], berhasil di update !!!</p> </div>"; 
-     
-   }
+    
 
     private function build_timeline($data)
    {

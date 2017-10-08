@@ -11,10 +11,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/bootstrap/css/bootstrap.min.css">
-  <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/datepicker/datepicker3.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/select2/select2.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -28,7 +24,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/singleuploadimages/main.css">
 <style type="text/css">
   
 </style>
@@ -85,18 +80,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Data Wisudawan</li>
+        <li class="active">Dashboard</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
-     
+      <!-- Info boxes -->
       <div class="row">
-        <div class="col-md-12">
+       <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Wisudawan</h3>
+              <h3 class="box-title">Log Admin</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -108,23 +103,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body">
              <div class="row"> 
               <div class="col-xs-12">
-                
-              <table id="wisudawan" class="table table-bordered table-striped">
+                 <table id="logadmin" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Photo</th>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Tanggal Bayar</th>
-                  <th>Kwitansi</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Keterangan</th>                  
-                  <th>Aksi</th>               
+                  <th>No</th>
+                  <th>Login</th>
+                  <th>Logout</th>
+                  <th>User name</th>                  
                 </tr>
                 </thead>
                 <tbody>
-                  <?php echo $data_wisudawan; ?>
+                  <?php echo $log_admin; ?>
+                </tbody>
+                <tfoot>
+                
+                </tfoot>
+              </table>
+              
+              </div>
+            </div>
+            </div>
+            <!-- ./box-body -->
+            
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->       
+      </div>
+      <!-- /.row -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Log Wisudawan</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>                
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+             <div class="row"> 
+              <div class="col-xs-12">
+                 <table id="logwisudawan" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Login</th>
+                  <th>Logout</th>
+                  <th>NIM</th>
+                  <th>Nama</th>                 
+                </tr>
+                </thead>
+                <tbody>
+                   <?php echo $log_wisudawan; ?>
                 </tbody>
                 <tfoot>
                 
@@ -142,11 +177,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- /.col -->
       </div>
       <!-- /.row -->
+
       <div class="row">
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Layak Verifikasi</h3>
+              <h3 class="box-title">Upload Photo</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -158,28 +194,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body">
              <div class="row"> 
               <div class="col-xs-12">
-                
-              <table id="layak" class="table table-bordered table-striped">
+                 <table id="tbphoto" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>No</th>
                   <th>Photo</th>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Tanggal Bayar</th>
-                  <th>Kwitansi</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Keterangan</th>                  
-                  <th>Aksi</th>              
+                  <th>Ket</th>                
                 </tr>
                 </thead>
                 <tbody>
-                  <?php echo $data_layak; ?>
+                  <?php echo $photo; ?>
                 </tbody>
                 <tfoot>
                 
                 </tfoot>
               </table>
+              
               </div>
             </div>
             </div>
@@ -191,72 +221,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- /.col -->
       </div>
       <!-- /.row -->
-      <!-- Main row -->
-      <div class="row">
-        <!-- Left col -->
-        <div class="col-md-12">
-          <!-- MAP & BOX PANE -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Calon Wisudawan</h3>
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">                
-              <div class="col-xs-12">
-                
-              <table id="calon" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Photo</th>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Tanggal Bayar</th>
-                  <th>Kwitansi</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Keterangan</th>                  
-                  <th>Aksi</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_calon; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              </div> 
-             </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-          
-          
-        </div>
-        <!-- /.col -->        
-      </div>
-      <!-- /.row -->
-
-
-  <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-       <div id="modal"></div>>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal --> 
-
-
+     
     </section>
-    <!-- /.content -->    
+    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
@@ -280,20 +248,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="<?php echo base_url();?>assets/bootstrap/js/bootstrap.min.js"></script>
-<!-- bootstrap datepicker -->
-<script src="<?php echo base_url();?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Select2 -->
-<script src="<?php echo base_url();?>assets/plugins/select2/select2.full.min.js"></script>
 <!-- FastClick -->
 <script src="<?php echo base_url();?>assets/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url();?>assets/dist/js/app.min.js"></script>
 <!-- Sparkline -->
 <script src="<?php echo base_url();?>assets/plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- InputMask -->
-<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="<?php echo base_url();?>assets/plugins/input-mask/jquery.inputmask.extensions.js"></script>
 <!-- jvectormap -->
 <script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 <script src="<?php echo base_url();?>assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
@@ -308,137 +268,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url();?>assets/dist/js/pages/dashboard2.js"></script> --> 
 <!-- AdminLTE for demo purposes 
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
-<script src="<?php echo base_url();?>assets/plugins/singleuploadimages/jquery.singleuploadimage.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script> 
 <script>
-  
-  function myajax(id,data1,url,fbefore=null,fafter=null) {
-        
-        if(fbefore != null){
-            if(typeof fbefore==='function'){
-               fbefore();
-            }
-        }
-        
-        $.ajax({
-            "type" : "post",
-            "url" : url,
-            "cache" : false,
-            "data" : data1,
-            success : function (data) {
-                if(id!=''){                  
-                  $('#'+id).html(data);
-                }
-                
-                if(fafter != null){
-                    if(typeof fafter==='function'){
-                       fafter(data1);
-                    }
-                }
-            }
-        });
-     }
-
-  function after(data)
-  {
-    $('#myModal').modal();
-    $("#myModal").on("hidden.bs.modal", function () {
-      window.location.href = "<?php echo site_url('Admin_dashboard/data'); ?>";
-     });
-
-     $("[data-mask]").inputmask();
-    
-    
-    $(".select2").select2();
-
-    //Date picker
-    $('#datepicker').datepicker({
-      format: 'dd-mm-yyyy',
-      autoclose: true
-    });
-
-    //Date picker
-    $('#datepicker1').datepicker({
-      format: 'dd-mm-yyyy',
-      autoclose: true
-    });
-
-    //Date picker
-    $('#datepicker2').datepicker({
-      format: 'dd-mm-yyyy',
-      autoclose: true
-    });
-
-    $("#fak").change(function () {
-       var idfak = $('#fak option:selected').val();
-       data = "idfak=" + idfak;
-       myajax('prodi',data,'<?php echo base_url();?>index.php/Main_dashboard/get_prodi');       
-      });
-        
-
-    $("#datawisudawan").validate();
-    
-
-                  $('#uploadbox').singleupload({
-                    action: 'do_upload', //action: 'do_upload.json'
-                    inputId: 'singleupload_input',
-                    onError: function(code) {
-                      //console.debug('error code '+res.code);
-                    },onSuccess: function(url, code) {
-                      if(url==''){
-                         $('#ketuploadphoto').html("<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Gagal upload gambar !!!</p> </div>");
-                         $('#nm_file').val(url);
-                       }else{
-                        $('#nm_file').val(url);
-                        $('#ketuploadphoto').html("<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Berhasil upload gambar !!!</p> </div>");
-                       }
-                    }
-                  });
-
-                  $('#uploadbox1').singleupload({
-                    action: 'do_upload', //action: 'do_upload.json'
-                    inputId: 'singleupload_input1',
-                    onError: function(code) {                      
-                      //console.debug('error code '+res.code);
-                    },onSuccess: function(url, code) { 
-                       if(url==''){
-                         $('#ketuploadkwitansi').html("<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Gagal upload gambar !!!</p> </div>");
-                         $('#nm_file1').val(url);
-                       }else{
-                        $('#nm_file1').val(url);
-                        $('#ketuploadkwitansi').html("<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Berhasil upload gambar !!!</p> </div>");
-                       }
-                    }
-                  });
-
-    $("#datawisudawan").submit(function(e) {
-
-        //prevent Default functionality
-        e.preventDefault();
-        var isvalid = $("#datawisudawan").valid();
-        if (isvalid) {            
-            data = $("#datawisudawan").serialize()+'&'+data;
-            myajax('ketdatawisudawan',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatedatawisudawan');    
-        }        
-    });
-
-
-  }
-
-
-  function modal_show(id)
-  {
-    myajax('modal','id_wisuda='+id,"<?php echo base_url();?>index.php/Admin_dashboard/baca_data_wisudawan",null,after);
-    
-  }
-
-
-
   $(function () {
-    $("#wisudawan").DataTable();
-    $("#calon").DataTable();
-    $("#layak").DataTable();
-    
+    $("#logadmin").DataTable();
+    $("#logwisudawan").DataTable();
+    $("#tbphoto").DataTable();
   });
 </script>
 </body>
