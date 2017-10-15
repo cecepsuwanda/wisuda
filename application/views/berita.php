@@ -86,12 +86,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Main content -->
     <section class="content">
+     <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Timeline Berita</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>                
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
       <!-- row -->
       <div class="row">
         <div class="col-md-12">
           <!-- The time line -->
-          <ul class="timeline">
-              <?php echo $timeline; ?>           
+          <ul class="timeline timeline-inverse">
+                
+             <?php echo $timeline; ?>       
+            
             <li>
               <i class="fa fa-clock-o bg-gray"></i>
             </li>
@@ -99,7 +113,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <!-- /.col -->
       </div>
-      <!-- /.row -->      
+      <!-- /.row --> 
+
+      </div>
+            <!-- ./box-body -->
+            
+          </div>
+          <!-- /.box -->     
     </section>
     <!-- /.content -->
   </div>

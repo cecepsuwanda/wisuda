@@ -140,7 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="row">
         <div class="col-md-12">
           <!-- The time line -->
-          <ul class="timeline">
+          <ul class="timeline timeline-inverse">
                 
              <?php echo $timeline; ?>       
             

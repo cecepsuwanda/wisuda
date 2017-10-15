@@ -167,7 +167,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </div> 
                 <div class="form-group">
                   <label>Alamat</label>
-                  <textarea name="alamat" class="form-control" rows="3" placeholder="Alamat ..."> <?php echo $alamat; ?></textarea>
+                  <textarea name="alamat" class="form-control" rows="3" placeholder="Alamat ..."><?php echo $alamat; ?></textarea>
                 </div>  
 
                 <div class="form-group">
@@ -223,14 +223,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 
                 <div class="row">
                         <div class="col-md-6">
-                          <div class="form-group">
+                        <!--  <div class="form-group">
                           <label>IPK</label>
                          <input type="text" class="form-control" id="ipk" name="ipk" placeholder="IPK ..." value="<?php echo $ipk; ?>"  data-inputmask='"mask": "9.99"'  data-mask>
                       </div>
                       <!-- /.form-group -->
                         </div>
                         <div class="col-md-6">  
-                          <div class="form-group">
+                         <!-- <div class="form-group">
                              <label>Tanggal Lulus</label> 
                              <input type="text" class="form-control" id="datepicker1" id="tgllls" name="tgllls" value="<?php echo $tgl_lls; ?>" placeholder="Tanggal Lulus ..." data-inputmask='"mask": "99-99-9999"'  data-mask>
                           </div>
@@ -278,6 +278,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-primary" onclick="cetak()" <?php echo ($ver==1 ? "" :"disabled" ); ?> >Cetak</button>
               </div>
       </form>    
         </div>
@@ -365,6 +366,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 }
             }
         });
+     }
+
+     function cetak()
+     {
+      //myajax('','','<?php echo base_url();?>index.php/Wisudawan_dashboard/cetak');
+      window.location = '<?php echo base_url();?>index.php/Wisudawan_dashboard/cetak';
      }
 
   $(function () {

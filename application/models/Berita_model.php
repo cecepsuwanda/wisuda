@@ -10,6 +10,8 @@ class Berita_model extends CI_Model {
         $this->db->where($where);      
       }
 
+      $this->db->order_by('tgl_post desc');
+
       $this->query = $this->db->get();
       $hsl=array();
       if($this->query->num_rows()>0)

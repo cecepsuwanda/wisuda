@@ -33,6 +33,8 @@ class Wisudawan_model extends CI_Model {
         $this->db->where($where);      
       }
 
+      $this->db->order_by('a.tgl_update desc,a.tgl_input desc');
+
       $this->query = $this->db->get();
       $hsl=array();
       if($this->query->num_rows()>0)
@@ -55,6 +57,8 @@ class Wisudawan_model extends CI_Model {
       if(!empty($where)){
         $this->db->where($where);      
       }
+
+      $this->db->order_by('a.tgl_update desc,a.tgl_input desc,b.urut_prodi asc');
 
       $this->query = $this->db->get();
       $hsl=array();

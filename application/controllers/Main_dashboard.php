@@ -5,6 +5,7 @@ class Main_dashboard extends CI_Controller {
 	
 	public function index()
 	{
+		$db['berita']=$this->Berita_model;
 		$db['wisudawan']=$this->Wisudawan_model;
 		$db['priode']=$this->Priode_model;
 		$this->Main_dashboard_model->setdbvar($db);
@@ -58,5 +59,9 @@ class Main_dashboard extends CI_Controller {
 		$data=$this->Main_dashboard_model->get_prodi($fak);
 		echo $data;
 	}
+
+
+    
+
 
 }

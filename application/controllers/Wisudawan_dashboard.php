@@ -172,13 +172,13 @@ class Wisudawan_dashboard extends CI_Controller {
           $data['user_pass']= md5($this->input->post('pass'));
         } 
 
-        $data['ipk']= $this->input->post('ipk');
+        //$data['ipk']= $this->input->post('ipk');
         
         $data['jdl_skripsi']= $this->input->post('jdlskripsi');
         
-        if(!empty($this->input->post('tgllls'))){
-          $data['tgl_lls']= date('Y-m-d', strtotime($this->input->post('tgllls')));
-        }
+        //if(!empty($this->input->post('tgllls'))){
+          //$data['tgl_lls']= date('Y-m-d', strtotime($this->input->post('tgllls')));
+        //}
         
         if(!empty($this->input->post('tglbyr'))){
           $data['tgl_byr']= date('Y-m-d', strtotime($this->input->post('tglbyr')));
@@ -199,9 +199,22 @@ class Wisudawan_dashboard extends CI_Controller {
 
 	
 
-	
-
-	
+	public function cetak(){
+         $logged_in = $this->session->userdata('logged_in');
+		 if($logged_in){ 
+            $db['fakultas']=$this->Fakultas_model;
+		    $db['prodi']=$this->Prodi_model;
+		    $db['wisudawan']=$this->Wisudawan_model;
+		    $this->Wisudawan_dashboard_model->setdbvar($db);
+		    $data = $this->Wisudawan_dashboard_model->cetak_data(); 
+            $this->load->library('pdf');
+            $this->pdf->load_view('cetak',$data);
+            $this->pdf->render();
+            $this->pdf->stream("welcome.pdf");
+         }else{
+			redirect('/Wisudawan_dashboard/login');
+		}   
+    }
 
 
 }

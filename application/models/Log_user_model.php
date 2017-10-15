@@ -10,6 +10,8 @@ class Log_user_model extends CI_Model {
         $this->db->where($where);      
       }
 
+      $this->db->order_by('out_time desc,lg_time desc');
+
       $this->query = $this->db->get();
       $hsl=array();
       if($this->query->num_rows()>0)

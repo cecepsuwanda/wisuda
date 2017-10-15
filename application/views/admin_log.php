@@ -183,10 +183,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">Upload Photo</h3>
-
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>                
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>                
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
             </div>
@@ -194,10 +192,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body">
              <div class="row"> 
               <div class="col-xs-12">
-                 <table id="tbphoto" class="table table-bordered table-striped">
+                
+                <table id="tbphoto" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>No</th>
+                  <th>ID Wisuda</th>>
                   <th>Photo</th>
                   <th>Ket</th>                
                 </tr>
@@ -269,6 +269,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!-- AdminLTE for demo purposes 
 <script src="<?php echo base_url();?>assets/dist/js/demo.js"></script> -->
 <script>
+  
+  function myajax(id,data1,url,fbefore=null,fafter=null) {
+        
+        if(fbefore != null){
+            if(typeof fbefore==='function'){
+               fbefore();
+            }
+        }
+        
+        $.ajax({
+            "type" : "post",
+            "url" : url,
+            "cache" : false,
+            "data" : data1,
+            success : function (data) {
+                if(id!=''){                  
+                  $('#'+id).html(data);
+                }
+                
+                if(fafter != null){
+                    if(typeof fafter==='function'){
+                       fafter(data);
+                    }
+                }
+            }
+        });
+     }
+
+  
+  function after()
+  {
+    window.location.href = "<?php echo site_url('Admin_dashboard/log'); ?>";
+  }
+
+  function updatephoto(id_wisuda,photo)
+  {
+    data = "id_wisuda=" + id_wisuda+"&photo="+photo;
+    myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatephoto',null,after); 
+  }
+
+  function deletephoto(photo)
+  {
+    data = "photo="+photo;
+    myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/deletephoto',null,after); 
+  }
+
+  function updatekwitansi(id_wisuda,kwitansi)
+  {
+    data = "id_wisuda=" + id_wisuda+"&kwitansi="+kwitansi;
+    myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatekwitansi',null,after); 
+  }
+
+
   $(function () {
     $("#logadmin").DataTable();
     $("#logwisudawan").DataTable();

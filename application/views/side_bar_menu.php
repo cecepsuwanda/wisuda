@@ -9,11 +9,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>            
           </a>          
         </li>
-        <li class="treeview">
+        <!--<li class="treeview">
           <a href="<?php echo base_url();?>index.php/Main_dashboard/berita">
             <i class="fa fa-newspaper-o"></i> <span>Berita</span>            
           </a>          
-        </li>
+        </li>-->
         <li class="treeview">
           <a href="<?php echo base_url();?>index.php/Main_dashboard/buat_akun">
             <i class="fa fa-edit"></i> <span>Buat Akun</span>            

@@ -134,16 +134,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
        
       </div>
-      <!-- /.row -->
+      
+ <!-- /.row -->
 
       <div class="row">
         <div class="col-md-12">
-          <div class="box">
+          <div class="box collapsed-box">
             <div class="box-header with-border">
               <h3 class="box-title">Wisudawan</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                 </button>                
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
@@ -159,6 +160,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <table id="wisudawan" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>No</th>
                   <th>NIM</th>
                   <th>Nama</th>
                   <th>Fakultas</th>
@@ -191,12 +193,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Left col -->
         <div class="col-md-12">
           <!-- MAP & BOX PANE -->
-          <div class="box">
+          <div class="box collapsed-box">
             <div class="box-header with-border">
               <h3 class="box-title">Calon Wisudawan</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
@@ -212,6 +214,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <table id="calon" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>No</th>
                   <th>NIM</th>
                   <th>Nama</th>
                   <th>Fakultas</th>
@@ -239,6 +242,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- /.col -->        
       </div>
       <!-- /.row -->
+
+      
+    <!-- /.row -->
+
+      <div class="row">
+        <div class="col-md-12">
+      <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Timeline Berita</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>                
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+      <!-- row -->
+      <div class="row">
+        <div class="col-md-12">
+          <!-- The time line -->
+          <ul class="timeline timeline-inverse">
+                
+             <?php echo $timeline; ?>       
+            
+            <li>
+              <i class="fa fa-clock-o bg-gray"></i>
+            </li>
+          </ul>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row --> 
+
+      </div>
+            <!-- ./box-body -->
+            
+          </div>
+          <!-- /.box -->    
+      </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+
+     
     </section>
     <!-- /.content -->
   </div>

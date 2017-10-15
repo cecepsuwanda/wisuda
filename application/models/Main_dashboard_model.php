@@ -15,18 +15,18 @@ class Main_dashboard_model extends CI_Model {
       $table='';
       if(!empty($data))      	
       {
+         $i=1;
          foreach ($data as $row) {
          	$table.='<tr>';
               foreach ($row as $key=>$value) {
-                if($key=='kwitansi'){
-                  $table.='<td>'.(is_null($value) ? ''  : 'Ada').'</td>';
-                }else{  
-              	 if($key=='nama'){
-                  $table.='<td>'.strtoupper($value).'</td>';
-                 }else{ 
-                   $table.='<td>'.$value.'</td>';
-                 }
-                }  
+                
+                switch($key)
+                {
+                  case 'kwitansi' : $table.='<td>'.(is_null($value) ? ''  : 'Ada').'</td>'; break;
+                  case 'nama' : $table.='<td>'.strtoupper($value).'</td>'; break;
+                  case 'nim' : $table.='<td>'.$i++.'</td>'.'<td>'.$value.'</td>'; break; 
+                  default : $table.='<td>'.$value.'</td>'; break;
+                }                  
               }
          	$table.='</tr>';
          }
@@ -47,6 +47,8 @@ class Main_dashboard_model extends CI_Model {
      $data['data_calon']=$this->build_tag_db($tmp);
      $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=1 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
      $data['data_wisudawan']=$this->build_tag_db($tmp);
+     $tmp=$this->db['berita']->getdata('');
+    $data['timeline'] = $this->build_timeline($tmp);
    	 return $data;
    }
 

@@ -124,9 +124,57 @@ class Admin_dashboard_model extends CI_Model {
           foreach ($data as $row) {
               $table.='<tr>';
               $table.='<td>'.$i.'</td>';
-              $table.='<td><img src="'.base_url().'assets/photo/'.$row.'" style="width:50px;height:50px;"><br>'.$row.'</td>';    
-              $table.='<td></td>';              
+              $ext = explode('.',basename($row));
+              $tmp = explode('_',$ext[0]);
+              $table.='<td>'.$tmp[1].'</td>';
+              $table.='<td><img src="'.base_url().'assets/photo/'.$row.'" style="width:50px;height:50px;"><br>'.$row.'</td>'; 
+              $tmp1 = $this->db['wisudawan']->getdata("id_wisuda='$tmp[1]'");
+              if(!empty($tmp1)){
+                if($tmp[0]=='temp'){
+                   $table.='<td>';
+                   if (basename($tmp1[0]['photo'])==$row){
+                      $table.="Photo Terkoneksi Ke Akun";
+                   }else{
+                      $table.="Photo di akun ".basename($tmp1[0]['photo']);
+                      $table.='<br><a href="javascript:deletephoto('."'$row'".')">Delete photo</a>';
+                   } 
+                   $table.='<br>';
+                   if(basename($tmp1[0]['kwitansi'])==$row){
+                     $table.="Kwitansi Terkoneksi Ke Akun";
+                   }else{
+                     $table.="Kwitansi di akun ".basename($tmp1[0]['kwitansi']);
+                     $table.= '<br><a href="javascript:deletephoto('."'$row'".')">Delete photo</a>';    
+                   }  
+                   $table.='</td>';    
+
+                }else{
+                  if($tmp[0]=='photo'){
+                      $table.='<td>';
+                      if(basename($tmp1[0]['photo'])==$row){
+                        $table.="Photo Terkoneksi Ke Akun"; 
+                      }else{
+                        $table.="Photo di akun ".basename($tmp1[0]['photo']).'<br>'; 
+                        $table.= '<a href="javascript:updatephoto('."'$tmp[1]'".","."'$row'".')">Update data</a>';
+                      }  
+                      $table.='</td>';                     
+                  }
+                  if($tmp[0]=='kwitansi'){
+                     $table.='<td>';
+                     if(basename($tmp1[0]['kwitansi'])==$row){
+                       $table.= "Kwitansi Terkoneksi Ke Akun";
+                     }else{
+                       $table.= "Kwitansi di akun ".basename($tmp1[0]['kwitansi']).'<br>';
+                       $table.= '<a href="javascript:updatekwitansi('."'$tmp[1]'".","."'$row'".')">Update data</a>';
+                     }
+                     $table.='</td>'; 
+                  }
+                }
+                            
+              }else{
+                $table.= '<td><a href="javascript:deletephoto('."'$row'".')">Delete photo</a></td>';
+              }  
               $table.='</tr>';
+            
           $i++;
          }
       }
@@ -261,6 +309,13 @@ class Admin_dashboard_model extends CI_Model {
 
    }
 
+   public function cetak_layak()
+   {
+    $priode=$this->db['priode']->getdata('aktif=1');
+    $data=$this->db['wisudawan']->getwisudawan_jn_prodi_admin('ver=0 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" and ((kwitansi is not null) or (tgl_byr is not null))');
+    return $data;
+   }
+
    public function baca_data_wisudawan($id_wisuda)
    {
 
@@ -294,8 +349,8 @@ class Admin_dashboard_model extends CI_Model {
 
      $data['nim']=$tmp[0]['nim'];
      
-     $data['ipk']=$tmp[0]['ipk'];
-     $data['tgl_lls']= is_null($tmp[0]['tgl_lls'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_lls']));
+     //$data['ipk']=$tmp[0]['ipk'];
+     //$data['tgl_lls']= is_null($tmp[0]['tgl_lls'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_lls']));
 
      $data['jdl_skripsi']=$tmp[0]['jdl_skripsi'];
 
@@ -387,6 +442,8 @@ class Admin_dashboard_model extends CI_Model {
                                  $ext = explode('.',basename($data['photo']));
                                  rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
                                  $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
+                             }else{
+                               unset($data['photo']);
                              }
                            }
 
@@ -395,6 +452,8 @@ class Admin_dashboard_model extends CI_Model {
                                  $ext = explode('.',basename($data['kwitansi']));
                                  rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1]);
                                  $data['kwitansi']=base_url().'assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1];
+                             }else{
+                               unset($data['kwitansi']);
                              }
                            }
 
@@ -404,7 +463,27 @@ class Admin_dashboard_model extends CI_Model {
                          
                }    
          }
-   }   
+   }
 
+   public function updatephoto($id_wisuda,$photo)
+   {
+     $data['id_wisuda']=$id_wisuda;
+     $data['photo']=base_url().'assets/photo/'.$photo;
+     $this->db['wisudawan']->updatedata($data);
+   }
+
+   public function deletephoto($photo)
+   {
+     if(file_exists('./assets/photo/'.$photo)){
+       unlink('./assets/photo/'.$photo);
+     }
+   }
+
+   public function updatekwitansi($id_wisuda,$kwitansi)
+   {
+     $data['id_wisuda']=$id_wisuda;
+     $data['kwitansi']=base_url().'assets/photo/'.$kwitansi;
+     $this->db['wisudawan']->updatedata($data);
+   }
 
 }

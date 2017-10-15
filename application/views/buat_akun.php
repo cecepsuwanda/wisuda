@@ -124,33 +124,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <div class="col-md-6">
                  
                     <div class="form-group">
-                        <!-- <label>Fakultas</label> -->
+                        <label>Fakultas</label>
                         <select class="form-control select2" id="fak" name="fak" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Fakultas Harus Dipilih !!!" required>
                           <?php echo $drop_fak ?>
                         </select>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
-                        <!-- <label>Prodi</label> -->
+                        <label>Prodi</label>
                         <select class="form-control select2" id="prodi" name="prodi" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Prodi Harus Dipilih !!!" required>
                           <option value = '' selected="selected">--- Pilih Prodi ---</option>                          
                         </select>
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
-                        <!-- <label>Angkatan</label> -->
+                        <label>Angkatan</label>
                         <select class="form-control select2" id="ang" name="ang" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Angkatan Harus Dipilih !!!" required>
                           <?php echo $drop_ang ?>
                         </select>
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
-                         <!-- <label>NIM</label> -->
+                         <label>NIM</label>
                          <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="NIM Harus Diisi !!!" data-inputmask='"mask": "A9A999999"' required data-mask>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
-                         <!-- <label>No. KTP/NIK</label> -->
+                         <label>No. KTP/NIK</label>
                          <input type="text" class="form-control" id="ktp" name="ktp"  placeholder="KTP/NIK ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="KTP/NIP Harus Diisi !!!" data-inputmask='"mask": "9999999999999999"' required data-mask>
                       </div>
                       <!-- /.form-group --> 
@@ -159,7 +159,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                  <div class="col-md-6">
                       
                       <div class="form-group">
-                         <!-- <label>Nama Lengkap</label> -->
+                         <label>Nama Lengkap</label>
                          <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Lengkap ..." <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Nama Lengkap Harus Diisi !!!" style="text-transform:uppercase;" on keyup="javascript:this.value=this.value.toUpperCase();" required >
                       </div>
                       
@@ -167,7 +167,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-6">
                           <!-- /.form-group --> 
                           <div class="form-group">
-                             <!-- <label>Tempat Lahir</label> -->
+                             <label>Jenis Kelamin</label>
                              <select class="form-control select2" id="jk" name="jk" style="width: 100%;" <?php echo $isbuka==0 ? 'disabled' :''; ?> data-msg="Jenis Kelamin Harus Dipilih !!!" required >
                                <option value='' selected='selected'>-- Pilih Jenis Kelamin --</option>
                                <option value='1' >Laki-laki</option>
@@ -178,19 +178,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="col-md-6">  
                           <div class="form-group">
-                             <!-- <label>Tanggal Lahir</label> -->
+                             <label>Tanggal Lahir</label>
                              <input type="text" class="form-control" id="datepicker" id="tgl" name="tgl" placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-msg="Tanggal Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required data-mask>
                           </div>
                           <!-- /.form-group -->
                         </div>
                       </div>  
                       <div class="form-group">
-                         <!-- <label>Username</label> -->
+                         <label>Username</label>
                          <input type="text" class="form-control"  id="user" name="user" placeholder="Username ..." data-msg="Username Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
                       </div>
                       <!-- /.form-group --> 
                       <div class="form-group">
-                         <!-- <label>Password</label> -->
+                         <label>Password</label>
                          <input type="password" class="form-control" id="pass" name="pass" placeholder="Password ..." data-msg="Password Harus Diisi !!!" <?php echo $isbuka==0 ? 'disabled' :''; ?> required>
                       </div>
                       <!-- /.form-group -->

@@ -71,11 +71,40 @@ class Wisudawan_dashboard_model extends CI_Model {
 
      $data['nim']=$tmp[0]['nim'];
      
-     $data['ipk']=$tmp[0]['ipk'];
-     $data['tgl_lls']= is_null($tmp[0]['tgl_lls'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_lls']));
+     //$data['ipk']=$tmp[0]['ipk'];
+     //$data['tgl_lls']= is_null($tmp[0]['tgl_lls'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_lls']));
 
      $data['jdl_skripsi']=$tmp[0]['jdl_skripsi'];
+     $data['ver']=$tmp[0]['ver'];
 
+     return $data;
+
+   }
+
+   public function cetak_data()
+   {
+     $id_wisuda = $this->session->userdata('id_wisuda');
+     
+     $tmp=$this->db['wisudawan']->getdata('id_wisuda="'.$id_wisuda.'"');
+          
+     $data['ang']= $tmp[0]['angkatan'];
+
+     $tmp_prodi=$this->db['prodi']->getdata('id_prodi="'.$tmp[0]['id_prodi'].'"');     
+     $tmp_fak=$this->db['fakultas']->getdata('id_fak="'.$tmp_prodi[0]['fak_prodi'].'"');
+     $data['fak']= 'Fakultas '.$tmp_fak[0]['nm_fak'];
+     $data['prodi']= 'Prodi. '.$tmp_prodi[0]['nm_prodi'];
+     
+     $data['nama']=$tmp[0]['nama'];
+     $data['jk']=$tmp[0]['jk']==1 ? 'Laki-laki' : 'Perempuan';
+     $data['tmpt_lahir']=$tmp[0]['tmpt_lahir'];
+     $data['tgl_lahir']=date("d-m-Y", strtotime($tmp[0]['tgl_lahir']));
+     $data['alamat']=empty($tmp[0]['alamat']) ? '' : $tmp[0]['alamat'];
+     $data['hp']=$tmp[0]['hp'];
+     $data['photo']=$tmp[0]['photo'];
+     $data['tgl_byr']= is_null($tmp[0]['tgl_byr'])  ? '' : date("d-m-Y", strtotime($tmp[0]['tgl_byr']));
+     $data['jdl_skripsi']=$tmp[0]['jdl_skripsi'];
+     $data['nim']=$tmp[0]['nim'];
+     
      return $data;
 
    }
@@ -177,6 +206,8 @@ class Wisudawan_dashboard_model extends CI_Model {
                                  $ext = explode('.',basename($data['photo']));
                                  rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
                                  $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
+                             }else{
+                                unset($data['photo']);
                              }
                            }
 
@@ -185,6 +216,8 @@ class Wisudawan_dashboard_model extends CI_Model {
                                  $ext = explode('.',basename($data['kwitansi']));
                                  rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1]);
                                  $data['kwitansi']=base_url().'assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1];
+                             }else{
+                              unset($data['kwitansi']);
                              }
                            }
 

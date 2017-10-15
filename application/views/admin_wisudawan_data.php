@@ -94,12 +94,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
       <div class="row">
         <div class="col-md-12">
-          <div class="box">
+          <div class="box collapsed-box">
             <div class="box-header with-border">
               <h3 class="box-title">Wisudawan</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                 </button>                
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
@@ -144,12 +144,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- /.row -->
       <div class="row">
         <div class="col-md-12">
-          <div class="box">
+          <div class="box collapsed-box">
             <div class="box-header with-border">
               <h3 class="box-title">Layak Verifikasi</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                 </button>                
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
@@ -182,9 +182,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </table>
               </div>
             </div>
+
             </div>
             <!-- ./box-body -->
-            
+            <div class="box-footer">
+               <button type="button" class="btn btn-primary" onclick="Verifikasi()">Cetak Form Verifikasi</button>
+            </div>
           </div>
           <!-- /.box -->
         </div>
@@ -196,12 +199,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- Left col -->
         <div class="col-md-12">
           <!-- MAP & BOX PANE -->
-          <div class="box">
+          <div class="box collapsed-box">
             <div class="box-header with-border">
               <h3 class="box-title">Calon Wisudawan</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                 </button>
                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
@@ -376,7 +379,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       });
         
 
-    $("#datawisudawan").validate();
+    
     
 
                   $('#uploadbox').singleupload({
@@ -415,11 +418,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         //prevent Default functionality
         e.preventDefault();
-        var isvalid = $("#datawisudawan").valid();
-        if (isvalid) {            
+                  
             data = $("#datawisudawan").serialize()+'&'+data;
             myajax('ketdatawisudawan',data,'<?php echo base_url();?>index.php/Admin_dashboard/updatedatawisudawan');    
-        }        
+                
     });
 
 
@@ -430,6 +432,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   {
     myajax('modal','id_wisuda='+id,"<?php echo base_url();?>index.php/Admin_dashboard/baca_data_wisudawan",null,after);
     
+  }
+
+  function Verifikasi()
+  {
+    window.location = '<?php echo base_url();?>index.php/Admin_dashboard/cetak_verifikasi';
   }
 
 
