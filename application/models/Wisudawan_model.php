@@ -131,7 +131,7 @@ class Wisudawan_model extends CI_Model {
 
    public function jml($where)
    {
-   	  $this->db->select('sum(if(ver=0,1,0)) as jml1,sum(if(ver=1,1,0)) as jml2,SUM(IF((kwitansi is not NULL) or (tgl_byr is not null),1,0)) AS jml3');
+   	  $this->db->select('sum(if(ver=0,1,0)) as jml1,sum(if(ver=1,1,0)) as jml2,SUM(IF((ver=0) and ((kwitansi is not NULL) or (tgl_byr is not null)),1,0)) AS jml3');
       $this->db->from('tb_wisudawan');
 
       if(!empty($where)){

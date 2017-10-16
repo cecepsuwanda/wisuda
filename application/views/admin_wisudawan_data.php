@@ -30,7 +30,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="<?php echo base_url();?>assets/dist/css/skins/_all-skins.min.css">
   <link rel="stylesheet" href="<?php echo base_url();?>assets/plugins/singleuploadimages/main.css">
 <style type="text/css">
-  
+.myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.myImg:hover {opacity: 0.7;}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
 </style>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -249,10 +267,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <!-- /.row -->
 
 
-  <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">     
+
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-       <div id="modal"></div>>
+       <div id="modal">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><div id="title"></div></h4>       
+         </div>
+         <div class="modal-body">
+            <img class="modal-content" id="img01" style="width:100%;height:100%;">
+            <!-- Modal Caption (Image Text) -->
+            <div id="caption"></div>
+         </div>
+               
+       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal --> 
@@ -315,8 +345,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script> 
 <script>
   
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+var titleText = document.getElementById("title");
+
+$('.myImg').click(function() {
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    titleText.innerHTML = this.alt;
+    $('#myModal').modal(); 
+ })
+
   function myajax(id,data1,url,fbefore=null,fafter=null) {
-        
+
         if(fbefore != null){
             if(typeof fbefore==='function'){
                fbefore();

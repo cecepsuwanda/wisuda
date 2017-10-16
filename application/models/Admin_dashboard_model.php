@@ -17,15 +17,17 @@ class Admin_dashboard_model extends CI_Model {
       if(!empty($data))       
       {
          $id_wisuda = '';
-         foreach ($data as $row) {
+          foreach ($data as $row) {
           $table.='<tr>';
+          $nama=$row['nama'];
+          $nim = $row['nim'];
               foreach ($row as $key=>$value) {
 
                    switch ($key) {
-                     case 'id_wisuda': $id_wisuda = '"'.$value.'"';break;
+                     case 'id_wisuda': $id_wisuda = '"'.$value.'"';break;                     
                      case 'nama'     : $table.='<td>'.strtoupper($value).'</td>';break;
-                     case 'photo'    : $table.='<td><img src="'.$value.'" style="width:50px;height:50px;"></td>';break;
-                     case 'kwitansi' : $table.='<td><img src="'.$value.'" style="width:50px;height:50px;"></td>';break;
+                     case 'photo'    : $table.= empty($value) ? '<td></td>' : '<td><img class="myImg" alt="Photo '.$nama.' ('.$nim.')" src="'.$value.'" style="width:50px;height:50px;"></td>';break;
+                     case 'kwitansi' : $table.= empty($value) ? '<td></td>' : '<td><img class="myImg" alt="Kwitansi '.$nama.' ('.$nim.')" src="'.$value.'" style="width:50px;height:50px;"></td>';break;
                      default: $table.='<td>'.$value.'</td>'; break;
                    }                  
               
