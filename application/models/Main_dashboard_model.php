@@ -12,23 +12,27 @@ class Main_dashboard_model extends CI_Model {
 
    private function build_tag_db($data)
    {
-      $table='';
+      $table=array();
       if(!empty($data))      	
       {
          $i=1;
          foreach ($data as $row) {
-         	$table.='<tr>';
-              foreach ($row as $key=>$value) {
-                
+         	$tmp=array();
+              foreach ($row as $key=>$value) {                
                 switch($key)
                 {
-                  case 'kwitansi' : $table.='<td>'.(is_null($value) ? ''  : 'Ada').'</td>'; break;
-                  case 'nama' : $table.='<td>'.strtoupper($value).'</td>'; break;
-                  case 'nim' : $table.='<td>'.$i++.'</td>'.'<td>'.$value.'</td>'; break; 
-                  default : $table.='<td>'.$value.'</td>'; break;
+                  case 'kwitansi' : $tmp[]=array((is_null($value) ? ''  : 'Ada'),array());
+                                    break;
+                  case 'nama' :$tmp[]=array(strtoupper($value),array()); 
+                               break;
+                  case 'nim' :$tmp[]=array($i++,array());
+                              $tmp[]=array($value,array());
+                              break; 
+                  default :  $tmp[]=array($value,array()); 
+                             break;
                 }                  
               }
-         	$table.='</tr>';
+         	$table[]=$tmp;
          }
       }
 
@@ -125,30 +129,8 @@ class Main_dashboard_model extends CI_Model {
         $arr_timeline[$tgl][] = array('id'=>$row['id_berita'],'waktu'=>$time,'msg'=>$row['isi_berita']);
       }
      }
-    
-    
-    $timeline ='';
-
-     if(!empty($arr_timeline))
-     {
-      foreach ($arr_timeline as $key=>$row) {
-         $timeline .= '<li class="time-label"><span class="bg-red">'.$key.'</span></li>';
-         
-         foreach ($row as $value) {
-                 $timeline .= '<li>
-                                <i class="fa fa-user bg-aqua"></i>
-                                <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> '.$value['waktu'].'</span>
-                                <h3 class="timeline-header"><a href="#">Admin</a></h3>
-                                <div class="timeline-body">'
-                                .$value['msg'].
-                                '</div>                                
-                                </div></li>';        
-         }           
- 
-      }
-     }
-     return $timeline;
+     
+     return $arr_timeline;
    }
 
 

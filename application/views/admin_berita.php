@@ -86,78 +86,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Main content -->
     <section class="content">
+                  
+                  <?php 
+                       $content=array(array('<div class="form-group">'.
+                            form_label('Berita').
+                            form_textarea(array('name'=>'berita',
+                                                'class'=>'form-control', 
+                                                'rows'=>'3',
+                                                'maxlength'=>'1000',
+                                                'placeholder'=>'Berita ...')).
+                            '</div>'));
+
+
+                           $row = array('jml'=>1);
+                           $col = array('jml'=>1,'class'=>array('col-md-12'));
+                           $divrowcol = new div_row_col($row,$col,$content);
+                           $body = $divrowcol->display();
+
+                           $box=array('class'=>'');
+                           $header_box = array('class'=>'with-border','title'=>'Buat Berita Baru','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+
+                           $tempbox=new box($box,$header_box,$body,form_submit('','Post',array('class'=>'btn btn-primary'))); 
+                           $content1 = array(array(form_open('#',array('action'=>'','id'=>'postberita')).$tempbox->display().form_close()));
+                  
+                   
+
+                   $hlp_timeline = new timeline($timeline);
+                   $content = array(array($hlp_timeline->display(1))); 
+                   $divrowcol = new div_row_col($row,$col,$content);
+                   $body = $divrowcol->display();
+
+                   $header_box['title']='Timeline Berita';
+                   $tempbox=new box($box,$header_box,$body);
+                   $content1[] = array($tempbox->display());
+
+                           $row = array('jml'=>2);
+                           $col = array('jml'=>1,'class'=>array('col-md-12'));
+                           $divrowcol = new div_row_col($row,$col,$content1);
+                           echo $divrowcol->display();
+
+                 ?>  
+
+
       
-     <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Buat Berita Baru</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <form id="postberita" action="" method="post" >
-            <form role="form">
-            <div class="box-body">
-              <div class="row">
-               <div class="col-md-12">
-                  <div class="form-group">
-                  <label>Berita</label>
-                  <textarea name="berita" class="form-control" rows="3" placeholder="Berita ..."></textarea>
-                </div> 
-
-                </div>
-                <!-- /.col -->
-              </div>
-                <!-- /.row --> 
-            
-            </div>
-            <!-- ./box-body -->
-            <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Post</button>
-              </div> 
-              </form>
-           </form>            
-          </div>
-          <!-- /.box -->     
-
-
-      <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Timeline Berita</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-      <!-- row -->
-      <div class="row">
-        <div class="col-md-12">
-          <!-- The time line -->
-          <ul class="timeline timeline-inverse">
-                
-             <?php echo $timeline; ?>       
-            
-            <li>
-              <i class="fa fa-clock-o bg-gray"></i>
-            </li>
-          </ul>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row --> 
-
-      </div>
-            <!-- ./box-body -->
-            
-          </div>
-          <!-- /.box -->     
 
     </section>
     <!-- /.content -->

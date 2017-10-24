@@ -86,21 +86,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Main content -->
     <section class="content">
-      <!-- row -->
-      <div class="row">
-        <div class="col-md-12">
-          <!-- The time line -->
-          <ul class="timeline">
-            <?php echo $timeline;?>           
-            
-            <li>
-              <i class="fa fa-clock-o bg-gray"></i>
-            </li>
-          </ul>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->  
+      
+            <?php 
+                   $box=array('class'=>'');
+                   $header_box = array('class'=>'with-border','title'=>'Timeline Berita','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+
+                   $row = array('jml'=>1);
+                   $col = array('jml'=>1,'class'=>array('col-md-12'));
+                   $hlp_timeline = new timeline($timeline);
+                   $content = array(array($hlp_timeline->display())); 
+                   $divrowcol = new div_row_col($row,$col,$content);
+                   $body=$divrowcol->display();
+                   $tempbox=new box($box,$header_box,$body); 
+                   echo $tempbox->display(); 
+            ?>           
+                    
       
 
       

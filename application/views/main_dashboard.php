@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+  
+  $header = array(array('No','NIM','Nama','Fakultas','Prodi','Kwitansi','Keterangan')); 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -86,206 +89,72 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Main content -->
     <section class="content">
-      <!-- Info boxes -->
-      <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-edit"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Calon Wisudawan</span>
-              <span class="info-box-number"><?php echo $jml_calon; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Layak Verifikasi</span>
-              <span class="info-box-number"><?php echo $jml_layak; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon"><i class="fa fa-graduation-cap"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Wisudawan</span>
-              <span class="info-box-number"><?php echo $jml_wisudawan; ?></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        
+      
+      
+       <?php 
+            $row = array('jml'=>1);
+            $col = array('jml'=>3,'class'=>array('col-md-3 col-sm-6 col-xs-12','col-md-3 col-sm-6 col-xs-12','col-md-3 col-sm-6 col-xs-12'));
+            $content=array();
+            $tmp=array();
+            $infobox = new info_box('fa fa-edit','Calon Wisudawan',$jml_calon);
+            $tmp[]= $infobox->display();
+            $infobox = new info_box('fa fa-graduation-cap','Layak Verifikasi',$jml_layak);
+            $tmp[]= $infobox->display();
+            $infobox = new info_box('fa fa-graduation-cap','Wisudawan',$jml_wisudawan);
+            $tmp[]= $infobox->display();
+            $content[] =$tmp;
+            $divrowcol = new div_row_col($row,$col,$content);
+            echo $divrowcol->display();
        
-      </div>
+                     $box=array('class'=>'collapsed-box');
+                     $header_box = array('class'=>'with-border','title'=>'Wisudawan','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+
+
+                     $row = array('jml'=>1);
+                     $col = array('jml'=>1,'class'=>array('col-md-12'));
+
+                     $callout=new callout('callout-info','Pemberitahuan','Wisudawan adalah pendaftar yang sudah diverifikasi oleh Admin');
+                     $tbstat = array("id" => "wisudawan",'width'=>'100%');
+                     $isi_data = $data_wisudawan;
+                     $tbl = new mytable($tbstat,$header,$isi_data,''); 
+                     $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
+                     $divrowcol = new div_row_col($row,$col,$content);
+                     $body = $divrowcol->display();
+                     $tempbox=new box($box,$header_box,$body); 
+                     $content1=array(array($tempbox->display())); 
+
+               
+                     $callout=new callout('callout-info','Pemberitahuan','Calon Wisudawan adalah pendaftar yang belum diverifikasi oleh Admin');
+                     $tbstat = array("id" => "calon",'width'=>'100%');
+                     $isi_data = $data_calon;
+                     $tbl = new mytable($tbstat,$header,$isi_data,''); 
+                     $content = array(array( $callout->display().'<div>'.$tbl->display().'</div>'));
+                     $divrowcol = new div_row_col($row,$col,$content);
+                     $body = $divrowcol->display();
+                     $header_box['title']='Calon Wisudawan';
+                     $tempbox=new box($box,$header_box,$body); 
+                    $content1[]=array($tempbox->display()); 
+
+               
+                   $hlp_timeline = new timeline($timeline);
+                   $content = array(array($hlp_timeline->display())); 
+                   $divrowcol = new div_row_col($row,$col,$content);
+                   $body = $divrowcol->display();
+                   $box['class']='';
+                   $header_box['title']='Timeline Berita';
+                   $header_box['tools'][0]['icon']='fa fa-minus';
+                   $tempbox=new box($box,$header_box,$body); 
+                   $content1[]=array($tempbox->display()); 
+
+                   $row = array('jml'=>3);
+                   $col = array('jml'=>1,'class'=>array('col-md-12'));
+
+                   $divrowcol = new div_row_col($row,$col,$content1);
+                   echo $divrowcol->display();
+
+
+            ?>         
       
- <!-- /.row -->
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Wisudawan</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-             <div class="row"> 
-              <div class="col-xs-12">
-                <div class='callout callout-info'>
-                    <h4>Pemberitahuan</h4>
-                    <p>Wisudawan adalah pendaftar yang sudah diverifikasi oleh Admin</p> 
-                </div>  
-              <table id="wisudawan" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>No</th>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Kwitansi</th>
-                  <th>Keterangan</th>                  
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_wisudawan; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              </div>
-            </div>
-            </div>
-            <!-- ./box-body -->
-            
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-      <!-- Main row -->
-      <div class="row">
-        <!-- Left col -->
-        <div class="col-md-12">
-          <!-- MAP & BOX PANE -->
-          <div class="box collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Calon Wisudawan</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">                
-              <div class="col-xs-12">
-                <div class='callout callout-info'>
-                    <h4>Pemberitahuan</h4>
-                    <p>Calon Wisudawan adalah pendaftar yang belum diverifikasi oleh Admin</p> 
-                </div>  
-              <table id="calon" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>No</th>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Kwitansi</th>
-                  <th>Keterangan</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_calon; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              </div> 
-             </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-          
-          
-        </div>
-        <!-- /.col -->        
-      </div>
-      <!-- /.row -->
-
-      
-    <!-- /.row -->
-
-      <div class="row">
-        <div class="col-md-12">
-      <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Timeline Berita</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-      <!-- row -->
-      <div class="row">
-        <div class="col-md-12">
-          <!-- The time line -->
-          <ul class="timeline timeline-inverse">
-                
-             <?php echo $timeline; ?>       
-            
-            <li>
-              <i class="fa fa-clock-o bg-gray"></i>
-            </li>
-          </ul>
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row --> 
-
-      </div>
-            <!-- ./box-body -->
-            
-          </div>
-          <!-- /.box -->    
-      </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
 
 
      

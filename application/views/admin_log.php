@@ -76,152 +76,70 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard        
+        User Log dan Upload Photo        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li class="active">User Log dan Upload Photo</li>
       </ol>
     </section>
 
     <!-- Main content -->
-    <section class="content">
-      <!-- Info boxes -->
-      <div class="row">
-       <div class="col-md-12">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Log Admin</h3>
+    <section class="content">             
+             
+               <?php
+                   
+                   $header = array(array('No','Login','Logout','User name'));
+                   $tbstat = array("id" => "logadmin",'width'=>'100%');
+                   $isi_data = $log_admin;
+                   $tbl = new mytable($tbstat,$header,$isi_data,'');
+                   $content=array(array($tbl->display())); 
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-             <div class="row"> 
-              <div class="col-xs-12">
-                 <table id="logadmin" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Login</th>
-                  <th>Logout</th>
-                  <th>User name</th>                  
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $log_admin; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              
-              </div>
-            </div>
-            </div>
-            <!-- ./box-body -->
-            
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->       
-      </div>
-      <!-- /.row -->
+                   $row = array('jml'=>1);
+                   $col = array('jml'=>1,'class'=>array('col-xs-12'));
+                   $divrowcol = new div_row_col($row,$col,$content);
+                   $body=$divrowcol->display(); 
 
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Log Wisudawan</h3>
+                   $box=array('class'=>'');
+                   $header_box = array('class'=>'with-border','title'=>'Log Admin','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-minus'),array('widget'=>'remove','icon'=>'fa fa-times')));
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-             <div class="row"> 
-              <div class="col-xs-12">
-                 <table id="logwisudawan" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Login</th>
-                  <th>Logout</th>
-                  <th>NIM</th>
-                  <th>Nama</th>                 
-                </tr>
-                </thead>
-                <tbody>
-                   <?php echo $log_wisudawan; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              
-              </div>
-            </div>
-            </div>
-            <!-- ./box-body -->
-            
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
+                   $tempbox=new box($box,$header_box,$body); 
+                   $content1=array(array($tempbox->display()));
+               
+                   
+                   $header = array(array('No','Login','Logout','NIM','Nama'));
+                   $tbstat = array("id" => "logwisudawan",'width'=>'100%');
+                   $isi_data = $log_wisudawan;
+                   $tbl = new mytable($tbstat,$header,$isi_data,'');
+                   $content=array(array($tbl->display())); 
 
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Upload Photo</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-             <div class="row"> 
-              <div class="col-xs-12">
-                
-                <table id="tbphoto" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>No</th>
-                  <th>ID Wisuda</th>>
-                  <th>Photo</th>
-                  <th>Ket</th>                
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $photo; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              
-              </div>
-            </div>
-            </div>
-            <!-- ./box-body -->
-            
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
+                   
+                   $divrowcol = new div_row_col($row,$col,$content);
+                   $body=$divrowcol->display();
+                   
+                   $header_box['title']='Log Wisudawan';
+                   $tempbox=new box($box,$header_box,$body); 
+                   $content1[]=array($tempbox->display()); 
 
+                                  
+                   $header = array(array('No','ID Wisuda','Photo','Ket'));
+                   $tbstat = array("id" => "tbphoto",'width'=>'100%');
+                   $isi_data = $photo;
+                   $tbl = new mytable($tbstat,$header,$isi_data,'');
+                   $content=array(array($tbl->display())); 
+                   
+                   $divrowcol = new div_row_col($row,$col,$content);
+                   $body=$divrowcol->display();
+                   
+                   $header_box['title']='Upload Photo';
+                   $tempbox=new box($box,$header_box,$body); 
+                   $content1[]=array($tempbox->display()); 
+
+                   $row = array('jml'=>3);
+                   $col = array('jml'=>1,'class'=>array('col-md-12'));
+                   $divrowcol = new div_row_col($row,$col,$content1);
+                   echo $divrowcol->display(); 
+               ?>                             
      
     </section>
     <!-- /.content -->

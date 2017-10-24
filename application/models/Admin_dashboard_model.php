@@ -2,38 +2,39 @@
 
 class Admin_dashboard_model extends CI_Model {
 
-   private $db;
+   private $db,$lib;
 
-   public function setdbvar($db)
+
+   public function setdbvar($db,$lib=array())
    {
    	$this->db=$db;
+    $this->lib=$lib;
    }
 
    
 
    private function build_tag_db($data)
    {
-      $table='';
+      
+      $table=array();
       if(!empty($data))       
       {
          $id_wisuda = '';
           foreach ($data as $row) {
-          $table.='<tr>';
+          $tmp=array();
           $nama=$row['nama'];
           $nim = $row['nim'];
               foreach ($row as $key=>$value) {
-
                    switch ($key) {
                      case 'id_wisuda': $id_wisuda = '"'.$value.'"';break;                     
-                     case 'nama'     : $table.='<td>'.strtoupper($value).'</td>';break;
-                     case 'photo'    : $table.= empty($value) ? '<td></td>' : '<td><img class="myImg" alt="Photo '.$nama.' ('.$nim.')" src="'.$value.'" style="width:50px;height:50px;"></td>';break;
-                     case 'kwitansi' : $table.= empty($value) ? '<td></td>' : '<td><img class="myImg" alt="Kwitansi '.$nama.' ('.$nim.')" src="'.$value.'" style="width:50px;height:50px;"></td>';break;
-                     default: $table.='<td>'.$value.'</td>'; break;
-                   }                  
-              
+                     case 'nama'     : $tmp[]= array(strtoupper($value),array());break;
+                     case 'photo'    : $tmp[]= array(empty($value) ? '' : '<img class="myImg" alt="Photo '.$nama.' ('.$nim.')" src="'.$value.'" style="width:50px;height:50px;">',array());break;
+                     case 'kwitansi' : $tmp[]=array(empty($value) ? '' : '<img class="myImg" alt="Kwitansi '.$nama.' ('.$nim.')" src="'.$value.'" style="width:50px;height:50px;">',array());break;
+                     default: $tmp[]=array($value,array()); break;
+                   }             
               }
-              $table.="<td><a onclick='modal_show($id_wisuda)' href='javascript:void(0);'>Edit</a></td>";
-          $table.='</tr>';
+              $tmp[]=array("<a onclick='modal_show($id_wisuda)' href='javascript:void(0);'>Edit</a>",array());
+          $table[]=$tmp;
          }
       }
 
@@ -42,21 +43,21 @@ class Admin_dashboard_model extends CI_Model {
 
    private function build_tag_db1($data)
    {
-      $table='';
+      $table=array();
       if(!empty($data))       
       {
           $i=1;
           foreach ($data as $row) {
-          $table.='<tr>';
+          $tmp=array();          
               foreach ($row as $key=>$value) {
                 if($key!='id_prodi'){
-                   $table.='<td>'.$value.'</td>';
+                   $tmp[]=array($value,array());
                  }else{
-                   $table.='<td>'.$i.'</td>';
+                   $tmp[]=array($i++,array());
                  }  
               }
-          $table.='</tr>';
-          $i++;
+          $table[]=$tmp;
+          
          }
       }
 
@@ -65,21 +66,20 @@ class Admin_dashboard_model extends CI_Model {
 
    private function build_tag_db2($data)
    {
-      $table='';
+      $table=array();
       if(!empty($data))       
       {
           $i=1;
           foreach ($data as $row) {
-          $table.='<tr>';
+          $tmp=array();
               foreach ($row as $key=>$value) {
                 if($key!='id'){
-                   $table.='<td>'.$value.'</td>';
+                   $tmp[]=array($value,array());
                  }else{
-                   $table.='<td>'.$i.'</td>';
+                   $tmp[]=array($i++,array());
                  }  
               }
-          $table.='</tr>';
-          $i++;
+          $table[]=$tmp;          
          }
       }
 
@@ -88,27 +88,27 @@ class Admin_dashboard_model extends CI_Model {
 
    private function build_tag_db3($data)
    {
-      $table='';
+      $table=array();
       if(!empty($data))       
       {
           $i=1;
           foreach ($data as $row) {
-          $table.='<tr>';
+          $tmp=array();
               foreach ($row as $key=>$value) {
                 if($key!='id'){
                   if($key=='id_wisuda'){
-                     $tmp=$this->db['wisudawan']->getdata("id_wisuda='$value'");
-                     $table.='<td>'.(isset($tmp[0]['nim']) ? $tmp[0]['nim'] : '').'</td>';
-                     $table.='<td>'.(isset($tmp[0]['nama']) ? $tmp[0]['nama'] : '').'</td>';
+                     $temp=$this->db['wisudawan']->getdata("id_wisuda='$value'");
+                     $tmp[]=array((isset($temp[0]['nim']) ? $temp[0]['nim'] : ''),array());
+                     $tmp[]=array((isset($temp[0]['nama']) ? $temp[0]['nama'] : ''),array());
                   }else{
-                     $table.='<td>'.$value.'</td>';
+                     $tmp[]=array($value,array());
                   }                
                  }else{
-                   $table.='<td>'.$i.'</td>';
+                   $tmp[]=array($i++,array());
                  }  
               }
-          $table.='</tr>';
-          $i++;
+          $table[]=$tmp;
+          
          }
       }
 
@@ -118,64 +118,65 @@ class Admin_dashboard_model extends CI_Model {
    private function build_tag_db4($data)
    {
       
-
-      $table='';
+      $table=array();
       if(!empty($data))       
       {
           $i=1;
           foreach ($data as $row) {
-              $table.='<tr>';
-              $table.='<td>'.$i.'</td>';
+              $temp=array();
+              $temp[]=array($i,array());
               $ext = explode('.',basename($row));
               $tmp = explode('_',$ext[0]);
-              $table.='<td>'.$tmp[1].'</td>';
-              $table.='<td><img src="'.base_url().'assets/photo/'.$row.'" style="width:50px;height:50px;"><br>'.$row.'</td>'; 
+              $temp[]=array($tmp[1],array());
+              $temp[]=array('<img src="'.base_url().'assets/photo/'.$row.'" style="width:50px;height:50px;"><br>'.$row,array());
               $tmp1 = $this->db['wisudawan']->getdata("id_wisuda='$tmp[1]'");
               if(!empty($tmp1)){
                 if($tmp[0]=='temp'){
-                   $table.='<td>';
+                   $txt='';
                    if (basename($tmp1[0]['photo'])==$row){
-                      $table.="Photo Terkoneksi Ke Akun";
+                      $txt.="Photo Terkoneksi Ke Akun";
                    }else{
-                      $table.="Photo di akun ".basename($tmp1[0]['photo']);
-                      $table.='<br><a href="javascript:deletephoto('."'$row'".')">Delete photo</a>';
+                      $txt.="Photo di akun ".basename($tmp1[0]['photo']);
+                      $txt.='<br><a href="javascript:deletephoto('."'$row'".')">Delete photo</a>';
                    } 
-                   $table.='<br>';
+                   $txt.='<br>';
                    if(basename($tmp1[0]['kwitansi'])==$row){
-                     $table.="Kwitansi Terkoneksi Ke Akun";
+                     $txt.="Kwitansi Terkoneksi Ke Akun";
                    }else{
-                     $table.="Kwitansi di akun ".basename($tmp1[0]['kwitansi']);
-                     $table.= '<br><a href="javascript:deletephoto('."'$row'".')">Delete photo</a>';    
+                     $txt.="Kwitansi di akun ".basename($tmp1[0]['kwitansi']);
+                     $txt.= '<br><a href="javascript:deletephoto('."'$row'".')">Delete photo</a>';    
                    }  
-                   $table.='</td>';    
+                   $temp[]=array($txt,array());    
 
                 }else{
                   if($tmp[0]=='photo'){
-                      $table.='<td>';
+                      $txt='';
                       if(basename($tmp1[0]['photo'])==$row){
-                        $table.="Photo Terkoneksi Ke Akun"; 
+                        $txt.="Photo Terkoneksi Ke Akun"; 
                       }else{
-                        $table.="Photo di akun ".basename($tmp1[0]['photo']).'<br>'; 
-                        $table.= '<a href="javascript:updatephoto('."'$tmp[1]'".","."'$row'".')">Update data</a>';
+                        $txt.="Photo di akun ".basename($tmp1[0]['photo']).'<br>'; 
+                        $txt.= '<a href="javascript:updatephoto('."'$tmp[1]'".","."'$row'".')">Update data</a>';
                       }  
-                      $table.='</td>';                     
+                      $temp[]=array($txt,array());                      
                   }
                   if($tmp[0]=='kwitansi'){
-                     $table.='<td>';
+                     $txt='';
                      if(basename($tmp1[0]['kwitansi'])==$row){
-                       $table.= "Kwitansi Terkoneksi Ke Akun";
+                       $txt.= "Kwitansi Terkoneksi Ke Akun";
                      }else{
-                       $table.= "Kwitansi di akun ".basename($tmp1[0]['kwitansi']).'<br>';
-                       $table.= '<a href="javascript:updatekwitansi('."'$tmp[1]'".","."'$row'".')">Update data</a>';
+                       $txt.= "Kwitansi di akun ".basename($tmp1[0]['kwitansi']).'<br>';
+                       $txt.= '<a href="javascript:updatekwitansi('."'$tmp[1]'".","."'$row'".')">Update data</a>';
                      }
-                     $table.='</td>'; 
+                      
+                     $temp[]=array($txt,array());      
                   }
                 }
                             
               }else{
-                $table.= '<td><a href="javascript:deletephoto('."'$row'".')">Delete photo</a></td>';
+                $temp[]=array('<a href="javascript:deletephoto('."'$row'".')">Delete photo</a>',array());
+                
               }  
-              $table.='</tr>';
+              $table[]=$temp;
             
           $i++;
          }
@@ -221,37 +222,9 @@ class Admin_dashboard_model extends CI_Model {
         $time = date("H:i:s", strtotime($row['tgl_post']));
         $arr_timeline[$tgl][] = array('id'=>$row['id_berita'],'waktu'=>$time,'msg'=>$row['isi_berita']);
       }
-     }
+     }   
     
-    
-    $timeline ='';
-
-     if(!empty($arr_timeline))
-     {
-      foreach ($arr_timeline as $key=>$row) {
-         $timeline .= '<li class="time-label"><span class="bg-red">'.$key.'</span></li>';
-         
-         foreach ($row as $value) {
-                 $timeline .= '<li>
-                                <i class="fa fa-user bg-aqua"></i>
-                                <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> '.$value['waktu'].'</span>
-                                <h3 class="timeline-header"><a href="#">Admin</a></h3>
-                                <div class="timeline-body" id="msgbdy_'.$value['id'].'">'
-                                .$value['msg'].
-                                '</div>
-                                <div class="timeline-footer">
-                                <a class="btn btn-danger btn-xs" id="edit_'.$value['id'].'"  onclick="edit_berita('."'$value[id]'".')" href="javascript:void(0);">Edit</a>
-                                <a class="btn btn-danger btn-xs"   onclick="delete_berita('."'$value[id]'".')" href="javascript:void(0);" >Delete</a>
-                                <a class="btn btn-danger btn-xs" id="save_'.$value['id'].'"  onclick="save_berita('."'$value[id]'".')" href="javascript:void(0);" style="display: none;" >Save</a>
-
-                                </div>
-                                </div></li>';        
-         }           
- 
-      }
-     }
-     return $timeline;
+     return $arr_timeline;
    }
 
    public function baca_berita()

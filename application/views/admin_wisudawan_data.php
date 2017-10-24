@@ -99,7 +99,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard        
+        Data Wisudawan        
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -110,165 +110,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Main content -->
     <section class="content">
      
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Wisudawan</h3>
+                  <?php 
+                    $header = array(array('Photo','NIM','Nama','Tanggal Bayar','Kwitansi','Fakultas','Prodi','Keterangan','Aksi'));
+                    $tbstat = array("id" => "wisudawan",'width'=>'100%');
+                    $isi_data = $data_wisudawan;
+                    $tbl = new mytable($tbstat,$header,$isi_data,'');
+                    $content=array(array($tbl->display())); 
 
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-             <div class="row"> 
-              <div class="col-xs-12">
-                
-              <table id="wisudawan" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Photo</th>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Tanggal Bayar</th>
-                  <th>Kwitansi</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Keterangan</th>                  
-                  <th>Aksi</th>               
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_wisudawan; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
+                    $row = array('jml'=>1);
+                    $col = array('jml'=>1,'class'=>array('col-xs-12'));
+                    $divrowcol = new div_row_col($row,$col,$content);
+                    $body=$divrowcol->display();
+
+                    $box=array('class'=>'collapsed-box');
+                    $header_box = array('class'=>'with-border','title'=>'Wisudawan','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
+                    $tempbox=new box($box,$header_box,$body); 
+                    $content1=array(array($tempbox->display()));
+                 
+                    $tbstat = array("id" => "layak",'width'=>'100%');
+                    $isi_data = $data_layak;
+                    $tbl = new mytable($tbstat,$header,$isi_data,'');
+                    $content=array(array($tbl->display())); 
+                   
+                    $divrowcol = new div_row_col($row,$col,$content);
+                    $body=$divrowcol->display();
+
+                    $header_box['title']='Layak Verifikasi';
+                    $footer = '<button type="button" class="btn btn-primary" onclick="Verifikasi()">Cetak Form Verifikasi</button>'; 
+                    $tempbox=new box($box,$header_box,$body,$footer); 
+                    $content1[]=array($tempbox->display());
+                 
+                    $tbstat = array("id" => "calon",'width'=>'100%');
+                    $isi_data = $data_calon;
+                    $tbl = new mytable($tbstat,$header,$isi_data,'');
+                    $content=array(array($tbl->display())); 
+                   
+                    $divrowcol = new div_row_col($row,$col,$content);
+                    $body=$divrowcol->display();
+
+                    $header_box['title']='Calon Wisudawan';
+                    $tempbox=new box($box,$header_box,$body); 
+                    $content1[]=array($tempbox->display());
+
+                    $row = array('jml'=>3);
+                    $col = array('jml'=>1,'class'=>array('col-md-12'));
+                    $divrowcol = new div_row_col($row,$col,$content1);
+                    echo $divrowcol->display();                    
+
+                ?>  
               
-              </div>
-            </div>
-            </div>
-            <!-- ./box-body -->
-            
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Layak Verifikasi</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>                
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-             <div class="row"> 
-              <div class="col-xs-12">
-                
-              <table id="layak" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Photo</th>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Tanggal Bayar</th>
-                  <th>Kwitansi</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Keterangan</th>                  
-                  <th>Aksi</th>              
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_layak; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              </div>
-            </div>
-
-            </div>
-            <!-- ./box-body -->
-            <div class="box-footer">
-               <button type="button" class="btn btn-primary" onclick="Verifikasi()">Cetak Form Verifikasi</button>
-            </div>
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      <!-- Main row -->
-      <div class="row">
-        <!-- Left col -->
-        <div class="col-md-12">
-          <!-- MAP & BOX PANE -->
-          <div class="box collapsed-box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Calon Wisudawan</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">                
-              <div class="col-xs-12">
-                
-              <table id="calon" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>Photo</th>
-                  <th>NIM</th>
-                  <th>Nama</th>
-                  <th>Tanggal Bayar</th>
-                  <th>Kwitansi</th>
-                  <th>Fakultas</th>
-                  <th>Prodi</th>
-                  <th>Keterangan</th>                  
-                  <th>Aksi</th>
-                </tr>
-                </thead>
-                <tbody>
-                  <?php echo $data_calon; ?>
-                </tbody>
-                <tfoot>
-                
-                </tfoot>
-              </table>
-              </div> 
-             </div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-          
-          
-        </div>
-        <!-- /.col -->        
-      </div>
-      <!-- /.row -->
+              
 
 
-  <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">     
-
+  <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
        <div id="modal">
@@ -280,8 +174,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <img class="modal-content" id="img01" style="width:100%;height:100%;">
             <!-- Modal Caption (Image Text) -->
             <div id="caption"></div>
-         </div>
-               
+         </div>               
        </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -345,6 +238,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script> 
 <script>
   
+  $(function () {
+    $("#wisudawan").DataTable();
+    $("#calon").DataTable();
+    $("#layak").DataTable();    
+  });
 
 // Get the image and insert it inside the modal - use its "alt" text as a caption
 
@@ -388,6 +286,7 @@ $('.myImg').click(function() {
 
   function after(data)
   {
+    
     $('#myModal').modal();
     $("#myModal").on("hidden.bs.modal", function () {
       window.location.href = "<?php echo site_url('Admin_dashboard/data'); ?>";
@@ -420,13 +319,9 @@ $('.myImg').click(function() {
        var idfak = $('#fak option:selected').val();
        data = "idfak=" + idfak;
        myajax('prodi',data,'<?php echo base_url();?>index.php/Main_dashboard/get_prodi');       
-      });
-        
+      });        
 
-    
-    
-
-                  $('#uploadbox').singleupload({
+                 $('#uploadbox').singleupload({
                     action: 'do_upload', //action: 'do_upload.json'
                     inputId: 'singleupload_input',
                     onError: function(code) {
@@ -482,15 +377,7 @@ $('.myImg').click(function() {
   {
     window.location = '<?php echo base_url();?>index.php/Admin_dashboard/cetak_verifikasi';
   }
-
-
-
-  $(function () {
-    $("#wisudawan").DataTable();
-    $("#calon").DataTable();
-    $("#layak").DataTable();
-    
-  });
+  
 </script>
 </body>
 </html>

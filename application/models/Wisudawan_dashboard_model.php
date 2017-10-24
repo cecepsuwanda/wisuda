@@ -241,30 +241,8 @@ class Wisudawan_dashboard_model extends CI_Model {
         $arr_timeline[$tgl][] = array('id'=>$row['id_berita'],'waktu'=>$time,'msg'=>$row['isi_berita']);
       }
      }
-    
-    
-    $timeline ='';
-
-     if(!empty($arr_timeline))
-     {
-      foreach ($arr_timeline as $key=>$row) {
-         $timeline .= '<li class="time-label"><span class="bg-red">'.$key.'</span></li>';
-         
-         foreach ($row as $value) {
-                 $timeline .= '<li>
-                                <i class="fa fa-user bg-aqua"></i>
-                                <div class="timeline-item">
-                                <span class="time"><i class="fa fa-clock-o"></i> '.$value['waktu'].'</span>
-                                <h3 class="timeline-header"><a href="#">Admin</a></h3>
-                                <div class="timeline-body">'
-                                .$value['msg'].
-                                '</div>                                
-                                </div></li>';        
-         }           
- 
-      }
-     }
-     return $timeline;
+       
+     return $arr_timeline;
    }
 
 
