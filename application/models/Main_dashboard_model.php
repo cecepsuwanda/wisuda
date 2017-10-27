@@ -43,13 +43,13 @@ class Main_dashboard_model extends CI_Model {
    public function rekap_data()
    {
    	 $priode=$this->db['priode']->getdata('aktif=1');
-     $tmp=$this->db['wisudawan']->jml('tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
+     $tmp=$this->db['wisudawan']->jml('tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" or tgl_update between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
      $data['jml_calon']= is_null($tmp[0]['jml1']) ? 0 : $tmp[0]['jml1'];
      $data['jml_wisudawan']=is_null($tmp[0]['jml2']) ? 0 :$tmp[0]['jml2'];
      $data['jml_layak']=is_null($tmp[0]['jml3']) ? 0 :$tmp[0]['jml3'];
-     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=0 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
+     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=0 and (tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" or tgl_update between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" )');
      $data['data_calon']=$this->build_tag_db($tmp);
-     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=1 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
+     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=1 and (tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" or tgl_update between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" )');
      $data['data_wisudawan']=$this->build_tag_db($tmp);
      $tmp=$this->db['berita']->getdata('');
     $data['timeline'] = $this->build_timeline($tmp);

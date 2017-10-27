@@ -114,9 +114,9 @@ class Wisudawan_dashboard_model extends CI_Model {
    public function login($login,$un,$psw)
    {
 
-     $tmp=$this->db['priode']->getdata('aktif=1');
-     $date = date('Y-m-d');
-     $data['isbuka']= $date >= $tmp[0]['awal'] && $date <= $tmp[0]['akhir'];    
+     //$tmp=$this->db['priode']->getdata('aktif=1');
+     //$date = date('Y-m-d');
+     //$data['isbuka']= $date >= $tmp[0]['awal'] && $date <= $tmp[0]['akhir'];    
    	 
    	 $data['msg']="";  	 
 
