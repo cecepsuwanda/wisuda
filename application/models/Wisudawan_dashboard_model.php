@@ -202,7 +202,7 @@ class Wisudawan_dashboard_model extends CI_Model {
                     }   
 
                        if(isset($data['photo'])){
-                              if(file_exists('./assets/photo/'.basename($data['photo']))){
+                            if(file_exists('./assets/photo/'.basename($data['photo']))){
                                  $ext = explode('.',basename($data['photo']));
                                  rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
                                  $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
@@ -223,6 +223,25 @@ class Wisudawan_dashboard_model extends CI_Model {
 
                       if($is_simpan==1){ 
                          $this->db['wisudawan']->updatedata($data);
+
+                         $id_wisuda = $this->session->userdata('id_wisuda');
+                         $nm_file = 'temp_'.$id_wisuda;
+
+                         $file = directory_map('./assets/photo/');
+
+                         if(!empty($file))                          
+                         {
+                            foreach ($file as $nmfile) {
+                               $ext = explode('.',basename($nmfile));
+                               $tmp = explode('_',$ext[0]);
+                               if(($tmp[0].'_'.$tmp[1])==$nm_file)
+                               {
+                                 unlink('./assets/photo/'.$nmfile);   
+                               }
+                             } 
+                         }
+
+
                          return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan id wisuda = $data[id_wisuda], berhasil di update !!!</p> </div>"; 
                       }   
                }    

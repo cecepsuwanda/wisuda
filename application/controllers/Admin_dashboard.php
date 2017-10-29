@@ -351,5 +351,61 @@ class Admin_dashboard extends CI_Controller {
 	  $this->Admin_dashboard_model->updatekwitansi($id_wisuda,$kwitansi);
 	}
 
+	public function setting()
+	{
+		$logged_in = $this->session->userdata('logged_in');
+		if($logged_in){ 		
+            $db['priode']=$this->Priode_model;
+            $db['user']=$this->User_model;
+			$this->Admin_dashboard_model->setdbvar($db);
+            $data = $this->Admin_dashboard_model->baca_setting();
+			$this->load->view('admin_setting',$data);
+		}else{
+			redirect('/Admin_dashboard/login');
+		}
+	}
+
+	public function add_priode_admin()
+	{
+        $data['judul']='Add Tanggal Daftar dan Tanggal Wisuda';
+		echo $this->load->view('priode_modal',$data,true);
+	}
+
+	public function edit_priode_admin()
+	{
+        $id= $this->input->post('id');
+        $db['priode']=$this->Priode_model;
+        $this->Admin_dashboard_model->setdbvar($db);
+        $data = $this->Admin_dashboard_model->baca_priode($id);
+        $data['judul']='Edit Tanggal Daftar dan Tanggal Wisuda';
+		echo $this->load->view('priode_modal',$data,true);
+	}
+
+	public function savedatapriode()
+	{
+		$data['id']=$this->input->post('id');
+		$data['wisuda']=$this->input->post('tglwisuda');
+		$data['daftar']=$this->input->post('tgldaftar');
+		$data['aktif']=$this->input->post('aktif');
+		
+		$db['priode']=$this->Priode_model;
+		$this->Admin_dashboard_model->setdbvar($db);
+        if(empty($data['id'])){
+         echo $this->Admin_dashboard_model->insertdatapriode($data);
+        }else{
+         echo $this->Admin_dashboard_model->updatedatapriode($data);
+        }
+
+
+	}
+
+	public function deletedatapriode()
+	{
+      $id= $this->input->post('id');
+      $db['priode']=$this->Priode_model;
+	  $this->Admin_dashboard_model->setdbvar($db);
+	  $this->Admin_dashboard_model->deletedatapriode($id);
+	}
+
 
 }

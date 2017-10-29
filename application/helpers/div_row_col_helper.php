@@ -24,8 +24,10 @@ class div_row_col
         	  if (!empty($this->col_)) {
         	  	for ($j=1; $j <= $this->col_['jml']; $j++) { 
         	  		$txt.='<div class="'.$this->col_['class'][$j-1].'">';
-        	  		$txt.=$this->content_[$i-1][$j-1];
-        	  		$txt.='</div>';        	  	
+                    if(isset($this->content_[$i-1][$j-1])){
+        	  		  $txt.=$this->content_[$i-1][$j-1];
+                    }        	  		
+                    $txt.='</div>';        	  	
         	  	}        		
          	  }
         	  $txt.='</div>';

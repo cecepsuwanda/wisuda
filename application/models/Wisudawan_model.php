@@ -74,7 +74,9 @@ class Wisudawan_model extends CI_Model {
 
    public function rekapperprodi()
    {
-      $this->db->select('a.id_prodi,nm_prodi,COUNT(*) as jml_calon,sum(if((kwitansi is not null)or(tgl_byr is not null),1,0)) as jml_layak,sum(if(ver=1,1,0)) as jml_ver');
+      $this->db->select('a.id_prodi,nm_prodi,sum(if(ver=0,1,0)) as jml_calon,
+                         sum(if((ver=0)and((kwitansi is not null)or(tgl_byr is not null)),1,0)) as jml_layak,
+                         sum(if(ver=1,1,0)) as jml_ver');
       $this->db->from('tb_prodi a'); 
       $this->db->join('tb_wisudawan b', 'a.id_prodi=b.id_prodi');
       $this->db->group_by('a.id_prodi');

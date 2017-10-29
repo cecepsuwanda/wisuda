@@ -185,6 +185,68 @@ class Admin_dashboard_model extends CI_Model {
       return $table;
    }
 
+   private function build_tag_db5($data)
+   {
+      
+      $table=array();
+      if(!empty($data))       
+      {         
+          foreach ($data as $row) {
+              $tmp=array();          
+              foreach ($row as $key=>$value) {
+                   if($key=='aktif'){
+                     $tmp[]=array($value==1 ?'True':'False',array());                                
+                   }else{
+                       if(in_array($key, array('awal','akhir','wisuda')))
+                       {
+                         $tmp[]=array(date("d F Y", strtotime($value)),array());
+                       }else{ 
+                         $tmp[]=array($value,array());
+                         }
+                     }
+                   
+              }
+              $tmp[]=array("<a onclick='priode(1,$row[id])' href='javascript:void(0);'>Edit</a><br>
+                            <a onclick='deletepriode($row[id])' href='javascript:void(0);'>Delete</a>",array());              
+          $table[]=$tmp;
+         }      
+      }
+      $tmp=array();
+      $tmp[]=array('[Id]',array());
+      $tmp[]=array('[Awal]',array());
+      $tmp[]=array('[Akhir]',array());
+      $tmp[]=array('[Wisuda]',array());
+      $tmp[]=array('[Aktif]',array());
+      $tmp[]=array("<a onclick='priode(0)' href='javascript:void(0);'>Add</a><br>",array());
+      $table[]=$tmp;
+
+      return $table;
+   }
+
+   private function build_tag_db6($data)
+   {
+      $table=array();
+      if(!empty($data))       
+      {
+          $i=1;
+          foreach ($data as $row) {
+            $tmp=array();          
+            $tmp[]=array($i++,array());                   
+            $tmp[]=array($row['user_name'],array());
+            $tmp[]=array("<a onclick='' href='javascript:void(0);'>Edit</a>".($row['user_name'] == 'admin' ? "":
+                         "<br><a onclick='' href='javascript:void(0);'>Delete</a>"),array());                   
+            $table[]=$tmp;          
+         }
+      }
+      $tmp=array();
+      $tmp[]=array('[No]',array());
+      $tmp[]=array('[Admin Name]',array());
+      $tmp[]=array("<a onclick='' href='javascript:void(0);'>Add</a><br>",array());
+      $table[]=$tmp;
+      return $table;
+   }
+
+
    public function baca_log()
    {
 
@@ -459,6 +521,56 @@ class Admin_dashboard_model extends CI_Model {
      $data['id_wisuda']=$id_wisuda;
      $data['kwitansi']=base_url().'assets/photo/'.$kwitansi;
      $this->db['wisudawan']->updatedata($data);
+   }
+
+   public function baca_setting()
+   {
+     $tmp = $this->db['priode']->getdata('');
+     $data['data_priode']=$this->build_tag_db5($tmp);
+     $tmp = $this->db['user']->getdata('');
+     $data['data_admin']=$this->build_tag_db6($tmp);
+     
+     return $data;
+   }
+
+   public function baca_priode($id)
+   {
+     $tmp = $this->db['priode']->getdata('id='.$id);
+     $data['wisuda']=date("d-m-Y", strtotime($tmp[0]['wisuda']));
+     $data['daftar']=date("d-m-Y", strtotime($tmp[0]['awal'])).' - '.date("d-m-Y", strtotime($tmp[0]['akhir']));
+     $data['aktif']=$tmp[0]['aktif'];
+     $data['id']=$tmp[0]['id'];
+     return $data;
+   }
+
+   public function insertdatapriode($data)
+   {
+      $data['wisuda'] = date('Y-m-d', strtotime($data['wisuda']));
+      $tmp = explode('-',$data['daftar']);      
+      $data['awal'] = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
+      $data['akhir'] = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));  
+      unset($data['daftar']);
+      $this->db['priode']->insertdata($data);
+      return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Disimpan !!!</p> </div>";      
+
+   }
+
+   public function updatedatapriode($data)
+   {
+      $data['wisuda'] = date('Y-m-d', strtotime($data['wisuda']));
+      $tmp = explode('-',$data['daftar']);
+      $data['awal'] = date('Y-m-d', strtotime($tmp[0] .'-'. $tmp[1].'-'.$tmp[2])); 
+      $data['akhir'] = date('Y-m-d', strtotime($tmp[3] .'-'. $tmp[4].'-'.$tmp[5]));       
+      unset($data['daftar']);
+      $this->db['priode']->updatedata($data);
+      return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Diupdate !!!</p> </div>";
+   }
+
+   
+
+   public function deletedatapriode($id)
+   {
+     $this->db['priode']->deletedata($id);
    }
 
 }
