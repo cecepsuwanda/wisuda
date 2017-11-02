@@ -22,6 +22,43 @@ class Priode_model extends CI_Model {
       return $hsl; 
    }
 
+   public function priode_aktif()
+   {
+     $priode=$this->getdata('aktif=1');
+     $data['awal']=$priode[0]['awal'];
+     $data['akhir']=$priode[0]['akhir'];
+     $data['wisuda']=$priode[0]['wisuda'];
+     return $data;
+   }
+
+   public function isbuka()
+   {
+    $tmp=$this->priode_aktif();
+    $date = date('Y-m-d');
+    return $date >= $tmp['awal'] && $date <= $tmp['akhir'];
+   }
+
+   public function isawal()
+   {
+    $tmp=$this->priode_aktif();
+    $date = date('Y-m-d');
+    return $date < $tmp['awal'];
+   }
+
+   public function istutup()
+   {
+    $tmp=$this->priode_aktif();
+    $date = date('Y-m-d');
+    return $date > $tmp['akhir'];
+   }
+
+   public function islogin()
+   {
+    $tmp=$this->priode_aktif();
+    $date = date('Y-m-d');
+    return $date < $tmp['wisuda'];
+   }
+
    public function insertdata($data)
    {
      if($data['aktif']==1)

@@ -8,51 +8,18 @@ class Main_dashboard_model extends CI_Model {
    {
    	$this->db=$db;
    }
-   
-
-   private function build_tag_db($data)
-   {
-      $table=array();
-      if(!empty($data))      	
-      {
-         $i=1;
-         foreach ($data as $row) {
-         	$tmp=array();
-              foreach ($row as $key=>$value) {                
-                switch($key)
-                {
-                  case 'kwitansi' : $tmp[]=array((is_null($value) ? ''  : 'Ada'),array());
-                                    break;
-                  case 'nama' :$tmp[]=array(strtoupper($value),array()); 
-                               break;
-                  case 'nim' :$tmp[]=array($i++,array());
-                              $tmp[]=array($value,array());
-                              break; 
-                  default :  $tmp[]=array($value,array()); 
-                             break;
-                }                  
-              }
-         	$table[]=$tmp;
-         }
-      }
-
-      return $table;
-   }
-
 
    public function rekap_data()
    {
-   	 $priode=$this->db['priode']->getdata('aktif=1');
-     $tmp=$this->db['wisudawan']->jml('tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" or tgl_update between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
-     $data['jml_calon']= is_null($tmp[0]['jml1']) ? 0 : $tmp[0]['jml1'];
-     $data['jml_wisudawan']=is_null($tmp[0]['jml2']) ? 0 :$tmp[0]['jml2'];
-     $data['jml_layak']=is_null($tmp[0]['jml3']) ? 0 :$tmp[0]['jml3'];
-     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=0 and (tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" or tgl_update between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" )');
-     $data['data_calon']=$this->build_tag_db($tmp);
-     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi('ver=1 and (tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" or tgl_update between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" )');
-     $data['data_wisudawan']=$this->build_tag_db($tmp);
-     $tmp=$this->db['berita']->getdata('');
-    $data['timeline'] = $this->build_timeline($tmp);
+   	 $priode=$this->db['priode']->priode_aktif();
+     $this->db['wisudawan']->set_priode($priode);
+     $this->db['berita']->set_priode($priode);
+
+     $data=$this->db['wisudawan']->jml();          
+     $data['data_calon']=$this->db['wisudawan']->getwisudawan_jn_prodi(0);
+     $data['data_wisudawan']=$this->db['wisudawan']->getwisudawan_jn_prodi(1);
+     $data['timeline'] =$this->db['berita']->getdata('');
+
    	 return $data;
    }
 
@@ -84,10 +51,17 @@ class Main_dashboard_model extends CI_Model {
     $data['drop_fak']=$this->build_dropdown($tmp,array('id_fak','nm_fak'),'Fakultas ','--- Pilih Fakultas ---');
     $tmp=$this->angkatan();
     $data['drop_ang']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Angkatan ---');
-    $tmp=$this->db['priode']->getdata('aktif=1');
-    $date = date('Y-m-d');
-    $data['isbuka']= $date >= $tmp[0]['awal'] && $date <= $tmp[0]['akhir'];    
-   	return $data;
+            
+    $data['isbuka']= $this->db['priode']->isbuka();
+    if($this->db['priode']->istutup()==1){
+      $data['msg']='Pendaftaran Online Sudah Ditutup !!!';
+    }
+
+    if($this->db['priode']->isawal()==1){
+      $data['msg']='Pendaftaran Online Belum Dibuka !!!';
+    }    
+   	
+    return $data;
    }
 
    public function save_akun($data)
@@ -118,20 +92,7 @@ class Main_dashboard_model extends CI_Model {
      return $data;
    }
    
-   private function build_timeline($data)
-   {
-     $arr_timeline=array(); 
-     if(!empty($data))
-     {
-      foreach ($data as $row) {
-        $tgl = date("d M Y", strtotime($row['tgl_post']));
-        $time = date("H:i:s", strtotime($row['tgl_post']));
-        $arr_timeline[$tgl][] = array('id'=>$row['id_berita'],'waktu'=>$time,'msg'=>$row['isi_berita']);
-      }
-     }
-     
-     return $arr_timeline;
-   }
+   
 
 
    public function baca_berita()

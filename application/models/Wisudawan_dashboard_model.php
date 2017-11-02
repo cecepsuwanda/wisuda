@@ -114,11 +114,27 @@ class Wisudawan_dashboard_model extends CI_Model {
    public function login($login,$un,$psw)
    {
 
+    $data['msg']='';
+    $data['isbuka']= $this->db['priode']->isbuka();
+
+
+    if($this->db['priode']->isawal()==1){
+      $data['msg']="<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Pendaftaran Online Belum Dibuka !!!</p> </div>";
+    }else{
+
+      if($this->db['priode']->islogin()==0){
+        $data['msg']="<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Perubahan Data Setelah Wisuda Tidak Diijinkan !!!</p> </div>";
+      }else{
+       $data['isbuka']=1;
+      }
+
+    }
+
      //$tmp=$this->db['priode']->getdata('aktif=1');
      //$date = date('Y-m-d');
      //$data['isbuka']= $date >= $tmp[0]['awal'] && $date <= $tmp[0]['akhir'];    
    	 
-   	 $data['msg']="";  	 
+   	   	 
 
    	 if($login=='login')
    	 {
@@ -267,8 +283,10 @@ class Wisudawan_dashboard_model extends CI_Model {
 
    public function baca_berita()
    {
-      $tmp=$this->db['berita']->getdata('');
-      $data['timeline'] = $this->build_timeline($tmp);
+      $priode=$this->db['priode']->priode_aktif();
+      $this->db['berita']->set_priode($priode);
+      $data['timeline'] =$this->db['berita']->getdata('');
+      
       return $data;
    }
 

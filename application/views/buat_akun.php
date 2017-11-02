@@ -107,10 +107,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="box-body">
             <div class="row">
                  <div class="col-md-12">
-                  <?php if($isbuka==0){ ?>
+                  <?php if(!empty($msg)){ ?>
                       <div class="callout callout-danger">
                           <h4>Pemberitahuan</h4>
-                          <p>Pendaftaran wisuda belum dibuka !!!</p>
+                          <p><?php echo $msg; ?></p>
                       </div>
                    <?php } ?> 
                      <div id="ket">

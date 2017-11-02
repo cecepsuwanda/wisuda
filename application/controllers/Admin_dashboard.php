@@ -96,7 +96,7 @@ class Admin_dashboard extends CI_Controller {
 	{
 		$logged_in = $this->session->userdata('logged_in');
 		if($logged_in){
-		   
+		   $db['priode']=$this->Priode_model;
 		   $db['berita']=$this->Berita_model;
 		   $this->Admin_dashboard_model->setdbvar($db);
 		   $data=$this->Admin_dashboard_model->baca_berita(); 

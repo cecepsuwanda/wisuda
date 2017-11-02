@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </li>
         <li class="active treeview">
           <a href="<?php echo base_url();?>index.php/Admin_dashboard/log">
-            <i class="fa fa-dashboard"></i> <span>User Log dan Upload Photo</span>            
+            <i class="fa fa-edit"></i> <span>User Log dan Upload Photo</span>            
           </a>          
         </li>
         <li class="treeview">
@@ -21,12 +21,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </li>
         <li class="treeview">
           <a href="<?php echo base_url();?>index.php/Admin_dashboard/data">
-            <i class="fa fa-edit"></i> <span>Data Wisudawan</span>            
+            <i class="fa fa-graduation-cap"></i> <span>Data Wisudawan</span>            
           </a>          
         </li>      
         <li class="treeview">
+          <a href="<?php echo base_url();?>index.php/Admin_dashboard/setting">
+            <i class="fa fa-gear"></i> <span>Setting</span>            
+          </a>          
+        </li>
+        <li class="treeview">
           <a href="<?php echo base_url();?>index.php/Admin_dashboard/logout">
-            <i class="fa fa-graduation-cap"></i> <span>Logout Admin</span>            
+            <i class="fa fa-user"></i> <span>Logout Admin</span>            
           </a>          
         </li>      
       </ul>

@@ -13,56 +13,9 @@ class Admin_dashboard_model extends CI_Model {
 
    
 
-   private function build_tag_db($data)
-   {
-      
-      $table=array();
-      if(!empty($data))       
-      {
-         $id_wisuda = '';
-          foreach ($data as $row) {
-          $tmp=array();
-          $nama=$row['nama'];
-          $nim = $row['nim'];
-              foreach ($row as $key=>$value) {
-                   switch ($key) {
-                     case 'id_wisuda': $id_wisuda = '"'.$value.'"';break;                     
-                     case 'nama'     : $tmp[]= array(strtoupper($value),array());break;
-                     case 'photo'    : $tmp[]= array(empty($value) ? '' : '<img class="myImg" alt="Photo '.$nama.' ('.$nim.')" src="'.$value.'" style="width:50px;height:50px;">',array());break;
-                     case 'kwitansi' : $tmp[]=array(empty($value) ? '' : '<img class="myImg" alt="Kwitansi '.$nama.' ('.$nim.')" src="'.$value.'" style="width:50px;height:50px;">',array());break;
-                     default: $tmp[]=array($value,array()); break;
-                   }             
-              }
-              $tmp[]=array("<a onclick='modal_show($id_wisuda)' href='javascript:void(0);'>Edit</a>",array());
-          $table[]=$tmp;
-         }
-      }
+  
 
-      return $table;
-   }
-
-   private function build_tag_db1($data)
-   {
-      $table=array();
-      if(!empty($data))       
-      {
-          $i=1;
-          foreach ($data as $row) {
-          $tmp=array();          
-              foreach ($row as $key=>$value) {
-                if($key!='id_prodi'){
-                   $tmp[]=array($value,array());
-                 }else{
-                   $tmp[]=array($i++,array());
-                 }  
-              }
-          $table[]=$tmp;
-          
-         }
-      }
-
-      return $table;
-   }
+   
 
    private function build_tag_db2($data)
    {
@@ -263,36 +216,21 @@ class Admin_dashboard_model extends CI_Model {
 
    public function rekap_data()
    {
-     $priode=$this->db['priode']->getdata('aktif=1');
-     $tmp=$this->db['wisudawan']->jml('tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
-     $data['jml_calon']= is_null($tmp[0]['jml1']) ? 0 : $tmp[0]['jml1'];
-     $data['jml_wisudawan']=is_null($tmp[0]['jml2']) ? 0 :$tmp[0]['jml2'];
-     $data['jml_layak']=is_null($tmp[0]['jml3']) ? 0 :$tmp[0]['jml3'];
-     
-     $tmp=$this->db['wisudawan']->rekapperprodi();
-     $data['rekap_prodi']=$this->build_tag_db1($tmp);
+     $priode=$this->db['priode']->priode_aktif();
+     $this->db['wisudawan']->set_priode($priode);     
+     $data=$this->db['wisudawan']->jml();     
+     $data['rekap_prodi']=$this->db['wisudawan']->rekapperprodi();     
      return $data;
    }
-
-   private function build_timeline($data)
-   {
-     $arr_timeline=array(); 
-     if(!empty($data))
-     {
-      foreach ($data as $row) {
-        $tgl = date("d M Y", strtotime($row['tgl_post']));
-        $time = date("H:i:s", strtotime($row['tgl_post']));
-        $arr_timeline[$tgl][] = array('id'=>$row['id_berita'],'waktu'=>$time,'msg'=>$row['isi_berita']);
-      }
-     }   
-    
-     return $arr_timeline;
-   }
+   
 
    public function baca_berita()
    {
-      $tmp=$this->db['berita']->getdata('');
-      $data['timeline'] = $this->build_timeline($tmp);
+      
+      $priode=$this->db['priode']->priode_aktif();
+      $this->db['berita']->set_priode($priode);
+
+      $data['timeline'] =$this->db['berita']->getdata('');
       return $data;
    }
 
@@ -335,13 +273,14 @@ class Admin_dashboard_model extends CI_Model {
 
    public function baca_data()
    {
-     $priode=$this->db['priode']->getdata('aktif=1');
-     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi_admin('ver=0 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" and ((kwitansi is null) and (tgl_byr is null))');
-     $data['data_calon']=$this->build_tag_db($tmp);
-     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi_admin('ver=0 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" and ((kwitansi is not null) or (tgl_byr is not null))');
-     $data['data_layak']=$this->build_tag_db($tmp);
-     $tmp=$this->db['wisudawan']->getwisudawan_jn_prodi_admin('ver=1 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'"');
-     $data['data_wisudawan']=$this->build_tag_db($tmp);
+     
+     $priode=$this->db['priode']->priode_aktif();
+     $this->db['wisudawan']->set_priode($priode);
+     
+     $data['data_calon']=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(0);     
+     $data['data_layak']=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(0,1);     
+     $data['data_wisudawan']=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(1);
+     
      return $data;
 
    }
