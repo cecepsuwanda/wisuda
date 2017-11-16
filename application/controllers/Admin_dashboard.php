@@ -54,6 +54,19 @@ class Admin_dashboard extends CI_Controller {
 
     }
 
+    public function tambah_data_wisudawan()
+    {
+          
+
+          $db['fakultas']=$this->Fakultas_model;
+		  $db['prodi']=$this->Prodi_model;
+		   $this->Admin_dashboard_model->setdbvar($db);
+		  $data=$this->Admin_dashboard_model->tambah_data_wisudawan();
+          
+		  echo $this->load->view('modal1',$data,true);
+
+    }
+
     public function addberita()
     {
     	$berita=$this->input->post('berita');

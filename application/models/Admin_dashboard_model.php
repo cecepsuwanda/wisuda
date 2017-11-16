@@ -280,6 +280,16 @@ class Admin_dashboard_model extends CI_Model {
      return $data;
    }
 
+
+   public function tambah_data_wisudawan()
+   {
+     $tmp=$this->db['fakultas']->getdata('');
+     $data['drop_fak']=$this->build_dropdown($tmp,array('id_fak','nm_fak'),'Fakultas ','--- Pilih Fakultas ---');
+     $tmp=$this->angkatan(0);
+     $data['drop_ang']=$this->build_dropdown($tmp,array(0,1),'','--- Pilih Angkatan ---');
+     return $data;
+   }
+
    public function login($login,$un,$psw)
    {
      

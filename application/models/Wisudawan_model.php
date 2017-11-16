@@ -38,6 +38,8 @@ class Wisudawan_model extends CI_Model {
          }
       }
 
+      
+
       return $table;
    }
 
@@ -64,7 +66,7 @@ class Wisudawan_model extends CI_Model {
       return $table;
    }
 
-    private function build_tag_db_admin($data)
+    private function build_tag_db_admin($data,$iswisudawan=0,$islayak=0)
    {
       
       $table=array();
@@ -88,7 +90,20 @@ class Wisudawan_model extends CI_Model {
           $table[]=$tmp;
          }
       }
-
+      
+      if(($iswisudawan==0) and ($islayak==0)){
+        $tmp=array();
+        $tmp[]=array('[Photo]',array());
+        $tmp[]=array('[NIM]',array());
+        $tmp[]=array('[Nama]',array());
+        $tmp[]=array('[Tanggal Bayar]',array());
+        $tmp[]=array('[Kwitansi]',array());
+        $tmp[]=array('[Fakultas]',array());
+        $tmp[]=array('[Prodi]',array());
+        $tmp[]=array('[Keterangan]',array());
+        $tmp[]=array("<a onclick='modal1_show()' href='javascript:void(0);'>Add</a><br>",array());
+        $table[]=$tmp;
+      }
       return $table;
    }
 
@@ -162,17 +177,17 @@ class Wisudawan_model extends CI_Model {
 
       $this->query = $this->db->get();
       $hsl=array();
-      if($this->query->num_rows()>0)
-      {
+      //if($this->query->num_rows()>0)
+      //{
          if($idx==0){
-          $hsl = $this->build_tag_db_admin($this->query->result_array());
+          $hsl = $this->build_tag_db_admin($this->query->result_array(),$iswisudawan,$islayak);
          }else{
           foreach ($this->query->result_array() as $row) {
             $hsl[]=$row;
           }
          } 
 
-      }
+      //}
       return $hsl; 
    }
 

@@ -367,10 +367,98 @@ $('.myImg').click(function() {
 
   }
 
+  function after1(data)
+  {
+    
+    $('#myModal').modal();
+    $("#myModal").on("hidden.bs.modal", function () {
+      window.location.href = "<?php echo site_url('Admin_dashboard/data'); ?>";
+     });
+
+     $("[data-mask]").inputmask();
+    
+    
+    $(".select2").select2();
+
+    //Date picker
+    $('#datepicker').datepicker({
+      format: 'dd-mm-yyyy',
+      autoclose: true
+    });
+
+    //Date picker
+    $('#datepicker1').datepicker({
+      format: 'dd-mm-yyyy',
+      autoclose: true
+    });
+
+    //Date picker
+    $('#datepicker2').datepicker({
+      format: 'dd-mm-yyyy',
+      autoclose: true
+    });
+
+    $("#fak").change(function () {
+       var idfak = $('#fak option:selected').val();
+       data = "idfak=" + idfak;
+       myajax('prodi',data,'<?php echo base_url();?>index.php/Main_dashboard/get_prodi');       
+      });        
+
+                 $('#uploadbox').singleupload({
+                    action: 'do_upload', //action: 'do_upload.json'
+                    inputId: 'singleupload_input',
+                    onError: function(code) {
+                      //console.debug('error code '+res.code);
+                    },onSuccess: function(url, code) {
+                      if(url==''){
+                         $('#ketuploadphoto').html("<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Gagal upload gambar !!!</p> </div>");
+                         $('#nm_file').val(url);
+                       }else{
+                        $('#nm_file').val(url);
+                        $('#ketuploadphoto').html("<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Berhasil upload gambar !!!</p> </div>");
+                       }
+                    }
+                  });
+
+                  $('#uploadbox1').singleupload({
+                    action: 'do_upload', //action: 'do_upload.json'
+                    inputId: 'singleupload_input1',
+                    onError: function(code) {                      
+                      //console.debug('error code '+res.code);
+                    },onSuccess: function(url, code) { 
+                       if(url==''){
+                         $('#ketuploadkwitansi').html("<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Gagal upload gambar !!!</p> </div>");
+                         $('#nm_file1').val(url);
+                       }else{
+                        $('#nm_file1').val(url);
+                        $('#ketuploadkwitansi').html("<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Berhasil upload gambar !!!</p> </div>");
+                       }
+                    }
+                  });
+
+    $("#datawisudawan").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+                  
+            data = $("#datawisudawan").serialize()+'&'+data;
+            myajax('ketdatawisudawan',data,'<?php echo base_url();?>index.php/Admin_dashboard/tambahdatawisudawan');    
+                
+    });
+
+
+  }
+
 
   function modal_show(id)
   {
     myajax('modal','id_wisuda='+id,"<?php echo base_url();?>index.php/Admin_dashboard/baca_data_wisudawan",null,after);
+    
+  }
+
+  function modal1_show(id)
+  {
+    myajax('modal','',"<?php echo base_url();?>index.php/Admin_dashboard/tambah_data_wisudawan",null,after1);
     
   }
 
