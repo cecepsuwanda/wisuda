@@ -126,7 +126,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $tempbox=new box($box,$header_box,$body); 
                     $content1[]=array($tempbox->display());
 
-                    $row = array('jml'=>2);
+                    
+                    $header = array(array('Id','Nama','Urut','Aksi'));
+                    $tbstat = array("id" => "fak",'width'=>'100%');
+                    $isi_data = $data_fak;
+                    $tbl = new mytable($tbstat,$header,$isi_data,'');
+                    $content=array(array($tbl->display())); 
+
+                    $row = array('jml'=>1);
+                    $col = array('jml'=>1,'class'=>array('col-xs-12'));
+                    $divrowcol = new div_row_col($row,$col,$content);
+                    $body=$divrowcol->display();
+
+                    $header_box['title']='Fakultas';                    
+                    $tempbox=new box($box,$header_box,$body); 
+                    $content1[]=array($tempbox->display());
+
+                    $header = array(array('Id','Nama','Fakultas','Urut','Aksi'));
+                    $tbstat = array("id" => "prodi",'width'=>'100%');
+                    $isi_data = $data_prodi;
+                    $tbl = new mytable($tbstat,$header,$isi_data,'');
+                    $content=array(array($tbl->display())); 
+
+                    $row = array('jml'=>1);
+                    $col = array('jml'=>1,'class'=>array('col-xs-12'));
+                    $divrowcol = new div_row_col($row,$col,$content);
+                    $body=$divrowcol->display();
+
+                    $header_box['title']='Program Studi';                    
+                    $tempbox=new box($box,$header_box,$body); 
+                    $content1[]=array($tempbox->display());
+
+                    $row = array('jml'=>4);
                     $col = array('jml'=>1,'class'=>array('col-md-12'));
                     $divrowcol = new div_row_col($row,$col,$content1);
                     echo $divrowcol->display();                                  
@@ -210,7 +241,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   $(function () {
     $("#priode").DataTable();
     $("#admin").DataTable();
-    
+    $("#fak").DataTable();
+    $("#prodi").DataTable();
   });
 
 // Get the image and insert it inside the modal - use its "alt" text as a caption

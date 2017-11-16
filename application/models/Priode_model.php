@@ -22,6 +22,54 @@ class Priode_model extends CI_Model {
       return $hsl; 
    }
 
+   
+   private function build_tag_db($data)
+   {
+      
+      $table=array();
+      if(!empty($data))       
+      {         
+          foreach ($data as $row) {
+              $tmp=array();          
+              foreach ($row as $key=>$value) {
+                   if($key=='aktif'){
+                     $tmp[]=array($value==1 ?'True':'False',array());                                
+                   }else{
+                       if(in_array($key, array('awal','akhir','wisuda')))
+                       {
+                         $tmp[]=array(date("d F Y", strtotime($value)),array());
+                       }else{ 
+                         $tmp[]=array($value,array());
+                         }
+                     }
+                   
+              }
+              $tmp[]=array("<a onclick='priode(1,$row[id])' href='javascript:void(0);'>Edit</a><br>
+                            <a onclick='deletepriode($row[id])' href='javascript:void(0);'>Delete</a>",array());              
+          $table[]=$tmp;
+         }      
+      }
+      $tmp=array();
+      $tmp[]=array('[Id]',array());
+      $tmp[]=array('[Awal]',array());
+      $tmp[]=array('[Akhir]',array());
+      $tmp[]=array('[Wisuda]',array());
+      $tmp[]=array('[Aktif]',array());
+      $tmp[]=array("<a onclick='priode(0)' href='javascript:void(0);'>Add</a><br>",array());
+      $table[]=$tmp;
+
+      return $table;
+   }
+
+
+
+   public function getsettingpriode()
+   {
+      $data = $this->getdata('');
+      $tmp = $this->build_tag_db($data); 
+      return $tmp;
+   }
+
    public function priode_aktif()
    {
      $priode=$this->getdata('aktif=1');

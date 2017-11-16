@@ -133,7 +133,7 @@ class Wisudawan_model extends CI_Model {
       return $hsl; 
    }
 
-   public function getwisudawan_jn_prodi_admin($iswisudawan,$islayak=0)
+   public function getwisudawan_jn_prodi_admin($iswisudawan,$islayak=0,$idx=0)
    {      
       
       $this->db->select('photo,id_wisuda,nim,nama,tgl_byr,kwitansi,fak_prodi,nm_prodi,ket');
@@ -153,14 +153,25 @@ class Wisudawan_model extends CI_Model {
       }    
 
       $this->db->where($where);
-
-      $this->db->order_by('a.tgl_update desc,a.tgl_input desc,b.urut_prodi asc');
+      
+      if($idx==0){
+       $this->db->order_by('a.tgl_update desc,a.tgl_input desc,b.urut_prodi asc');
+      }else{
+       $this->db->order_by('b.urut_prodi asc,nama asc,nim asc'); 
+      }
 
       $this->query = $this->db->get();
       $hsl=array();
       if($this->query->num_rows()>0)
       {
-       $hsl = $this->build_tag_db_admin($this->query->result_array());
+         if($idx==0){
+          $hsl = $this->build_tag_db_admin($this->query->result_array());
+         }else{
+          foreach ($this->query->result_array() as $row) {
+            $hsl[]=$row;
+          }
+         } 
+
       }
       return $hsl; 
    }

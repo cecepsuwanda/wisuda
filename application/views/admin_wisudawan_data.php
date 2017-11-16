@@ -124,7 +124,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                     $box=array('class'=>'collapsed-box');
                     $header_box = array('class'=>'with-border','title'=>'Wisudawan','tools'=>array(array('widget'=>'collapse','icon'=>'fa fa-plus'),array('widget'=>'remove','icon'=>'fa fa-times')));
-                    $tempbox=new box($box,$header_box,$body); 
+                    $footer = '<button type="button" class="btn btn-primary" onclick="Cetak()">Cetak Data Wisudawan</button>';
+                    $tempbox=new box($box,$header_box,$body,$footer); 
                     $content1=array(array($tempbox->display()));
                  
                     $tbstat = array("id" => "layak",'width'=>'100%');
@@ -376,6 +377,11 @@ $('.myImg').click(function() {
   function Verifikasi()
   {
     window.location = '<?php echo base_url();?>index.php/Admin_dashboard/cetak_verifikasi';
+  }
+
+  function Cetak()
+  {
+    window.location = '<?php echo base_url();?>index.php/Admin_dashboard/cetak_wisudawan';
   }
   
 </script>

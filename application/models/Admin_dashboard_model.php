@@ -9,13 +9,7 @@ class Admin_dashboard_model extends CI_Model {
    {
    	$this->db=$db;
     $this->lib=$lib;
-   }
-
-   
-
-  
-
-   
+   }   
 
    private function build_tag_db2($data)
    {
@@ -136,68 +130,7 @@ class Admin_dashboard_model extends CI_Model {
       }
 
       return $table;
-   }
-
-   private function build_tag_db5($data)
-   {
-      
-      $table=array();
-      if(!empty($data))       
-      {         
-          foreach ($data as $row) {
-              $tmp=array();          
-              foreach ($row as $key=>$value) {
-                   if($key=='aktif'){
-                     $tmp[]=array($value==1 ?'True':'False',array());                                
-                   }else{
-                       if(in_array($key, array('awal','akhir','wisuda')))
-                       {
-                         $tmp[]=array(date("d F Y", strtotime($value)),array());
-                       }else{ 
-                         $tmp[]=array($value,array());
-                         }
-                     }
-                   
-              }
-              $tmp[]=array("<a onclick='priode(1,$row[id])' href='javascript:void(0);'>Edit</a><br>
-                            <a onclick='deletepriode($row[id])' href='javascript:void(0);'>Delete</a>",array());              
-          $table[]=$tmp;
-         }      
-      }
-      $tmp=array();
-      $tmp[]=array('[Id]',array());
-      $tmp[]=array('[Awal]',array());
-      $tmp[]=array('[Akhir]',array());
-      $tmp[]=array('[Wisuda]',array());
-      $tmp[]=array('[Aktif]',array());
-      $tmp[]=array("<a onclick='priode(0)' href='javascript:void(0);'>Add</a><br>",array());
-      $table[]=$tmp;
-
-      return $table;
-   }
-
-   private function build_tag_db6($data)
-   {
-      $table=array();
-      if(!empty($data))       
-      {
-          $i=1;
-          foreach ($data as $row) {
-            $tmp=array();          
-            $tmp[]=array($i++,array());                   
-            $tmp[]=array($row['user_name'],array());
-            $tmp[]=array("<a onclick='' href='javascript:void(0);'>Edit</a>".($row['user_name'] == 'admin' ? "":
-                         "<br><a onclick='' href='javascript:void(0);'>Delete</a>"),array());                   
-            $table[]=$tmp;          
-         }
-      }
-      $tmp=array();
-      $tmp[]=array('[No]',array());
-      $tmp[]=array('[Admin Name]',array());
-      $tmp[]=array("<a onclick='' href='javascript:void(0);'>Add</a><br>",array());
-      $table[]=$tmp;
-      return $table;
-   }
+   }  
 
 
    public function baca_log()
@@ -287,8 +220,17 @@ class Admin_dashboard_model extends CI_Model {
 
    public function cetak_layak()
    {
-    $priode=$this->db['priode']->getdata('aktif=1');
-    $data=$this->db['wisudawan']->getwisudawan_jn_prodi_admin('ver=0 and tgl_input between "'.$priode[0]['awal'].'" and "'.$priode[0]['akhir'].'" and ((kwitansi is not null) or (tgl_byr is not null))');
+    $priode=$this->db['priode']->priode_aktif();
+     $this->db['wisudawan']->set_priode($priode);
+    $data=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(0,1,1);
+    return $data;
+   }
+
+   public function cetak_wisudawan()
+   {
+    $priode=$this->db['priode']->priode_aktif();
+     $this->db['wisudawan']->set_priode($priode);
+    $data=$this->db['wisudawan']->getwisudawan_jn_prodi_admin(1,1,1);
     return $data;
    }
 
@@ -464,11 +406,10 @@ class Admin_dashboard_model extends CI_Model {
 
    public function baca_setting()
    {
-     $tmp = $this->db['priode']->getdata('');
-     $data['data_priode']=$this->build_tag_db5($tmp);
-     $tmp = $this->db['user']->getdata('');
-     $data['data_admin']=$this->build_tag_db6($tmp);
-     
+     $data['data_priode'] = $this->db['priode']->getsettingpriode();
+     $data['data_admin'] = $this->db['user']->getsettinguser();     
+     $data['data_fak'] = $this->db['fak']->getsettingfak('');
+     $data['data_prodi'] = $this->db['prodi']->getsettingprodi('');
      return $data;
    }
 

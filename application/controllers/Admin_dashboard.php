@@ -179,7 +179,6 @@ class Admin_dashboard extends CI_Controller {
 			$this->Admin_dashboard_model->setdbvar($db);
 	        $data=$this->Admin_dashboard_model->cetak_layak();
 
-
 			$this->excel->setActiveSheetIndex(0);
 			$this->excel->setColumnWidth($col_width);
 			$this->excel->tulis_data($jdl);
@@ -208,6 +207,89 @@ class Admin_dashboard extends CI_Controller {
 
 			 
 			$filename='form_verifikasi_wisudawan.xls'; //save our workbook as this file name
+			header('Content-Type: application/vnd.ms-excel'); //mime type
+			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+			            
+			//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+			//if you want to save it as .XLSX Excel 2007 format
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');  
+			//force user to download the Excel file without writing it to server's HD
+			$objWriter->save('php://output');
+
+		}else{
+			redirect('/Admin_dashboard/login');
+		}
+	}
+
+	public function cetak_wisudawan()
+	{
+		$logged_in = $this->session->userdata('logged_in');
+		if($logged_in){ 
+
+			//load our new PHPExcel library
+			$this->load->library('excel');
+
+			$col_width=array("A"=>5.00,"B"=>12.00,"C"=>39.00,"D"=>14.00,"E"=>39.00);
+
+			$tmp_font = $this->excel->build_font(true,'Times New Roman',12);
+
+			$tmp_borders = $this->excel->build_borders(PHPExcel_Style_Border::BORDER_THIN,PHPExcel_Style_Border::BORDER_MEDIUM);
+
+			$jdl=array(array('add'=>'A1','txt'=>'DATA WISUDAWAN','merge'=>true,'madd'=>'A1:E1','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
+	                   array('add'=>'A','row'=>4,'txt'=>'NO','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders),
+	                   array('add'=>'B4','txt'=>'NIM','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),  
+	                   array('add'=>'C4','txt'=>'NAMA','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
+	                   array('add'=>'D4','txt'=>'VERIFIKASI','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),
+	                   array('add'=>'E4','txt'=>'KETERANGAN','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font)
+					   );
+
+			$isi=array(
+	                   array('add'=>'A','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders),
+	                   array('add'=>'B','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_CENTER,'font'=>$tmp_font),  
+	                   array('add'=>'C','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font),
+	                   array('add'=>'D','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font),
+	                   array('add'=>'E','row'=>0,'txt'=>'','v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font)
+					   );
+
+			$nm_prodi=array(
+	                   array('add'=>'A','row'=>0,'txt'=>'','merge'=>true,'mawl'=>'A','makh'=>'E','mjml'=>0,'v'=>PHPExcel_Style_Alignment::VERTICAL_CENTER,'h'=>PHPExcel_Style_Alignment::HORIZONTAL_LEFT,'font'=>$tmp_font,'wbrdawl'=>'A','wbrdakh'=>'E','wbrdjml'=>0,'wborders'=>$tmp_borders)	 
+					   );
+
+			
+            $db['wisudawan']=$this->Wisudawan_model;
+            $db['priode']=$this->Priode_model;
+			$this->Admin_dashboard_model->setdbvar($db);
+	        $data=$this->Admin_dashboard_model->cetak_wisudawan();
+
+			$this->excel->setActiveSheetIndex(0);
+			$this->excel->setColumnWidth($col_width);
+			$this->excel->tulis_data($jdl);
+
+			if (!empty($data)) {
+				$i=5;
+				$j=1;
+				$prodi='';
+				foreach ($data as $row) {
+				  if(empty($prodi) or ($prodi!=$row['nm_prodi'])){
+                    $nm_prodi[0]['row']=$i++;
+				    $nm_prodi[0]['txt']='Prodi. '.$row['nm_prodi'];                   
+                    $this->excel->tulis_data($nm_prodi); 
+                    $prodi=$row['nm_prodi'];
+				  }
+
+				  $isi[0]['row']=$i++;
+				  $isi[0]['txt']=$j++;
+				  $isi[1]['row']=$i-1;
+				  $isi[1]['txt']=strtoupper($row['nim']);
+				  $isi[2]['row']=$i-1;
+				  $isi[2]['txt']=strtoupper($row['nama']);
+				  $this->excel->tulis_data($isi);					
+				}
+			}
+
+			 
+			$filename='data_wisudawan.xls'; //save our workbook as this file name
 			header('Content-Type: application/vnd.ms-excel'); //mime type
 			header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
 			header('Cache-Control: max-age=0'); //no cache
@@ -357,6 +439,8 @@ class Admin_dashboard extends CI_Controller {
 		if($logged_in){ 		
             $db['priode']=$this->Priode_model;
             $db['user']=$this->User_model;
+            $db['fak']=$this->Fakultas_model;
+            $db['prodi']=$this->Prodi_model;
 			$this->Admin_dashboard_model->setdbvar($db);
             $data = $this->Admin_dashboard_model->baca_setting();
 			$this->load->view('admin_setting',$data);

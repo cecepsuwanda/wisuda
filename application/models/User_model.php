@@ -22,6 +22,37 @@ class User_model extends CI_Model {
       return $hsl; 
    }
 
+   private function build_tag_db($data)
+   {
+      $table=array();
+      if(!empty($data))       
+      {
+          $i=1;
+          foreach ($data as $row) {
+            $tmp=array();          
+            $tmp[]=array($i++,array());                   
+            $tmp[]=array($row['user_name'],array());
+            $tmp[]=array("<a onclick='' href='javascript:void(0);'>Edit</a>".($row['user_name'] == 'admin' ? "":
+                         "<br><a onclick='' href='javascript:void(0);'>Delete</a>"),array());                   
+            $table[]=$tmp;          
+         }
+      }
+      $tmp=array();
+      $tmp[]=array('[No]',array());
+      $tmp[]=array('[Admin Name]',array());
+      $tmp[]=array("<a onclick='' href='javascript:void(0);'>Add</a><br>",array());
+      $table[]=$tmp;
+      return $table;
+   }
+
+
+   public function getsettinguser()
+   {
+      $data = $this->getdata('');
+      $tmp = $this->build_tag_db($data); 
+      return $tmp;
+   }
+
    
 
    public function insertdata($data)
