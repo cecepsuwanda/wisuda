@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$data['menu_idx']=$menu_idx;
 ?>
 <!DOCTYPE html>
 <html>
@@ -73,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">      
-      <?php $this->load->view('side_bar_menu2');  ?>
+      <?php $this->load->view('side_bar_menu2',$data);  ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -324,6 +325,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   }
 
+  function after2(data)
+  {
+    
+    $('#myModal').modal();
+    $("#myModal").on("hidden.bs.modal", function () {
+      window.location.href = "<?php echo site_url('Admin_dashboard/setting'); ?>";
+     });
+
+    $("#admindata").validate();
+
+    $("#admindata").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#admindata").valid();
+        if (isvalid) {
+            data = $("#admindata").serialize();
+            myajax('ketadmindata',data,'<?php echo base_url();?>index.php/Admin_dashboard/saveuserdata');    
+        }        
+    });
+
+
+  }
+
 
   function priode(isedit,id)
   {
@@ -333,6 +358,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      myajax('modal','id='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_priode_admin",null,after); 
     }
     
+  }
+
+  function user(isedit,id)
+  {
+    if(isedit==0){
+     myajax('modal','',"<?php echo base_url();?>index.php/Admin_dashboard/add_user_admin",null,after2);
+    }else{
+     myajax('modal','id='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_user_admin",null,after2); 
+    }
   }
 
   function after1()
@@ -345,7 +379,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     data = "id="+id;
     myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/deletedatapriode',null,after1); 
   }
-
+  
+  function deleteuser(id)
+  {
+    data = "id="+id;
+    myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/deleteuserdata',null,after1); 
+  }
   
   
 </script>

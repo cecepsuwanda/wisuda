@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$data['menu_idx']=$menu_idx;
 ?>
 <!DOCTYPE html>
 <html>
@@ -89,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">      
-      <?php $this->load->view('side_bar_menu2');  ?>
+      <?php $this->load->view('side_bar_menu2',$data);  ?>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -375,7 +376,10 @@ $('.myImg').click(function() {
       window.location.href = "<?php echo site_url('Admin_dashboard/data'); ?>";
      });
 
-     $("[data-mask]").inputmask();
+    
+    $("#datawisudawan").validate();
+
+    $("[data-mask]").inputmask();
     
     
     $(".select2").select2();
@@ -440,13 +444,19 @@ $('.myImg').click(function() {
 
         //prevent Default functionality
         e.preventDefault();
-                  
-            data = $("#datawisudawan").serialize()+'&'+data;
+        var isvalid = $("#datawisudawan").valid();
+        if (isvalid) {
+            data = $("#datawisudawan").serialize();
             myajax('ketdatawisudawan',data,'<?php echo base_url();?>index.php/Admin_dashboard/tambahdatawisudawan');    
-                
+        }        
     });
 
 
+  }
+
+  function after2(data)
+  {
+    window.location.href = "<?php echo site_url('Admin_dashboard/data'); ?>";
   }
 
 
@@ -456,7 +466,12 @@ $('.myImg').click(function() {
     
   }
 
-  function modal1_show(id)
+  function hapus_data(id)
+  {
+    myajax('','id_wisuda='+id,"<?php echo base_url();?>index.php/Admin_dashboard/hapus_data_wisudawan",null,after2);    
+  }
+
+  function modal1_show()
   {
     myajax('modal','',"<?php echo base_url();?>index.php/Admin_dashboard/tambah_data_wisudawan",null,after1);
     

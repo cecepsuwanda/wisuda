@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
   
   $header = array(array('No','NIM','Nama','Fakultas','Prodi','Kwitansi','Keterangan')); 
-
+  $data['menu_idx']=$menu_idx;
 ?>
 <!DOCTYPE html>
 <html>
@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">      
-      <?php $this->load->view('side_bar_menu');  ?>
+      <?php $this->load->view('side_bar_menu',$data);  ?>
     </section>
     <!-- /.sidebar -->
   </aside>

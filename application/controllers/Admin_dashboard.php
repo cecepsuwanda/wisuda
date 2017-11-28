@@ -11,8 +11,8 @@ class Admin_dashboard extends CI_Controller {
            $db['wisudawan']=$this->Wisudawan_model;
 		   $db['priode']=$this->Priode_model;
 		   $this->Admin_dashboard_model->setdbvar($db);
-		   $data=$this->Admin_dashboard_model->rekap_data(); 
-
+		   $data=$this->Admin_dashboard_model->rekap_data();
+		   $data['menu_idx']=0;           
 		   $this->load->view('admin_dashboard',$data);
 		}else{
 			redirect('/Admin_dashboard/login');
@@ -54,13 +54,23 @@ class Admin_dashboard extends CI_Controller {
 
     }
 
+    public function hapus_data_wisudawan()
+    {
+          $id_wisuda=$this->input->post('id_wisuda'); 
+          
+		  $db['wisudawan']=$this->Wisudawan_model;
+		  $this->Admin_dashboard_model->setdbvar($db);
+		  $data=$this->Admin_dashboard_model->hapus_data_wisudawan($id_wisuda);	  
+
+    }
+
     public function tambah_data_wisudawan()
     {
           
 
           $db['fakultas']=$this->Fakultas_model;
 		  $db['prodi']=$this->Prodi_model;
-		   $this->Admin_dashboard_model->setdbvar($db);
+		  $this->Admin_dashboard_model->setdbvar($db);
 		  $data=$this->Admin_dashboard_model->tambah_data_wisudawan();
           
 		  echo $this->load->view('modal1',$data,true);
@@ -112,9 +122,9 @@ class Admin_dashboard extends CI_Controller {
 		   $db['priode']=$this->Priode_model;
 		   $db['berita']=$this->Berita_model;
 		   $this->Admin_dashboard_model->setdbvar($db);
-		   $data=$this->Admin_dashboard_model->baca_berita(); 
+		   $data=$this->Admin_dashboard_model->baca_berita();
+		   $data['menu_idx']=2; 
 		   $this->load->view('admin_berita',$data);
-
 		 }else{
 			redirect('/Admin_dashboard/login');
 		}  
@@ -128,7 +138,7 @@ class Admin_dashboard extends CI_Controller {
 		  $db['priode']=$this->Priode_model;
 		  $this->Admin_dashboard_model->setdbvar($db);
 		  $data = $this->Admin_dashboard_model->baca_data();		  
-
+          $data['menu_idx']=3; 
 		  $this->load->view('admin_wisudawan_data',$data);
 		}else{
 			redirect('/Admin_dashboard/login');
@@ -146,6 +156,7 @@ class Admin_dashboard extends CI_Controller {
 			$db['wisudawan']=$this->Wisudawan_model;
 			$this->Admin_dashboard_model->setdbvar($db);
 	        $data=$this->Admin_dashboard_model->baca_log();
+	        $data['menu_idx']=1;
 			$this->load->view('admin_log',$data);
 		}else{
 			redirect('/Admin_dashboard/login');
@@ -422,6 +433,64 @@ class Admin_dashboard extends CI_Controller {
 		echo $hsl;
 	}
 
+	public function tambahdatawisudawan()
+	{
+        $data['alamat']=$this->input->post('alamat');
+        $data['hp']=$this->input->post('hp');
+        $data['jk']= $this->input->post('jk');
+        $data['ktp']=$this->input->post('ktp');
+        $data['nama']=$this->input->post('nama');
+        $data['tmpt_lahir']= $this->input->post('tempat');
+        $data['tgl_lahir']= date('Y-m-d', strtotime($this->input->post('tgl')));
+        if(!empty($this->input->post('nm_file')))
+        {
+         $data['photo']= $this->input->post('nm_file');
+        }
+
+        $data['angkatan']=$this->input->post('ang');
+        $data['id_prodi']= $this->input->post('prodi');
+        $data['nim']=$this->input->post('nim');
+
+        //$data['ket']=$this->input->post('keterangan');
+        //$data['ver']= $this->input->post('verifikasi');
+        //$data['tgl_ver']=date('Y-m-d H:i:s');
+        //$data['admin_name']=$this->session->userdata('user_name');
+
+       // $data['ipk']= $this->input->post('ipk');
+        
+        $data['jdl_skripsi']= $this->input->post('jdlskripsi');
+        
+       // if(!empty($this->input->post('tgllls'))){
+      //    $data['tgl_lls']= date('Y-m-d', strtotime($this->input->post('tgllls')));
+       // }
+        
+        if(!empty($this->input->post('tglbyr'))){
+          $data['tgl_byr']= date('Y-m-d', strtotime($this->input->post('tglbyr')));
+        }
+        
+        if(!empty($this->input->post('nm_file1')))
+        {
+         $data['kwitansi']= $this->input->post('nm_file1');
+        }
+
+        
+        if($this->Priode_model->istutup()){
+        	$tmp = $this->Priode_model->priode_aktif();
+            $data['tgl_input']=$tmp['akhir'];
+            $data['tgl_update']=$tmp['akhir'];
+        }else{
+        	$data['tgl_input']=date('Y-m-d H:i:s');
+            $data['tgl_update']=date('Y-m-d H:i:s');
+        }
+
+
+        $data['id_wisuda']= $this->input->post('id_wisuda');
+		$db['wisudawan']=$this->Wisudawan_model;
+		$this->Admin_dashboard_model->setdbvar($db);
+		$hsl=$this->Admin_dashboard_model->tambahdatawisudawan($data);
+		echo $hsl;
+	}
+
 	public function updatephoto()
 	{
       $id_wisuda= $this->input->post('id_wisuda');
@@ -454,8 +523,10 @@ class Admin_dashboard extends CI_Controller {
             $db['user']=$this->User_model;
             $db['fak']=$this->Fakultas_model;
             $db['prodi']=$this->Prodi_model;
+			$id = $this->session->userdata('user_name');
 			$this->Admin_dashboard_model->setdbvar($db);
-            $data = $this->Admin_dashboard_model->baca_setting();
+            $data = $this->Admin_dashboard_model->baca_setting($id);
+            $data['menu_idx']=4;
 			$this->load->view('admin_setting',$data);
 		}else{
 			redirect('/Admin_dashboard/login');
@@ -502,6 +573,46 @@ class Admin_dashboard extends CI_Controller {
       $db['priode']=$this->Priode_model;
 	  $this->Admin_dashboard_model->setdbvar($db);
 	  $this->Admin_dashboard_model->deletedatapriode($id);
+	}
+
+	public function add_user_admin()
+	{
+	    $data['judul']='Add Admin';
+		echo $this->load->view('user_modal',$data,true);	
+	}
+
+	public function edit_user_admin()
+	{
+        $id= $this->input->post('id');
+        $db['user']=$this->User_model;
+        $this->Admin_dashboard_model->setdbvar($db);
+        $data = $this->Admin_dashboard_model->baca_user($id);
+        $data['judul']='Edit Admin';
+		echo $this->load->view('user_modal',$data,true);
+	}
+
+	public function saveuserdata()
+	{
+        $data['id']=$this->input->post('id');
+        $data['user']=$this->input->post('user');
+		$data['pass']=$this->input->post('pass');
+
+        $db['user']=$this->User_model;
+		$this->Admin_dashboard_model->setdbvar($db);
+        if(empty($data['id'])){
+           echo $this->Admin_dashboard_model->insertuserdata($data);
+        }else{
+           echo $this->Admin_dashboard_model->updateuserdata($data);
+        }		
+		
+	}
+
+	public function deleteuserdata()
+	{
+      $id= $this->input->post('id');
+      $db['user']=$this->User_model;
+	  $this->Admin_dashboard_model->setdbvar($db);
+	  $this->Admin_dashboard_model->deleteuserdata($id);
 	}
 
 

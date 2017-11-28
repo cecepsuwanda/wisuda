@@ -86,7 +86,8 @@ class Wisudawan_model extends CI_Model {
                      default: $tmp[]=array($value,array()); break;
                    }             
               }
-              $tmp[]=array("<a onclick='modal_show($id_wisuda)' href='javascript:void(0);'>Edit</a>",array());
+              $tmp[]=array("<a onclick='modal_show($id_wisuda)' href='javascript:void(0);'>Edit</a><br><a onclick='hapus_data($id_wisuda)' href='javascript:void(0);'>Delete</a>",array());
+              
           $table[]=$tmp;
          }
       }
@@ -235,6 +236,23 @@ class Wisudawan_model extends CI_Model {
      $this->db->insert('tb_wisudawan',$tmp);
 
    }
+
+   public function insertdataadmin($data)
+   {
+     $data['id_wisuda']=date('YmdHis');
+     $data['user_name']=$data['ktp'];
+     $data['user_pass']=md5('123456');
+     
+     $this->db->insert('tb_wisudawan',$data);
+
+   }
+
+   public function deletedataadmin($id_wisuda)
+   {
+     $this->db->where('id_wisuda', $id_wisuda);
+     $this->db->delete('tb_wisudawan');
+  }
+
 
    public function updatedata($data)
    {

@@ -9,7 +9,8 @@ class Main_dashboard extends CI_Controller {
 		$db['wisudawan']=$this->Wisudawan_model;
 		$db['priode']=$this->Priode_model;
 		$this->Main_dashboard_model->setdbvar($db);
-		$data=$this->Main_dashboard_model->rekap_data();        
+		$data=$this->Main_dashboard_model->rekap_data();
+		$data['menu_idx']=0;        
 		$this->load->view('main_dashboard',$data);
 	}
 
@@ -48,6 +49,7 @@ class Main_dashboard extends CI_Controller {
 		$db['priode']=$this->Priode_model;		
 		$this->Main_dashboard_model->setdbvar($db);
 		$data=$this->Main_dashboard_model->buat_akun();
+		$data['menu_idx']=1;
 		$this->load->view('buat_akun',$data);
 	}
 

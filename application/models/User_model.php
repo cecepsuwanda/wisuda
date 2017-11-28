@@ -22,7 +22,7 @@ class User_model extends CI_Model {
       return $hsl; 
    }
 
-   private function build_tag_db($data)
+   private function build_tag_db($data,$id)
    {
       $table=array();
       if(!empty($data))       
@@ -32,24 +32,30 @@ class User_model extends CI_Model {
             $tmp=array();          
             $tmp[]=array($i++,array());                   
             $tmp[]=array($row['user_name'],array());
-            $tmp[]=array("<a onclick='' href='javascript:void(0);'>Edit</a>".($row['user_name'] == 'admin' ? "":
-                         "<br><a onclick='' href='javascript:void(0);'>Delete</a>"),array());                   
+            $user_name='"'.$row['user_name'].'"';
+                        
+            $aksi= (($id=='admin') or ($row['user_name']==$id)) ? "<a onclick='user(1,$user_name)' href='javascript:void(0);'>Edit</a>":"";     
+            $aksi.=(($id=='admin') and ($row['user_name']!=$id)) ? "<br><a onclick='deleteuser($user_name)' href='javascript:void(0);'>Delete</a>":""; 
+ 
+            $tmp[]=array($aksi,array());    
             $table[]=$tmp;          
          }
       }
-      $tmp=array();
-      $tmp[]=array('[No]',array());
-      $tmp[]=array('[Admin Name]',array());
-      $tmp[]=array("<a onclick='' href='javascript:void(0);'>Add</a><br>",array());
-      $table[]=$tmp;
+       if($id=='admin'){ 
+        $tmp=array();
+        $tmp[]=array('[No]',array());
+        $tmp[]=array('[Admin Name]',array());
+        $tmp[]=array("<a onclick='user(0)' href='javascript:void(0);'>Add</a><br>",array());
+        $table[]=$tmp;
+      }
       return $table;
    }
 
 
-   public function getsettinguser()
+   public function getsettinguser($id)
    {
       $data = $this->getdata('');
-      $tmp = $this->build_tag_db($data); 
+      $tmp = $this->build_tag_db($data,$id); 
       return $tmp;
    }
 
@@ -57,31 +63,28 @@ class User_model extends CI_Model {
 
    public function insertdata($data)
    {
-     $tmp['id_wisuda']=date('YmdHis');;
-     $tmp['nim']=$data['nim'];
-     $tmp['ktp']=$data['ktp'];
-     $tmp['nama']=$data['nama'];
-     $tmp['tgl_lahir']=date('Y-m-d', strtotime($data['tgl']));
-     $tmp['jk']=$data['jk'];
-     $tmp['angkatan']=$data['ang'];
-     $tmp['id_prodi']=$data['prodi'];
+     
      $tmp['user_name']=$data['user'];
      $tmp['user_pass']=md5($data['pass']);
      $tmp['tgl_input']=date('Y-m-d H:i:s');
-     $tmp['tgl_update']=date('Y-m-d H:i:s');
-
-     $this->db->insert('tb_wisudawan',$tmp);
+     $this->db->insert('tb_user',$tmp);
 
    }
 
    public function updatedata($data)
    {
-     foreach ($data as $key => $value) {
-       $this->db->set($key,$value);  
-     }
      
-     $this->db->where('id_wisuda',$data['id_wisuda']);
-     $this->db->update('tb_wisudawan');
+     $this->db->set('user_name',empty($data['user']) ? 'admin' : $data['user']);  
+     $this->db->set('user_pass',md5($data['pass'])); 
+     $this->db->where('user_name',$data['id']);
+     $this->db->update('tb_user');
+   }
+
+   public function deletedata($id)
+   {
+     echo $id;
+     $this->db->where('user_name',$id);
+     $this->db->delete('tb_user');
    }
 
 

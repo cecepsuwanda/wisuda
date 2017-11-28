@@ -28,12 +28,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                  <div class="form-group">
                  <label>No. KTP/NIK</label>
-                 <input type="text" class="form-control" id="ktp" name="ktp" value=""  placeholder="KTP/NIK ..."   data-inputmask='"mask": "9999999999999999"'  data-mask>
+                 <input type="text" class="form-control" id="ktp" name="ktp" value=""  placeholder="KTP/NIK ..."   data-inputmask='"mask": "9999999999999999"' data-msg="KTP/NIP Harus Diisi !!!" data-mask required >
                  </div>
                       <!-- /.form-group --> 
                 <div class="form-group">
                 <label>Nama Lengkap</label>
-                <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="Nama Lengkap ..."    style="text-transform:uppercase;" on keyup="javascript:this.value=this.value.toUpperCase();"  >
+                <input type="text" class="form-control" id="nama" name="nama" value="" placeholder="Nama Lengkap ..."    style="text-transform:uppercase;" on keyup="javascript:this.value=this.value.toUpperCase();" data-msg="Nama Lengkap Harus Diisi !!!" required >
                 </div>
                 <div class="form-group">
                 <label>Tempat Lahir</label>
@@ -44,7 +44,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           <!-- /.form-group --> 
                           <div class="form-group">
                              <label>Jenis Kelamin</label>
-                             <select class="form-control select2" id="jk" name="jk" style="width: 100%;">
+                             <select class="form-control select2" id="jk" name="jk" style="width: 100%;" data-msg="Jenis Kelamin Harus Dipilih !!!" required >
                                <option value='' selected="selected" >-- Pilih Jenis Kelamin --</option>
                                <option value='1' >Laki-laki</option>                                                              
                                <option value='2' >Perempuan</option>
@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-6">  
                           <div class="form-group">
                              <label>Tanggal Lahir</label>
-                             <input type="text" class="form-control" id="datepicker" id="tgl" name="tgl" value=""  placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-mask>
+                             <input type="text" class="form-control" id="datepicker" id="tgl" name="tgl" value=""  placeholder="Tanggal Lahir ..." data-inputmask='"mask": "99-99-9999"' data-mask data-msg="Tanggal Harus Diisi !!!" required>
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -76,28 +76,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- general form elements -->
           <div class="form-group">
                          <label>Fakultas</label>
-                        <select class="form-control select2" id="fak" name="fak" style="width: 100%;">
+                        <select class="form-control select2" id="fak" name="fak" style="width: 100%;" data-msg="Fakultas Harus Dipilih !!!"  required >
                           <?php echo $drop_fak ?>
                         </select>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Prodi</label>
-                        <select class="form-control select2" id="prodi" name="prodi" style="width: 100%;">
+                        <select class="form-control select2" id="prodi" name="prodi" style="width: 100%;" data-msg="Prodi Harus Dipilih !!!" required >
                           <option value = '' selected="selected">--- Pilih Prodi ---</option>                       
                         </select>
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Angkatan</label>
-                        <select class="form-control select2" id="ang" name="ang" style="width: 100%;">
+                        <select class="form-control select2" id="ang" name="ang" style="width: 100%;" data-msg="Angkatan Harus Dipilih !!!" required >
                           <?php echo $drop_ang ?>
                         </select>
                       </div>                      
                       <!-- /.form-group -->
                       <div class="form-group">
                          <label>NIM</label>
-                         <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." value="" data-inputmask='"mask": "A9A999999"' data-mask>
+                         <input type="text" class="form-control" id="nim" name="nim" placeholder="NIM ..." value="" data-inputmask='"mask": "A9A999999"' data-mask data-msg="NIM Harus Diisi !!!" required >
                       </div>
                       <!-- /.form-group -->
              
@@ -127,7 +127,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                       <div class="form-group">
                              <label>Tanggal Bayar Wisuda</label> 
-                             <input type="text" class="form-control" id="datepicker2" id="tglbyr" name="tglbyr" value="" placeholder="Tanggal Bayar Wisuda ..." data-inputmask='"mask": "99-99-9999"' data-mask>
+                             <input type="text" class="form-control" id="datepicker2" id="tglbyr" name="tglbyr" value="" placeholder="Tanggal Bayar Wisuda ..." data-inputmask='"mask": "99-99-9999"' data-mask data-msg="Tanggal Bayar Wisuda Harus Diisi !!!" required >
                           </div>
                           <!-- /.form-group -->  
 

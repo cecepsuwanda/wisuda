@@ -11,6 +11,7 @@ class Wisudawan_dashboard extends CI_Controller {
 		    $db['berita']=$this->Berita_model;
             $this->Wisudawan_dashboard_model->setdbvar($db);
             $data=$this->Wisudawan_dashboard_model->baca_berita();
+            $data['menu_idx']=0;
 		    $this->load->view('wisudawan_dashboard',$data);
 
 		}else{
@@ -74,7 +75,7 @@ class Wisudawan_dashboard extends CI_Controller {
 		  $db['wisudawan']=$this->Wisudawan_model;
 		  $this->Wisudawan_dashboard_model->setdbvar($db);
 		  $data = $this->Wisudawan_dashboard_model->baca_data();		  
-
+          $data['menu_idx']=1;
 		  $this->load->view('wisudawan_data',$data);
 		}else{
 			redirect('/Wisudawan_dashboard/login');

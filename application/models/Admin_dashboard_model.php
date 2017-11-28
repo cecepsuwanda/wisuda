@@ -280,6 +280,26 @@ class Admin_dashboard_model extends CI_Model {
      return $data;
    }
 
+   public function hapus_data_wisudawan($id_wisuda)
+   {
+     $data=$this->db['wisudawan']->getdata("id_wisuda='$id_wisuda'");
+     
+     if(!empty($data[0]['photo'])){
+        if(file_exists('./assets/photo/'.basename($data[0]['photo']))){
+          unlink('./assets/photo/'.basename($data[0]['photo']));
+        }
+     }
+
+     if(!empty($data[0]['kwitansi'])){
+       if(file_exists('./assets/photo/'.basename($data[0]['kwitansi']))){
+          unlink('./assets/photo/'.basename($data[0]['kwitansi']));
+        } 
+     }
+
+
+     $this->db['wisudawan']->deletedataadmin($id_wisuda);
+   }
+
 
    public function tambah_data_wisudawan()
    {
@@ -355,6 +375,7 @@ class Admin_dashboard_model extends CI_Model {
    public function updatedatawisudawan($data)
    {
      $tmp=$this->db['wisudawan']->getdata("ktp='$data[ktp]' and id_wisuda<>'$data[id_wisuda]'");
+         
          if(!empty($tmp)){
              return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon wisudawan dengan ktp/nik = $data[ktp], sudah ada !!!</p> </div>"; 
          }else{
@@ -393,6 +414,45 @@ class Admin_dashboard_model extends CI_Model {
          }
    }
 
+   public function tambahdatawisudawan($data)
+   {
+      $tmp=$this->db['wisudawan']->getdata("nim='$data[nim]'");
+      if(!empty($tmp)){
+        return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan nim = $data[nim], sudah buat akun !!!</p> </div>"; 
+      }else{
+         $tmp=$this->db['wisudawan']->getdata("ktp='$data[ktp]'");
+         if(!empty($tmp)){
+             return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Calon Wisudawan dengan ktp/nik = $data[ktp], sudah buat akun !!!</p> </div>"; 
+         }else{ 
+
+                          if(isset($data['photo'])){
+                              if(file_exists('./assets/photo/'.basename($data['photo']))){
+                                 $ext = explode('.',basename($data['photo']));
+                                 rename('./assets/photo/'.basename($data['photo']),'./assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1]);
+                                 $data['photo']=base_url().'assets/photo/photo_'.$data['id_wisuda'].'.'.$ext[1];
+                             }else{
+                               unset($data['photo']);
+                             }
+                           }
+
+                           if(isset($data['kwitansi'])){
+                              if(file_exists('./assets/photo/'.basename($data['kwitansi']))){
+                                 $ext = explode('.',basename($data['kwitansi']));
+                                 rename('./assets/photo/'.basename($data['kwitansi']),'./assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1]);
+                                 $data['kwitansi']=base_url().'assets/photo/kwitansi_'.$data['id_wisuda'].'.'.$ext[1];
+                             }else{
+                               unset($data['kwitansi']);
+                             }
+                           }
+
+               
+               $this->db['wisudawan']->insertdataadmin($data);
+               return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Akun Calon Wisudawan dengan nim = $data[nim], berhasil di buat !!!</p> </div>"; 
+               
+         }
+      } 
+   }
+
    public function updatephoto($id_wisuda,$photo)
    {
      $data['id_wisuda']=$id_wisuda;
@@ -414,10 +474,10 @@ class Admin_dashboard_model extends CI_Model {
      $this->db['wisudawan']->updatedata($data);
    }
 
-   public function baca_setting()
+   public function baca_setting($id)
    {
      $data['data_priode'] = $this->db['priode']->getsettingpriode();
-     $data['data_admin'] = $this->db['user']->getsettinguser();     
+     $data['data_admin'] = $this->db['user']->getsettinguser($id);     
      $data['data_fak'] = $this->db['fak']->getsettingfak('');
      $data['data_prodi'] = $this->db['prodi']->getsettingprodi('');
      return $data;
@@ -430,6 +490,14 @@ class Admin_dashboard_model extends CI_Model {
      $data['daftar']=date("d-m-Y", strtotime($tmp[0]['awal'])).' - '.date("d-m-Y", strtotime($tmp[0]['akhir']));
      $data['aktif']=$tmp[0]['aktif'];
      $data['id']=$tmp[0]['id'];
+     return $data;
+   }
+
+   public function baca_user($id)
+   {
+     $tmp = $this->db['user']->getdata('user_name="'.$id.'"');
+     $data['id']=$tmp[0]['user_name'];
+     $data['user_name']=$tmp[0]['user_name'];
      return $data;
    }
 
@@ -454,13 +522,34 @@ class Admin_dashboard_model extends CI_Model {
       unset($data['daftar']);
       $this->db['priode']->updatedata($data);
       return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Diupdate !!!</p> </div>";
-   }
-
-   
+   }   
 
    public function deletedatapriode($id)
    {
      $this->db['priode']->deletedata($id);
+   }
+
+   public function insertuserdata($data)
+   {
+      $tmp=$this->db['user']->getdata("user_name='$data[user]'");
+      if(!empty($tmp)){
+         return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Admin dengan username = $data[user], sudah buat akun !!!</p> </div>"; 
+      }else{
+        $this->db['user']->insertdata($data);
+        return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Disimpan !!!</p> </div>";      
+      }
+   }
+
+   public function updateuserdata($data)
+   {
+        $this->db['user']->updatedata($data);
+        return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Diupdate !!!</p> </div>";     
+      
+   }
+
+   public function deleteuserdata($id)
+   {
+     $this->db['user']->deletedata($id);
    }
 
 }
