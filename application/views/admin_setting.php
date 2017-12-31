@@ -349,6 +349,56 @@ $data['menu_idx']=$menu_idx;
 
   }
 
+  function after3(data)
+  {
+    
+    $('#myModal').modal();
+    $("#myModal").on("hidden.bs.modal", function () {
+      window.location.href = "<?php echo site_url('Admin_dashboard/setting'); ?>";
+     });
+
+    $("#fakdata").validate();
+
+    $("#fakdata").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#fakdata").valid();
+        if (isvalid) {
+            data = $("#fakdata").serialize();
+            myajax('ketfakdata',data,'<?php echo base_url();?>index.php/Admin_dashboard/savefakdata');    
+        }        
+    });
+
+
+  }
+
+  function after4(data)
+  {
+    
+    $('#myModal').modal();
+    $("#myModal").on("hidden.bs.modal", function () {
+      window.location.href = "<?php echo site_url('Admin_dashboard/setting'); ?>";
+     });
+
+    $("#prodidata").validate();
+
+    $(".select2").select2();
+
+    $("#prodidata").submit(function(e) {
+
+        //prevent Default functionality
+        e.preventDefault();
+        var isvalid = $("#prodidata").valid();
+        if (isvalid) {
+            data = $("#prodidata").serialize();
+            myajax('ketprodidata',data,'<?php echo base_url();?>index.php/Admin_dashboard/saveprodidata');    
+        }        
+    });
+
+
+  }
+
 
   function priode(isedit,id)
   {
@@ -369,6 +419,24 @@ $data['menu_idx']=$menu_idx;
     }
   }
 
+  function fak(isedit,id)
+  {
+   if(isedit==0){
+     myajax('modal','',"<?php echo base_url();?>index.php/Admin_dashboard/add_fak_admin",null,after3);
+    }else{
+     myajax('modal','id='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_fak_admin",null,after3); 
+    } 
+  }
+
+  function prodi(isedit,id)
+  {
+   if(isedit==0){
+     myajax('modal','',"<?php echo base_url();?>index.php/Admin_dashboard/add_prodi_admin",null,after4);
+    }else{
+     myajax('modal','id='+id,"<?php echo base_url();?>index.php/Admin_dashboard/edit_prodi_admin",null,after4); 
+    } 
+  }
+
   function after1()
   {
     window.location.href = "<?php echo site_url('Admin_dashboard/setting'); ?>";
@@ -384,6 +452,18 @@ $data['menu_idx']=$menu_idx;
   {
     data = "id="+id;
     myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/deleteuserdata',null,after1); 
+  }
+
+  function deletefak(id)
+  {
+    data = "id="+id;
+    myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/deletefakdata',null,after1); 
+  }
+
+  function deleteprodi(id)
+  {
+    data = "id="+id;
+    myajax('',data,'<?php echo base_url();?>index.php/Admin_dashboard/deleteprodidata',null,after1); 
   }
   
   

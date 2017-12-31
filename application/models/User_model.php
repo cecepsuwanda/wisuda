@@ -82,7 +82,6 @@ class User_model extends CI_Model {
 
    public function deletedata($id)
    {
-     echo $id;
      $this->db->where('user_name',$id);
      $this->db->delete('tb_user');
    }

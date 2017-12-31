@@ -615,5 +615,89 @@ class Admin_dashboard extends CI_Controller {
 	  $this->Admin_dashboard_model->deleteuserdata($id);
 	}
 
+	public function add_fak_admin()
+	{
+        $data['judul']='Add Fakultas';
+		echo $this->load->view('fak_modal',$data,true);
+	}
+
+	public function edit_fak_admin()
+	{
+	    $id= $this->input->post('id');
+        $db['fakultas']=$this->Fakultas_model;
+        $this->Admin_dashboard_model->setdbvar($db);
+        $data = $this->Admin_dashboard_model->baca_fak($id);
+        $data['judul']='Edit Fakultas';
+		echo $this->load->view('fak_modal',$data,true);	
+	}
+
+	public function savefakdata()
+	{
+        $data['id_old']=$this->input->post('id_old');
+        $data['id']=$this->input->post('id');
+        $data['nm']=$this->input->post('nm');
+		$data['urut']=$this->input->post('urut');
+        
+        $db['fakultas']=$this->Fakultas_model;
+		$this->Admin_dashboard_model->setdbvar($db);
+        if(empty($data['id_old'])){
+           echo $this->Admin_dashboard_model->insertfakdata($data);
+        }else{
+           echo $this->Admin_dashboard_model->updatefakdata($data);
+        }
+	}
+
+	public function deletefakdata()
+	{
+	  $id= $this->input->post('id');
+      $db['fakultas']=$this->Fakultas_model;
+	  $this->Admin_dashboard_model->setdbvar($db);
+	  $this->Admin_dashboard_model->deletefakdata($id);	
+	}
+
+	public function add_prodi_admin()
+	{
+        $data['judul']='Add Prodi';
+        $data['drop_fak']=$this->Fakultas_model->getdropdownfak();
+		echo $this->load->view('prodi_modal',$data,true);
+	}
+
+	public function edit_prodi_admin()
+	{
+	    $id= $this->input->post('id');
+        $db['prodi']=$this->Prodi_model;
+        $db['fakultas']=$this->Fakultas_model;
+        $this->Admin_dashboard_model->setdbvar($db);
+        $data = $this->Admin_dashboard_model->baca_prodi($id);
+        $data['judul']='Edit Prodi';
+		echo $this->load->view('prodi_modal',$data,true);	
+	}
+
+	public function saveprodidata()
+	{
+        $data['id_old']=$this->input->post('id_old');
+        $data['id']=$this->input->post('id');
+        $data['nm']=$this->input->post('nm');
+		$data['urut']=$this->input->post('urut');
+		$data['fak']=$this->input->post('fak');
+        
+
+        $db['prodi']=$this->Prodi_model;
+		$this->Admin_dashboard_model->setdbvar($db);
+        if(empty($data['id_old'])){
+           echo $this->Admin_dashboard_model->insertprodidata($data);
+        }else{
+           echo $this->Admin_dashboard_model->updateprodidata($data);
+        }
+	}
+
+	public function deleteprodidata()
+	{
+	  $id= $this->input->post('id');
+      $db['prodi']=$this->Prodi_model;
+	  $this->Admin_dashboard_model->setdbvar($db);
+	  $this->Admin_dashboard_model->deleteprodidata($id);	
+	}
+
 
 }

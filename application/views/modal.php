@@ -107,7 +107,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- right column -->
         <div class="col-md-6">
             <!-- general form elements -->
-          <div class="form-group">
+                     <div class="form-group">
                          <label>Fakultas</label>
                         <select class="form-control select2" id="fak" name="fak" style="width: 100%;">
                           <?php echo $drop_fak ?>

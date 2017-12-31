@@ -529,6 +529,15 @@ class Admin_dashboard_model extends CI_Model {
      $this->db['priode']->deletedata($id);
    }
 
+   public function baca_fak($id)
+   {
+     $tmp = $this->db['fakultas']->getdata('id_fak="'.$id.'"');
+     $data['id']=$tmp[0]['id_fak'];
+     $data['nm']=$tmp[0]['nm_fak'];
+     $data['urut']=$tmp[0]['urut_fak'];
+     return $data;
+   }
+
    public function insertuserdata($data)
    {
       $tmp=$this->db['user']->getdata("user_name='$data[user]'");
@@ -550,6 +559,98 @@ class Admin_dashboard_model extends CI_Model {
    public function deleteuserdata($id)
    {
      $this->db['user']->deletedata($id);
+   }
+
+   public function insertfakdata($data)
+   {
+      $tmp=$this->db['fakultas']->getdata("id_fak='$data[id]'");
+      
+      if(!empty($tmp)){
+         return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Fakultas dengan id = $data[id], sudah ada !!!</p> </div>"; 
+      }else{
+        $this->db['fakultas']->insertdata($data);
+        return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Disimpan !!!</p> </div>";      
+      }
+   }
+
+   public function updatefakdata($data)
+   {
+      $update = 1;
+      if($data['id']!=$data['id_old'])
+      {
+        $tmp=$this->db['fakultas']->getdata("id_fak='$data[id]'");
+      
+        if(!empty($tmp)){
+          $msg = "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Fakultas dengan id = $data[id], sudah ada !!!</p> </div>"; 
+          $update =0;
+        } 
+      }  
+
+      if($update==1){
+        $this->db['fakultas']->updatedata($data);
+        $msg = "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Diupdate !!!</p> </div>";     
+      }
+      return $msg;
+   }
+
+   public function deletefakdata($id)
+   {
+     $this->db['fakultas']->deletedata($id);
+   }
+
+   public function baca_prodi($id)
+   {
+     $tmp = $this->db['prodi']->getdata('id_prodi="'.$id.'"');
+     $data['id']=$tmp[0]['id_prodi'];
+     $data['nm']=$tmp[0]['nm_prodi'];
+     $data['urut']=$tmp[0]['urut_prodi'];
+     $data['fak']=$tmp[0]['fak_prodi'];
+
+
+     $tmp_fak=$this->db['fakultas']->getdata('id_fak="'.$tmp[0]['fak_prodi'].'"');
+
+     $arr_fak=$this->db['fakultas']->getdata('id_fak<>"'.$tmp[0]['fak_prodi'].'"');
+     $data['drop_fak']=$this->build_dropdown($arr_fak,array('id_fak','nm_fak'),'Fakultas ','--- Pilih Fakultas ---');
+     $data['drop_fak']= "<option value='".$tmp_fak[0]['id_fak']."' selected='selected' >Fakultas ".$tmp_fak[0]['nm_fak']."</option>".$data['drop_fak'];
+
+     return $data;
+   }  
+
+   public function insertprodidata($data)
+   {
+      $tmp=$this->db['prodi']->getdata("id_prodi='$data[id]'");
+      
+      if(!empty($tmp)){
+         return "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Prodi dengan id = $data[id], sudah ada !!!</p> </div>"; 
+      }else{
+        $this->db['prodi']->insertdata($data);
+        return "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Disimpan !!!</p> </div>";      
+      }
+   }
+
+   public function updateprodidata($data)
+   {
+      $update = 1;
+      if($data['id']!=$data['id_old'])
+      {
+        $tmp=$this->db['prodi']->getdata("id_prodi='$data[id]'");
+      
+        if(!empty($tmp)){
+          $msg = "<div class='callout callout-danger'><h4>Pemberitahuan</h4><p>Prodi dengan id = $data[id], sudah ada !!!</p> </div>"; 
+          $update =0;
+        } 
+      }  
+
+      if($update==1){
+        $this->db['prodi']->updatedata($data);
+        $msg = "<div class='callout callout-info'><h4>Pemberitahuan</h4><p>Data Berhasil Diupdate !!!</p> </div>";     
+      }
+      return $msg;
+   }
+
+   public function deleteprodidata($id)
+   {
+     $this->db['prodi']->deletedata($id);
    }
 
 }
